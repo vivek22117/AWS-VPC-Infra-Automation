@@ -1,0 +1,37 @@
+{
+    "variables" : {
+        "region" : "us-east-1",
+        "source_ami" : "ami-0de53d8956e8dcf80"
+    },
+    "builders" : [
+        {
+            "type" : "amazon-ebs",
+            "profile" : "doubledigit",
+            "region" : "{{user `region`}}",
+            "instance_type" : "t2.micro",
+            "source_ami" : "{{user `source_ami`}}",
+            "ssh_username" : "ec2-user",
+            "ami_name" : "dd-bastion",
+            "ami_description" : "Amazon Linux Image with Telegraf",
+            "run_tags" : {
+                "Name" : "packer-builder-docker"
+            },
+            "tags" : {
+                "Tool" : "Packer",
+                "Author" : "Vivek"
+            }
+        }
+    ],
+    "provisioners" : [
+        {
+            "type" : "file",
+            "source" : "./telegraf.conf",
+            "destination" : "/tmp/telegraf.conf"
+        },
+        {
+            "type" : "shell",
+            "script" : "./setup.sh",
+            "execute_command" : "sudo -E -S sh '{{ .Path }}'"
+        }
+    ]
+}
