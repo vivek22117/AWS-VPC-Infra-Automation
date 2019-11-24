@@ -1,10 +1,10 @@
 ######################################################
-# NAT gateways  enable instances in a private subnet
-# to connect to the Internet or other AWS services,
-# but prevent the internet from initiating
-# a connection with those instances.
-#
-# Each NAT gateway requires an Elastic IP.
+# NAT gateways  enable instances in a private subnet #
+# to connect to the Internet or other AWS services,  #
+# but prevent the internet from initiating           #
+# a connection with those instances.                 #
+#                                                    #
+# Each NAT gateway requires an Elastic IP.           #
 ######################################################
 resource "aws_eip" "nat_eip" {
   depends_on = ["aws_internet_gateway.vpc_igw"]
@@ -16,7 +16,10 @@ resource "aws_eip" "nat_eip" {
   }
 }
 
-//Create NatGateway and allocate EIP
+
+#################################################
+#       Create NatGateway and allocate EIP      #
+#################################################
 resource "aws_nat_gateway" "nat_gateway" {
   depends_on = ["aws_internet_gateway.vpc_igw"]
   count      = var.enable_nat_gateway == "true" ? 1 : 0
@@ -30,9 +33,9 @@ resource "aws_nat_gateway" "nat_gateway" {
 }
 
 ######################################################
-# Create route table for private subnets
-# Route non-local traffic through the NAT gateway
-# to the Internet
+# Create route table for private subnets             #
+# Route non-local traffic through the NAT gateway    #
+# to the Internet                                    #
 ######################################################
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.vpc.id
@@ -57,8 +60,8 @@ resource "aws_route_table_association" "private_association" {
 }
 
 ######################################################
-# Route the public subnet traffic through
-# the Internet Gateway
+# Route the public subnet traffic through            #
+# the Internet Gateway                               #
 ######################################################
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.vpc.id
@@ -79,8 +82,8 @@ resource "aws_route_table_association" "public_association" {
 }
 
 ######################################################
-# Public subnets
-# Each subnet in a different AZ
+# Public subnets                                     #
+# Each subnet in a different AZ                      #
 ######################################################
 resource "aws_subnet" "public" {
   count = length(var.public_azs_with_cidr)
@@ -94,8 +97,8 @@ resource "aws_subnet" "public" {
 }
 
 ######################################################
-# Private subnets
-# Each subnet in a different AZ
+# Private subnets                                    #
+# Each subnet in a different AZ                      #
 ######################################################
 resource "aws_subnet" "private" {
   count = length(var.private_azs_with_cidr)

@@ -66,6 +66,11 @@ variable "owner" {
   description = "Owner of the product"
 }
 
+variable "isMonitoring" {
+  type        = bool
+  description = "Monitiroing is enabled or disabled for the resources creating"
+}
+
 #########################################################
 # Default variables for backend and SSH key for Bastion #
 #########################################################
@@ -73,4 +78,17 @@ variable "s3_bucket_prefix" {
   type        = "string"
   default     = "teamconcept-tfstate"
   description = "Prefix for s3 bucket"
+}
+
+#####=============ASG Standards Tags===============#####
+variable "custom_tags" {
+  description = "Custom tags to set on the Instances in the ASG"
+  type        = map(string)
+  default = {
+    owner       = "vivek"
+    team        = "doubledigit-solutions"
+    tool        = "Terraform"
+    monitoring  = "true"
+    Name        = "Bastion-Host"
+  }
 }

@@ -1,3 +1,6 @@
+####################################################
+#Dev VPC moudle configuratin                       #
+####################################################
 module "vpc-dev" {
   source = "../../modules/module.vpc"
 
@@ -15,6 +18,7 @@ module "vpc-dev" {
 
   team  = var.team
   owner = var.owner
+  isMonitoring = var.isMonitoring
 
   bastion_instance_type = var.bastion_instance_type
 }

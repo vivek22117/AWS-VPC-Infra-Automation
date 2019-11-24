@@ -1,3 +1,6 @@
+####################################################
+#Key pair to be used for different applications    #
+####################################################
 resource "aws_key_pair" "bastion_key" {
   public_key = var.public_key
   key_name   = "bastion-key"
@@ -13,7 +16,14 @@ resource "aws_key_pair" "rsvp_processor_key" {
   key_name   = "rsvp-processor-key"
 }
 
-//Bastion host launch configuration and act as Jump Instance
+resource "aws_key_pair" "common_ec2_key" {
+  public_key = var.public_key
+  key_name   = "doubledigit-solutions"
+}
+
+###############################################################
+#Bastion host launch configuration and act as Jump Instance   #
+###############################################################
 resource "aws_launch_configuration" "bastion_launch_conf" {
   name_prefix = "bastion-"
 
@@ -28,7 +38,9 @@ resource "aws_launch_configuration" "bastion_launch_conf" {
   }
 }
 
-//Bastion host ASG
+#################################################
+#         Bastion host ASG                      #
+#################################################
 resource "aws_autoscaling_group" "bastion_asg" {
   name = "bastion-asg-${aws_launch_configuration.bastion_launch_conf.name}"
 
@@ -42,21 +54,12 @@ resource "aws_autoscaling_group" "bastion_asg" {
     create_before_destroy = true
   }
 
-  tag {
-    key                 = "Name"
-    value               = "bastion"
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "Owner"
-    value               = "Vivek"
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "Tool"
-    value               = "Terraform"
-    propagate_at_launch = true
+  dynamic "tag" {
+    for_each = var.custom_tags
+    content {
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = true
+    }
   }
 }

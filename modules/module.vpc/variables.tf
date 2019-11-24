@@ -84,11 +84,30 @@ variable "environment" {
   description = "Environmet to be used"
 }
 
-//Local variables
+variable "isMonitoring" {
+  type        = bool
+  description = "Monitiroing is enabled or disabled for the resources creating"
+}
+
+#####=============ASG Standards Tags===============#####
+variable "custom_tags" {
+  description = "Custom tags to set on the Instances in the ASG"
+  type        = map(string)
+  default = {
+    owner       = "vivek"
+    team        = "doubledigit-solutions"
+    tool        = "Terraform"
+    monitoring  = "true"
+    Name        = "Bastion-Host"
+  }
+}
+
+#####=============Local variables===============#####
 locals {
   common_tags = {
     owner       = var.owner
     team        = var.team
     environment = var.environment
+    monitoring  = var.isMonitoring
   }
 }

@@ -2,9 +2,42 @@
 #/bin/sh
 
 echo "Install Telegraf"
+sudo yum update -y
 wget https://dl.influxdata.com/telegraf/releases/telegraf-1.6.0-1.x86_64.rpm -O /tmp/telegraf.rpm
 yum localinstall -y /tmp/telegraf.rpm
 rm /tmp/telegraf.rpm
 chkconfig telegraf on
 mv /tmp/telegraf.conf /etc/telegraf/telegraf.conf
 service telegraf start
+
+
+echo "Install NodeExporter"
+cd /tmp
+wget https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz
+tar -xf node_exporter-0.18.1.linux-amd64.tar.gz
+sudo mv node_exporter-0.18.1.linux-amd64/node_exporter /usr/local/bin/
+sudo useradd -rs /bin/false node_exporter
+chown node_exporter:node_exporter /usr/local/bin/node_exporter
+rm -rf /tmp/node_exporter-0.18.1.linux-amd64*
+
+sudo cat << EOF > /etc/systemd/system/node_exporter.service
+[Unit]
+Description=Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=node_exporter
+Group=node_exporter
+Type=simple
+ExecStart=/usr/local/bin/node_exporter
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl start node_exporter
+sudo systemctl enable node_exporter
+
+echo "SUCCESS! Installation succeeded!"

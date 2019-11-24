@@ -1,3 +1,6 @@
+#################################################
+#       Bastion Host Security Group             #
+#################################################
 resource "aws_security_group" "bastion_host_sg" {
   name = "bastion-sg-${aws_vpc.vpc.id}"
 
