@@ -1,5 +1,5 @@
 ####################################################
-#Dev VPC moudle configuratin                       #
+#        Dev VPC moudle configuratin               #
 ####################################################
 module "vpc-dev" {
   source = "../../modules/module.vpc"
