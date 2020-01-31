@@ -1,4 +1,4 @@
-profile        = "doubledigit"
+profile        = "admin"
 environment    = "dev"
 default_region = "us-east-1"
 

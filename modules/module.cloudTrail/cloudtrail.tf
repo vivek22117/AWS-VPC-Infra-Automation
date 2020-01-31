@@ -7,7 +7,7 @@ resource "aws_cloudtrail" "vpc_cloudTrail" {
   name                          = "${var.environment}-CloudTrail"
   enable_logging                = var.enable_logging
   s3_bucket_name                = aws_s3_bucket.cloudtrail_s3_bucket.id
-  s3_key_prefix =                 var.s3_key_prefix
+  s3_key_prefix                 = var.s3_key_prefix
   enable_log_file_validation    = var.enable_log_file_validation
   is_multi_region_trail         = var.is_multi_region_trail
   include_global_service_events = var.include_global_service_events
@@ -56,7 +56,7 @@ resource "aws_s3_bucket" "cloudtrail_s3_bucket" {
 
   lifecycle_rule {
     enabled = var.enable_s3_lifecycle
-    prefix = "${var.s3_key_prefix}/"
+    prefix  = "${var.s3_key_prefix}/"
 
     transition {
       days          = var.s3_bucket_days_to_transition
@@ -71,7 +71,6 @@ resource "aws_s3_bucket" "cloudtrail_s3_bucket" {
       days = 1
     }
   }
-
   tags = local.common_tags
 }
 
@@ -86,7 +85,7 @@ resource "aws_s3_bucket_policy" "s3_bucket_trail_policy" {
 resource "aws_cloudwatch_log_group" "cloudtrail_logGroup" {
   name = "doubledigitCloudtrail"
 
-  retention_in_days = 7
+  retention_in_days = var.log_retention
   tags              = local.common_tags
 }
 
@@ -113,12 +112,11 @@ resource "aws_cloudwatch_metric_alarm" "root_login_alarm" {
   statistic           = "Sum"
   threshold           = "1"
   alarm_description   = "Use of the root account has been detected"
-  alarm_actions       = [
-    aws_sns_topic.security_alerts_sns.arn]
+  alarm_actions       = [aws_sns_topic.security_alerts_sns.arn]
 }
 
 
-#####==========watch for use of the console without MFA===========#####
+#####==========Watch for use of the console without MFA===========#####
 resource "aws_cloudwatch_log_metric_filter" "console_without_mfa" {
   name           = "console-without-mfa"
   pattern        = "{$.eventName = ConsoleLogin && $.additionalEventData.MFAUsed = No}"
@@ -141,8 +139,7 @@ resource "aws_cloudwatch_metric_alarm" "console_without_mfa" {
   statistic           = "Sum"
   threshold           = "1"
   alarm_description   = "Use of the console by an account without MFA has been detected"
-  alarm_actions       = [
-    aws_sns_topic.security_alerts_sns.arn]
+  alarm_actions = [aws_sns_topic.security_alerts_sns.arn]
 }
 
 
@@ -169,8 +166,7 @@ resource "aws_cloudwatch_metric_alarm" "illegal_key_use" {
   statistic           = "Sum"
   threshold           = "1"
   alarm_description   = "A key alias has been changed or a key has been deleted"
-  alarm_actions       = [
-    aws_sns_topic.security_alerts_sns.arn]
+  alarm_actions = [aws_sns_topic.security_alerts_sns.arn]
 }
 
 
@@ -197,8 +193,7 @@ resource "aws_cloudwatch_metric_alarm" "security_group_change" {
   statistic           = "Sum"
   threshold           = "1"
   alarm_description   = "Security groups have been changed"
-  alarm_actions       = [
-    aws_sns_topic.security_alerts_sns.arn]
+  alarm_actions = [aws_sns_topic.security_alerts_sns.arn]
 }
 
 
@@ -225,8 +220,7 @@ resource "aws_cloudwatch_metric_alarm" "iam_change" {
   statistic           = "Sum"
   threshold           = "1"
   alarm_description   = "IAM Resources have been changed"
-  alarm_actions       = [
-    aws_sns_topic.security_alerts_sns.arn]
+  alarm_actions = [aws_sns_topic.security_alerts_sns.arn]
 }
 
 
@@ -254,8 +248,7 @@ resource "aws_cloudwatch_metric_alarm" "routetable_change" {
   statistic           = "Sum"
   threshold           = "1"
   alarm_description   = "Route Table Resources have been changed"
-  alarm_actions       = [
-    aws_sns_topic.security_alerts_sns.arn]
+  alarm_actions = [aws_sns_topic.security_alerts_sns.arn]
 }
 
 
@@ -289,7 +282,7 @@ resource "aws_cloudwatch_metric_alarm" "nacl_change" {
 # SetUp SNS for Notification and Alarm configuration  #
 #######################################################
 resource "aws_sns_topic" "security_alerts_sns" {
-  name = "security_alerts_topic"
+  name            = "security_alerts_topic"
   delivery_policy = <<JSON
 {
   "http": {
@@ -309,13 +302,14 @@ resource "aws_sns_topic_subscription" "security_alerts_to_sqs" {
   depends_on = ["aws_sqs_queue.security_alerts_sqs"]
 
   topic_arn = aws_sns_topic.security_alerts_sns.arn
-  protocol  = "sqs"
-  endpoint  = aws_sqs_queue.security_alerts_sqs.arn
+  protocol = "sqs"
+  endpoint = aws_sqs_queue.security_alerts_sqs.arn
+  raw_message_delivery = true
 }
 
 resource "aws_sqs_queue" "security_alerts_sqs" {
-  name                       = "security_alerts_${var.environment}_${var.region}"
-  redrive_policy             = "{\"deadLetterTargetArn\":\"${aws_sqs_queue.security_alerts_dlq.arn}\",\"maxReceiveCount\":5}"
+  name = "security_alerts_${var.environment}_${var.region}"
+  redrive_policy = "{\"deadLetterTargetArn\":\"${aws_sqs_queue.security_alerts_dlq.arn}\",\"maxReceiveCount\":5}"
   visibility_timeout_seconds = 300
 }
 
@@ -325,27 +319,5 @@ resource "aws_sqs_queue" "security_alerts_dlq" {
 
 resource "aws_sqs_queue_policy" "security_alerts_queue_policy" {
   queue_url = aws_sqs_queue.security_alerts_sqs.id
-  policy    = data.aws_iam_policy_document.order_placed_queue_iam_policy.json
-}
-
-data "aws_iam_policy_document" "order_placed_queue_iam_policy" {
-  policy_id = "SecuritySQSSendAccess"
-
-  statement {
-    sid       = "SecuritySQSSendAccessStatement"
-    effect    = "Allow"
-    actions   = ["SQS:SendMessage"]
-    resources = [
-      aws_sqs_queue.security_alerts_sqs.arn]
-    principals {
-      identifiers = ["*"]
-      type        = "*"
-    }
-    condition {
-      test     = "ArnEquals"
-      values   = [
-        aws_sns_topic.security_alerts_sns.arn]
-      variable = "aws:SourceArn"
-    }
-  }
+  policy = data.aws_iam_policy_document.order_placed_queue_iam_policy.json
 }

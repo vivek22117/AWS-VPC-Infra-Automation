@@ -8,6 +8,7 @@ module "vpc-cloudtrail" {
   environment = var.environment
 
   enable_logging                = var.enable_logging
+  log_retention                 = var.log_retention
   enable_log_file_validation    = var.enable_log_file_validation
   is_multi_region_trail         = var.is_multi_region_trail
   include_global_service_events = var.include_global_service_events

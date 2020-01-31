@@ -36,31 +36,31 @@ resource "aws_iam_role_policy_attachment" "cloudtrail_log_role_att" {
 data "aws_iam_policy_document" "cloudtrail_log_access" {
 
   statement {
-    sid       = "AWSCloudTrailAclCheck"
-    actions   = ["s3:GetBucketAcl"]
+    sid = "AWSCloudTrailAclCheck"
+    actions = ["s3:GetBucketAcl"]
     resources = [aws_s3_bucket.cloudtrail_s3_bucket.arn]
 
     principals {
-      type        = "Service"
+      type = "Service"
       identifiers = ["cloudtrail.amazonaws.com"]
     }
   }
 
   statement {
-    sid     = "AWSCloudTrailWrite"
+    sid = "AWSCloudTrailWrite"
     actions = ["s3:PutObject"]
 
     resources = [var.s3_key_prefix != "" ? format("%s/%s/*", aws_s3_bucket.cloudtrail_s3_bucket.arn, var.s3_key_prefix) : format("%s/*", aws_s3_bucket.cloudtrail_s3_bucket.arn)]
 
     principals {
-      type        = "Service"
+      type = "Service"
       identifiers = ["cloudtrail.amazonaws.com"]
     }
 
     condition {
-      test     = "StringEquals"
+      test = "StringEquals"
       variable = "s3:x-amz-acl"
-      values   = ["bucket-owner-full-control"]
+      values = ["bucket-owner-full-control"]
     }
   }
 }

@@ -26,14 +26,19 @@ variable "enable_logging" {
   description = "Enable logging for the trail"
 }
 
+variable "log_retention" {
+  type = number
+  description = "Number of days to keep logs"
+}
+
 variable "s3_bucket_name" {
   type        = string
   description = "S3 bucket name for CloudTrail logs"
 }
 
 variable "s3_key_prefix" {
-  type = string
-  default = ""
+  type        = string
+  default     = ""
   description = "S3 bucket prefix for aws cloud trail"
 }
 
@@ -86,7 +91,7 @@ variable "s3_bucket_transition_storage_class" {
 
 
 variable "metric_name_space" {
-  type = string
+  type        = string
   description = "Name to the cloudwatch metric space"
 }
 

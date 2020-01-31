@@ -26,6 +26,11 @@ variable "enable_logging" {
   description = "Enable logging for the trail"
 }
 
+variable "log_retention" {
+  type        = number
+  description = "Number of days to keep logs"
+}
+
 variable "s3_bucket_name" {
   type        = string
   description = "S3 bucket name for CloudTrail logs"

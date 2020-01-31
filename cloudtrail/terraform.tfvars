@@ -1,10 +1,11 @@
-profile = "doubledigit"
+profile = "admin"
 
 enable_log_file_validation    = true
 include_global_service_events = true
 is_multi_region_trail         = false
 
 enable_logging        = true
+log_retention         = 1
 s3_bucket_name        = "ddsolutions-cloudtrail"
 is_organization_trail = false
 
