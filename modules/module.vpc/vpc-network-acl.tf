@@ -98,6 +98,8 @@ resource "aws_network_acl" "public_nacl" {
   tags = merge(local.common_tags, map("Name", "Public-${var.environment}-NACL"))
 }
 
+
+
 #################################################
 #       NACL for Private Subnet                 #
 #################################################

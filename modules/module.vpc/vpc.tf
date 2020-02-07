@@ -11,10 +11,10 @@ resource "aws_vpc" "vpc" {
   tags = merge(local.common_tags, map("Name", "vpc-${var.environment}-${var.cidr_block}"))
 }
 
-######################################################
-# Enable access to or from the Internet for instances#
-# in public subnets                                  #
-######################################################
+#######################################################
+# Enable access to or from the Internet for instances #
+# in public subnets using IGW                         #
+#######################################################
 resource "aws_internet_gateway" "vpc_igw" {
   vpc_id = aws_vpc.vpc.id
 

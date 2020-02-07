@@ -2,67 +2,71 @@
 # Global variables for VPC and Bastion Host
 ######################################################
 variable "profile" {
-  type        = "string"
+  type        = string
   description = "AWS Profile name for credentials"
 }
 
 variable "default_region" {
-  type        = "string"
+  type        = string
   description = "AWS region to deploy resources"
 }
 
 variable "cidr_block" {
-  type        = "string"
+  type        = string
   description = "Cidr range for vpc"
 }
 
 variable "instance_tenancy" {
-  type        = "string"
+  type        = string
   description = "Type of instance tenancy required default/dedicated"
 }
 
 variable "enable_dns" {
-  type        = "string"
+  type        = string
   description = "To use private DNS within the VPC"
 }
 
 variable "support_dns" {
-  type        = "string"
+  type        = string
   description = "To use private DNS support within the VPC"
 }
 
 variable "private_azs_with_cidr" {
-  type        = "map"
+  type        = map(string)
   description = "Name of azs with cidr to be used for infrastructure"
 }
 
 variable "public_azs_with_cidr" {
-  type        = "map"
+  type        = map(string)
   description = "Name of azs with cidr to be used for infrastructure"
 }
 
 variable "enable_nat_gateway" {
-  type        = "string"
+  type        = string
   description = "want to create nat-gateway or not"
 }
 
 variable "bastion_instance_type" {
-  type        = "string"
+  type        = string
   description = "Instance type for Bastion Host"
 }
 
+
+######################################################
+# Local variables defined                            #
+######################################################
 variable "environment" {
-  type        = "string"
+  type        = string
   description = "Environmet to be used"
 }
 
 variable "team" {
-  type        = "string"
+  type        = string
   description = "Owner team for this applcation infrastructure"
 }
 
 variable "owner" {
-  type        = "string"
+  type        = string
   description = "Owner of the product"
 }
 
@@ -75,8 +79,8 @@ variable "isMonitoring" {
 # Default variables for backend and SSH key for Bastion #
 #########################################################
 variable "s3_bucket_prefix" {
-  type        = "string"
-  default     = "teamconcept-tfstate"
+  type        = string
+  default     = "doubledigit-tfstate"
   description = "Prefix for s3 bucket"
 }
 
@@ -86,7 +90,7 @@ variable "custom_tags" {
   type        = map(string)
   default = {
     owner       = "vivek"
-    team        = "doubledigit-solutions"
+    team        = "DoubleDigit"
     tool        = "Terraform"
     monitoring  = "true"
     Name        = "Bastion-Host"

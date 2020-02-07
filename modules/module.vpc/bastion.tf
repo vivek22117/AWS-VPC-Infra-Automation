@@ -1,6 +1,6 @@
-####################################################
-#Key pair to be used for different applications    #
-####################################################
+########################################################
+#    Key pair to be used for different applications    #
+########################################################
 resource "aws_key_pair" "bastion_key" {
   public_key = var.public_key
   key_name   = "bastion-key"
@@ -21,9 +21,9 @@ resource "aws_key_pair" "common_ec2_key" {
   key_name   = "doubledigit-solutions"
 }
 
-###############################################################
-#Bastion host launch configuration and act as Jump Instance   #
-###############################################################
+##################################################################
+#   Bastion host launch configuration and act as Jump Instance   #
+##################################################################
 resource "aws_launch_configuration" "bastion_launch_conf" {
   name_prefix = "bastion-"
 

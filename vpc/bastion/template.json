@@ -6,7 +6,7 @@
     "builders" : [
         {
             "type" : "amazon-ebs",
-            "profile" : "doubledigit",
+            "profile" : "admin",
             "region" : "{{user `region`}}",
             "instance_type" : "t2.micro",
             "source_ami" : "{{user `source_ami`}}",
@@ -14,7 +14,7 @@
             "ami_name" : "doubledigit-bastion",
             "ami_description" : "Amazon Linux Image with Telegraf",
             "run_tags" : {
-                "Name" : "packer-builder-docker"
+                "Name" : "packer-builder-bastion"
             },
             "tags" : {
                 "Tool" : "Packer",

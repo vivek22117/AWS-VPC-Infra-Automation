@@ -1,5 +1,4 @@
 profile        = "admin"
-environment    = "dev"
 default_region = "us-east-1"
 
 cidr_block       = "10.0.0.0/20"
@@ -22,7 +21,7 @@ public_azs_with_cidr = {
 }
 
 
-team                  = "TeamConcept"
+team                  = "DoubleDigitTeam"
 owner                 = "Vivek"
 bastion_instance_type = "t2.micro"
 isMonitoring = true

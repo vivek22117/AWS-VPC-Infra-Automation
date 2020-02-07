@@ -7,7 +7,8 @@
 # Each NAT gateway requires an Elastic IP.           #
 ######################################################
 resource "aws_eip" "nat_eip" {
-  depends_on = ["aws_internet_gateway.vpc_igw"]
+  depends_on = [aws_internet_gateway.vpc_igw]
+
   vpc   = true
   count = var.enable_nat_gateway == "true" ? 1 : 0
 
@@ -21,7 +22,8 @@ resource "aws_eip" "nat_eip" {
 #       Create NatGateway and allocate EIP      #
 #################################################
 resource "aws_nat_gateway" "nat_gateway" {
-  depends_on = ["aws_internet_gateway.vpc_igw"]
+  depends_on = [aws_internet_gateway.vpc_igw]
+
   count      = var.enable_nat_gateway == "true" ? 1 : 0
 
   allocation_id = aws_eip.nat_eip.*.id[count.index]
@@ -59,6 +61,7 @@ resource "aws_route_table_association" "private_association" {
   subnet_id      = aws_subnet.private.*.id[count.index]
 }
 
+
 ######################################################
 # Route the public subnet traffic through            #
 # the Internet Gateway                               #
@@ -81,6 +84,7 @@ resource "aws_route_table_association" "public_association" {
   subnet_id      = aws_subnet.public.*.id[count.index]
 }
 
+
 ######################################################
 # Public subnets                                     #
 # Each subnet in a different AZ                      #
@@ -95,6 +99,7 @@ resource "aws_subnet" "public" {
 
   tags = merge(local.common_tags, map("Name", "publicSubnet-${var.environment}-${element(keys(var.public_azs_with_cidr), count.index)}"))
 }
+
 
 ######################################################
 # Private subnets                                    #
