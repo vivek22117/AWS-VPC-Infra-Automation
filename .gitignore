@@ -23,6 +23,7 @@
 hs_err_pid*
 
 *.iml
+*.xml
 .idea
 .idea/
 #Terraform files
