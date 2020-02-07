@@ -2,7 +2,7 @@
 # Global variables for CloudTrail Configuration                      #
 ######################################################################
 variable "profile" {
-  type        = "string"
+  type        = string
   description = "AWS Profile name for credentials"
 }
 
@@ -38,7 +38,6 @@ variable "s3_bucket_name" {
 
 variable "s3_key_prefix" {
   type        = string
-  default     = ""
   description = "S3 bucket prefix for aws cloud trail"
 }
 
@@ -60,6 +59,7 @@ variable "is_organization_trail" {
   type        = bool
   description = "The trail is an AWS Organizations trail"
 }
+
 
 ######################################################
 # Variables for S3 Configuration                     #
@@ -94,20 +94,26 @@ variable "metric_name_space" {
   description = "Name to the cloudwatch metric space"
 }
 
+variable "bucket_acl" {
+  type        = string
+  description = "S3 bucket acl property 'private' or 'public'"
+}
+
+
 ######################################################
 # Local variables defined                            #
 ######################################################
 variable "team" {
-  type        = "string"
+  type        = string
   description = "Owner team for this applcation infrastructure"
 }
 
 variable "owner" {
-  type        = "string"
+  type        = string
   description = "Owner of the product"
 }
 
 variable "environment" {
-  type        = "string"
+  type        = string
   description = "Environmet to be used"
 }

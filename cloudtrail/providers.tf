@@ -5,7 +5,7 @@ provider "aws" {
   region  = var.region
   profile = var.profile
 
-  version = "2.17.0"
+  version = ">=2.22"
 }
 
 

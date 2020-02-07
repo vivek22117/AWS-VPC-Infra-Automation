@@ -1,4 +1,6 @@
 profile = "admin"
+team    = "DoubleDigitSolutions"
+owner   = "Vivek"
 
 enable_log_file_validation    = true
 include_global_service_events = true
@@ -14,12 +16,10 @@ s3_bucket_days_to_expiration       = 70
 enable_s3_lifecycle                = true
 s3_bucket_days_to_transition       = 60
 s3_bucket_transition_storage_class = "ONEZONE_IA"
-s3_key_prefix                      = "doubledigit-cloudtrail"
+s3_key_prefix                      = "cloudtrail"
 metric_name_space                  = "CloudTrailMetrics"
+bucket_acl                         = "private"
 
-team        = "DoubleDigitSolutions"
-owner       = "Vivek"
-environment = "dev"
 
 event_selector = [
   {

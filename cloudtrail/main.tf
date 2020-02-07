@@ -18,6 +18,7 @@ module "vpc-cloudtrail" {
   s3_bucket_name    = var.s3_bucket_name
   s3_key_prefix     = var.s3_key_prefix
   metric_name_space = var.metric_name_space
+  bucket_acl        = var.bucket_acl
 
 
   s3_bucket_days_to_expiration       = var.s3_bucket_days_to_expiration
