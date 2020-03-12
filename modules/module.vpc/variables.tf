@@ -41,6 +41,11 @@ variable "public_azs_with_cidr" {
   description = "Name of azs with cidr to be used for infrastructure"
 }
 
+variable "db_azs_with_cidr" {
+  type        = map(string)
+  description = "Name of azs with cidr to be used for Database infrastructure"
+}
+
 variable "enable_nat_gateway" {
   type        = string
   description = "want to create nat-gateway or not"
@@ -94,11 +99,11 @@ variable "custom_tags" {
   description = "Custom tags to set on the Instances in the ASG"
   type        = map(string)
   default = {
-    owner       = "vivek"
-    team        = "doubledigit-solutions"
-    tool        = "Terraform"
-    monitoring  = "true"
-    Name        = "Bastion-Host"
+    owner      = "vivek"
+    team       = "doubledigit-solutions"
+    tool       = "Terraform"
+    monitoring = "true"
+    Name       = "Bastion-Host"
   }
 }
 

@@ -18,6 +18,14 @@ output "private_cirds" {
   value = aws_subnet.private.*.cidr_block
 }
 
+output "db_subnets" {
+  value = aws_subnet.db_subnets_private.*.id
+}
+
+output "db_cirds" {
+  value = aws_subnet.db_subnets_private.*.cidr_block
+}
+
 output "bastion_sg_id" {
   value = aws_security_group.bastion_host_sg.id
 }

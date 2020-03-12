@@ -24,7 +24,7 @@ resource "aws_eip" "nat_eip" {
 resource "aws_nat_gateway" "nat_gateway" {
   depends_on = [aws_internet_gateway.vpc_igw]
 
-  count      = var.enable_nat_gateway == "true" ? 1 : 0
+  count = var.enable_nat_gateway == "true" ? 1 : 0
 
   allocation_id = aws_eip.nat_eip.*.id[count.index]
   subnet_id     = aws_subnet.public.*.id[count.index]
@@ -116,4 +116,19 @@ resource "aws_subnet" "private" {
   tags = merge(local.common_tags, map("Name", "privateSubnet-${var.environment}-${element(keys(var.public_azs_with_cidr), count.index)}"))
 }
 
+
+######################################################
+# Private DB subnets for RDS, Aurora                 #
+# Each subnet in a different AZ                      #
+######################################################
+resource "aws_subnet" "db_subnets_private" {
+  count = length(var.db_azs_with_cidr)
+
+  cidr_block              = values(var.db_azs_with_cidr)[count.index]
+  vpc_id                  = aws_vpc.vpc.id
+  availability_zone       = keys(var.db_azs_with_cidr)[count.index]
+  map_public_ip_on_launch = false
+
+  tags = merge(local.common_tags, map("Name", "db_subnet-${var.environment}-${element(keys(var.db_azs_with_cidr), count.index)}"))
+}
 

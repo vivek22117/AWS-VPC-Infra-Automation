@@ -36,6 +36,11 @@ variable "private_azs_with_cidr" {
   description = "Name of azs with cidr to be used for infrastructure"
 }
 
+variable "db_azs_with_cidr" {
+  type        = map(string)
+  description = "Name of azs with cidr to be used for Database infrastructure"
+}
+
 variable "public_azs_with_cidr" {
   type        = map(string)
   description = "Name of azs with cidr to be used for infrastructure"
@@ -57,7 +62,7 @@ variable "bastion_instance_type" {
 ######################################################
 variable "environment" {
   type        = string
-  description = "Environmet to be used"
+  description = "Environmet to be used valid values: 'dev', 'qa', 'prod'"
 }
 
 variable "team" {
@@ -89,10 +94,10 @@ variable "custom_tags" {
   description = "Custom tags to set on the Instances in the ASG"
   type        = map(string)
   default = {
-    owner       = "vivek"
-    team        = "DoubleDigit"
-    tool        = "Terraform"
-    monitoring  = "true"
-    Name        = "Bastion-Host"
+    owner      = "vivek"
+    team       = "DoubleDigit"
+    tool       = "Terraform"
+    monitoring = "true"
+    Name       = "Bastion-Host"
   }
 }

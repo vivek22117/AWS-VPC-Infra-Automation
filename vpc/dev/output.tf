@@ -18,6 +18,14 @@ output "public_cirds" {
   value = module.vpc-dev.public_cidrs
 }
 
+output "db_subnets" {
+  value = module.vpc-dev.db_subnets
+}
+
+output "db_cirds" {
+  value = module.vpc-dev.db_cirds
+}
+
 output "bastion_sg" {
   value = module.vpc-dev.bastion_sg_id
 }
