@@ -38,12 +38,13 @@ variable "cloudtrail_bucket_name" {
 
 variable "s3_key_prefix" {
   type        = string
+  default     = ""
   description = "S3 bucket prefix for aws cloud trail"
 }
 
 variable "event_selector" {
   type = list(object({
-    include_management_events = bool
+    include_management_events = string
     read_write_type           = string
 
     data_resource = list(object({
@@ -65,7 +66,7 @@ variable "is_organization_trail" {
 ######################################################
 variable "default_region" {
   type        = string
-  description = "Name of the region where the Trail bucket should be created."
+  description = "Name of the region where the Trail should be created."
 }
 
 variable "s3_bucket_days_to_expiration" {
@@ -85,13 +86,7 @@ variable "s3_bucket_days_to_transition" {
 
 variable "s3_bucket_transition_storage_class" {
   type        = string
-  description = "Specifies the S3 storage class to which logs will transition for archival,  ONEZONE_IA, STANDARD_IA, INTELLIGENT_TIERING, GLACIER, or DEEP_ARCHIVE. Only applies if `enable_s3_bucket_transition` is true."
-}
-
-
-variable "bucket_acl" {
-  type        = string
-  description = "S3 bucket acl property 'private' or 'public'"
+  description = "Specifies the S3 storage class to which logs will transition for archival. Only applies if `enable_s3_bucket_transition` is true."
 }
 
 
@@ -99,6 +94,12 @@ variable "metric_name_space" {
   type        = string
   description = "Name to the cloudwatch metric space"
 }
+
+variable "bucket_acl" {
+  type        = string
+  description = "S3 bucket acl property 'private' or 'public'"
+}
+
 
 ######################################################
 # Local variables defined                            #

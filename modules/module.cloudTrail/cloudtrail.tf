@@ -12,7 +12,7 @@ resource "aws_cloudtrail" "vpc_cloudTrail" {
   s3_bucket_name                = aws_s3_bucket.cloudtrail_s3_bucket.id
   s3_key_prefix                 = var.s3_key_prefix
   enable_log_file_validation    = var.enable_log_file_validation
-  is_multi_region_trail         = var.is_multi_region_trail
+  is_multi_region_trail = var.is_multi_region_trail
   include_global_service_events = var.include_global_service_events
   is_organization_trail         = var.is_organization_trail
   cloud_watch_logs_group_arn    = aws_cloudwatch_log_group.cloudtrail_logGroup.arn
@@ -42,8 +42,8 @@ resource "aws_cloudtrail" "vpc_cloudTrail" {
 #                     CloudTrail logs S3 Bucket                #
 ################################################################
 resource "aws_s3_bucket" "cloudtrail_s3_bucket" {
-  bucket = "${var.s3_bucket_name}-${var.environment}-${var.region}"
-  region = var.region
+  bucket = "${var.cloudtrail_bucket_name}-${var.environment}-${var.default_region}"
+  region = var.default_region
   acl    = var.bucket_acl
 
   force_destroy = true
@@ -80,6 +80,7 @@ resource "aws_s3_bucket" "cloudtrail_s3_bucket" {
   tags = local.common_tags
 }
 
+
 resource "aws_s3_bucket_policy" "s3_bucket_trail_policy" {
   bucket = aws_s3_bucket.cloudtrail_s3_bucket.id
 
@@ -115,7 +116,7 @@ resource "aws_cloudwatch_log_metric_filter" "root_login" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "root_login_alarm" {
-  alarm_name          = "root-access-${var.region}"
+  alarm_name          = "root-access-${var.default_region}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
   metric_name         = "RootAccessCount"
@@ -143,7 +144,7 @@ resource "aws_cloudwatch_log_metric_filter" "console_without_mfa" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "console_without_mfa" {
-  alarm_name          = "console-without-mfa-${var.region}"
+  alarm_name          = "console-without-mfa-${var.default_region}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
   metric_name         = "ConsoleWithoutMFACount"
@@ -171,7 +172,7 @@ resource "aws_cloudwatch_log_metric_filter" "illegal_key_use" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "illegal_key_use" {
-  alarm_name          = "key-changes-${var.region}"
+  alarm_name          = "key-changes-${var.default_region}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
   metric_name         = "KeyChangeOrDelete"
@@ -199,7 +200,7 @@ resource "aws_cloudwatch_log_metric_filter" "security_group_change" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "security_group_change" {
-  alarm_name          = "security-group-changes-${var.region}"
+  alarm_name          = "security-group-changes-${var.default_region}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
   metric_name         = "SecurityGroupChanges"
@@ -227,7 +228,7 @@ resource "aws_cloudwatch_log_metric_filter" "iam_change" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "iam_change" {
-  alarm_name          = "iam-changes-${var.region}"
+  alarm_name          = "iam-changes-${var.default_region}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
   metric_name         = "IamChanges"
@@ -256,7 +257,7 @@ resource "aws_cloudwatch_log_metric_filter" "routetable_change" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "routetable_change" {
-  alarm_name          = "route-table-changes-${var.region}"
+  alarm_name          = "route-table-changes-${var.default_region}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
   metric_name         = "RouteTableChanges"
@@ -284,7 +285,7 @@ resource "aws_cloudwatch_log_metric_filter" "nacl_change" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "nacl_change" {
-  alarm_name          = "nacl-changes-${var.region}"
+  alarm_name          = "nacl-changes-${var.default_region}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
   metric_name         = "NaclChanges"
@@ -301,7 +302,7 @@ resource "aws_cloudwatch_metric_alarm" "nacl_change" {
 # SetUp SNS for Notification and Alarm configuration  #
 #######################################################
 resource "aws_sns_topic" "security_alerts_sns" {
-  name            = "security_alerts_topic_${var.environment}_${var.region}"
+  name            = "security_alerts_topic_${var.environment}_${var.default_region}"
   delivery_policy = <<JSON
 {
   "http": {
@@ -327,14 +328,14 @@ resource "aws_sns_topic_subscription" "security_alerts_to_sqs" {
 }
 
 resource "aws_sqs_queue" "security_alerts_sqs" {
-  name = "security_alerts_${var.environment}_${var.region}"
+  name = "security_alerts_${var.environment}_${var.default_region}"
 
   redrive_policy             = "{\"deadLetterTargetArn\":\"${aws_sqs_queue.security_alerts_dlq.arn}\",\"maxReceiveCount\":5}"
   visibility_timeout_seconds = 300
 }
 
 resource "aws_sqs_queue" "security_alerts_dlq" {
-  name = "security_alerts_dlq_${var.environment}_${var.region}"
+  name = "security_alerts_dlq_${var.environment}_${var.default_region}"
 }
 
 resource "aws_sqs_queue_policy" "security_alerts_queue_policy" {
