@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#/bin/sh
 
 echo "Install Telegraf"
 sudo yum update -y
@@ -9,6 +8,12 @@ rm /tmp/telegraf.rpm
 chkconfig telegraf on
 mv /tmp/telegraf.conf /etc/telegraf/telegraf.conf
 service telegraf start
+
+
+echo "Install SSM-Agent"
+sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+sudo systemctl enable amazon-ssm-agent
+sudo systemctl start amazon-ssm-agent
 
 
 echo "Install NodeExporter"

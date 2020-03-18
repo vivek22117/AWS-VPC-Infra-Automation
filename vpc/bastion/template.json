@@ -18,7 +18,8 @@
             },
             "tags" : {
                 "Tool" : "Packer",
-                "Author" : "Vivek"
+                "Author" : "Vivek",
+                "Name": "Bastion-AMI"
             }
         }
     ],
