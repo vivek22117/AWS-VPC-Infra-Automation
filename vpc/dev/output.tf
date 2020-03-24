@@ -26,6 +26,22 @@ output "db_cirds" {
   value = module.vpc-dev.db_cirds
 }
 
+output "private_rt" {
+  value = module.vpc-dev.private_rt
+}
+
+output "public_rt" {
+  value = module.vpc-dev.public_rt
+}
+
+output "vpce_sg" {
+  value = module.vpc-dev.vpce_sg
+}
+
+output "ecs_task_sg" {
+  value = module.vpc-dev.ecs_task_sg
+}
+
 output "bastion_sg" {
   value = module.vpc-dev.bastion_sg_id
 }

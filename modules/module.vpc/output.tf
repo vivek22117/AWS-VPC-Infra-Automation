@@ -26,6 +26,22 @@ output "db_cirds" {
   value = aws_subnet.db_subnets_private.*.cidr_block
 }
 
+output "private_rt" {
+  value = aws_route_table.private.*.id
+}
+
+output "public_rt" {
+  value = aws_route_table.public.*.id
+}
+
+output "vpce_sg" {
+  value = aws_security_group.vpce.id
+}
+
+output "ecs_task_sg" {
+  value = aws_security_group.ecs_task.id
+}
+
 output "bastion_sg_id" {
   value = aws_security_group.bastion_host_sg.id
 }
