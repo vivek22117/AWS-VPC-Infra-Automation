@@ -85,5 +85,9 @@ resource "aws_iam_role_policy_attachment" "ec2_policy_role_attach" {
 resource "aws_iam_instance_profile" "bastion_host_profile" {
   name = "BastionHostInstanceProfile"
   role = aws_iam_role.bastion_host_role.name
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 

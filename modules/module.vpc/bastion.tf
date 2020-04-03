@@ -29,6 +29,7 @@ resource "aws_launch_configuration" "bastion_launch_conf" {
 
   image_id                    = data.aws_ami.bastion.id
   instance_type               = var.bastion_instance_type
+  iam_instance_profile        = aws_iam_instance_profile.bastion_host_profile.name
   key_name                    = aws_key_pair.bastion_key.key_name
   security_groups             = [aws_security_group.bastion_host_sg.id]
   associate_public_ip_address = true
