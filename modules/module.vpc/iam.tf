@@ -10,7 +10,9 @@ resource "aws_iam_role" "bastion_host_role" {
             "Action": "sts:AssumeRole",
             "Effect": "Allow",
             "Principal": {
-               "Service": "ec2.amazonaws.com"
+               "Service": [
+                  "ec2.amazonaws.com"
+                ]
             }
         }
     ]
