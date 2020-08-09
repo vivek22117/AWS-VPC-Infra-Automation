@@ -5,7 +5,9 @@ data "aws_caller_identity" "current" {}
 
 
 resource "aws_cloudtrail" "vpc_cloudTrail" {
-  depends_on = [aws_s3_bucket.cloudtrail_s3_bucket, aws_cloudwatch_log_group.cloudtrail_logGroup, aws_s3_bucket_policy.s3_bucket_trail_policy]
+  depends_on = [aws_s3_bucket.cloudtrail_s3_bucket,
+    aws_cloudwatch_log_group.cloudtrail_logGroup,
+    aws_s3_bucket_policy.s3_bucket_trail_policy]
 
   name                          = "${var.environment}-CloudTrail"
   enable_logging                = var.enable_logging

@@ -1,7 +1,7 @@
 {
     "variables" : {
         "region" : "us-east-1",
-        "source_ami" : "ami-0de53d8956e8dcf80"
+        "source_ami" : "ami-02354e95b39ca8dec"
     },
     "builders" : [
         {
@@ -14,12 +14,14 @@
             "ami_name" : "doubledigit-bastion",
             "ami_description" : "Amazon Linux Image with Telegraf",
             "run_tags" : {
-                "Name" : "packer-builder-bastion"
+                "Name" : "packer-builder-bastion",
+                "Project": "DoubleDigit-Solutions"
             },
             "tags" : {
                 "Tool" : "Packer",
                 "Author" : "Vivek",
-                "Name": "Bastion-AMI"
+                "Name": "Bastion-AMI",
+                "Project": "DoubleDigit-Solutions"
             }
         }
     ],

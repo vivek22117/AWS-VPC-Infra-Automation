@@ -26,7 +26,6 @@ module "vpc-cloudtrail" {
 
   event_selector = var.event_selector
 
-
   cloudtrail_bucket_name = var.cloudtrail_bucket_name
 
   owner = var.owner

@@ -22,7 +22,5 @@ event_selector = [{ include_management_events : true, read_write_type : "All", d
 
 metric_name_space = "doubledigit-cloudtrail"
 
-
-
 team  = "DoubleDigitTeam"
 owner = "Vivek"
