@@ -2,7 +2,7 @@
 #        VPC Other Resources Module                #
 ####################################################
 module "vpc_other_resources" {
-  source = "../../modules/module.vpc-resources"
+  source = "../../../modules/module.vpc-resources"
 
   profile = var.profile
   default_region = var.default_region

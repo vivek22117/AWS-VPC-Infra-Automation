@@ -2,7 +2,7 @@
 #        QA VPC moudle configuration              #
 ####################################################
 module "vpc-qa" {
-  source = "../../modules/module.vpc"
+  source = "../../../modules/module.vpc"
 
   profile        = var.profile
   environment    = var.environment
