@@ -21,8 +21,8 @@ terraform {
   required_version = ">=0.12"
 
   backend "s3" {
-    profile        = "admin"
-    region         = "us-east-1"
-    encrypt        = true
+    profile = "admin"
+    region  = "us-east-1"
+    encrypt = true
   }
 }

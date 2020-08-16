@@ -6,13 +6,13 @@ resource "aws_cloudwatch_log_group" "dd_ecs_cluster_log_group" {
 }
 
 resource "aws_ecs_cluster" "dd_ecs_cluster" {
-  name = "${var.environment}-${var.component_name}"
+  name = "${var.component_name}-cluster-${var.environment}"
 
   tags = merge(local.common_tags, map("Name", "dd-ecs-cluster"))
 }
 
 resource "aws_launch_template" "ecs_cluster_lt" {
-  name_prefix = "${var.component_name}-${var.environment}"
+  name_prefix = "${var.component_name}-ecslt-${var.environment}"
 
   image_id      = data.aws_ami.ecs-node-ami.id
   instance_type = var.instance_type
@@ -68,7 +68,7 @@ resource "aws_launch_template" "ecs_cluster_lt" {
 }
 
 resource "aws_alb" "ecs_cluster_alb" {
-  name = "${var.component_name}-alb"
+  name = "${var.component_name}-ecs-alb"
 
   load_balancer_type = "application"
   subnets            = data.terraform_remote_state.vpc.outputs.public_subnets
@@ -111,7 +111,7 @@ resource "aws_alb_listener_rule" "ecs_alb_listener_rule" {
 }
 
 resource "aws_lb_target_group" "ecs_alb_default_target_group" {
-  name = "${var.component_name}-${var.environment}-tg"
+  name = "${var.component_name}-ecs-tg-${var.environment}"
 
   port        = var.default_target_group_port
   protocol    = "HTTP"
@@ -135,7 +135,7 @@ resource "aws_lb_target_group" "ecs_alb_default_target_group" {
 }
 
 resource "aws_autoscaling_group" "ecs_monitoring_cluster_asg" {
-  name_prefix         = "${var.component_name}-${var.environment}-asg"
+  name_prefix         = "${var.component_name}-ecs-asg-${var.environment}"
 
   vpc_zone_identifier = data.terraform_remote_state.vpc.outputs.private_subnets
 

@@ -4,10 +4,10 @@
 module "vpc_other_resources" {
   source = "../../../modules/module.vpc-resources"
 
-  profile = var.profile
+  profile        = var.profile
   default_region = var.default_region
 
-  team = var.team
-  owner = var.owner
+  team        = var.team
+  owner       = var.owner
   environment = var.environment
 }
