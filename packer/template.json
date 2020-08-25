@@ -1,7 +1,7 @@
 {
   "variables": {
     "region": "us-east-1",
-    "source_ami": "ami-05250bd90f5750ed7"
+    "source_ami": "ami-00a35b04ab99b549a"
   },
   "builders": [
     {
@@ -11,7 +11,7 @@
       "instance_type": "t2.medium",
       "source_ami": "{{user `source_ami`}}",
       "ssh_username": "ec2-user",
-      "ami_name": "ecs-instance-dd",
+      "ami_name": "emr-ami",
       "ami_description": "Amazon Linux Image with Docker",
       "run_tags": {
         "Name": "packer-builder",
@@ -19,7 +19,7 @@
       },
       "tags": {
         "Tool": "Packer",
-        "Name": "ECS-Server-AMI",
+        "Name": "EMR-AMI",
         "Author": "Vivek",
         "Project": "DoubleDigit-Solutions"
       }

@@ -1,5 +1,5 @@
 #################################################
-#       VPC ENdpoints Security Group            #
+#       VPC Endpoints Security Group            #
 #################################################
 resource "aws_security_group" "vpce" {
   name   = "vpce-sg"
