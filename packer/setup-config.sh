@@ -2,6 +2,9 @@
 
 
 echo "Install Java8"
+sudo yum update -y
+sleep 5
+
 sudo yum remove -y java
 sudo yum install -y java-1.8.0-openjdk
 
@@ -13,7 +16,6 @@ sudo systemctl start amazon-ssm-agent
 
 
 echo "Install AWS Cli & kubectl & eks & docker"
-sudo yum update -y
 curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
 unzip  awscli-bundle.zip
 sudo  ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
