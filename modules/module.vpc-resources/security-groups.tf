@@ -35,3 +35,5 @@ resource "aws_security_group" "ecs_task" {
   }
   tags = merge(local.common_tags, map("Name", "${var.environment}-ecs-task-sg"))
 }
+
+

@@ -85,3 +85,18 @@ resource "aws_vpc_endpoint" "private_link_cw_logs" {
 
   tags = merge(local.common_tags, map("Name", "${var.environment}-logs-endpoint"))
 }
+
+
+#################################################
+#              AWS EC2 VPC Endpoint             #
+#################################################
+resource "aws_vpc_endpoint" "ec2" {
+  vpc_id       = data.terraform_remote_state.vpc.outputs.vpc_id
+  service_name = "com.amazonaws.${var.default_region}.ec2"
+  vpc_endpoint_type = "Interface"
+  private_dns_enabled = true
+  subnet_ids          = flatten([data.terraform_remote_state.vpc.outputs.private_subnets, data.terraform_remote_state.vpc.outputs.public_subnets])
+  security_group_ids = [aws_security_group.vpce.id]
+
+  tags = merge(local.common_tags, map("Name", "${var.environment}-EC2-endpoint"))
+}
