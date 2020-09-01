@@ -95,7 +95,7 @@ resource "aws_vpc_endpoint" "ec2" {
   service_name = "com.amazonaws.${var.default_region}.ec2"
   vpc_endpoint_type = "Interface"
   private_dns_enabled = true
-  subnet_ids          = flatten([data.terraform_remote_state.vpc.outputs.private_subnets, data.terraform_remote_state.vpc.outputs.public_subnets])
+  subnet_ids          = data.terraform_remote_state.vpc.outputs.private_subnets
   security_group_ids = [aws_security_group.vpce.id]
 
   tags = merge(local.common_tags, map("Name", "${var.environment}-EC2-endpoint"))
