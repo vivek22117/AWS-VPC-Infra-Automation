@@ -42,7 +42,7 @@ data "template_file" "ec2_user_data" {
   template = file("${path.module}/scripts/ec2-user-data-temp.sh")
 
   vars = {
-    healt_monitoring_cluster = aws_ecs_cluster.dd_ecs_cluster.name
+    health_monitoring_cluster = aws_ecs_cluster.dd_ecs_cluster.name
   }
 }
 
