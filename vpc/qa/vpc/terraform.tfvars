@@ -1,11 +1,11 @@
-profile        = "admin"
+profile        = "qa-admin"
 default_region = "us-east-1"
 
 cidr_block         = "10.0.0.0/20"
 instance_tenancy   = "default"
 enable_dns         = "true"
 support_dns        = "true"
-enable_nat_gateway = true
+enable_nat_gateway = "true"
 
 
 private_azs_with_cidr = {
@@ -29,6 +29,6 @@ db_azs_with_cidr = {
 
 team                  = "DoubleDigitTeam"
 owner                 = "Vivek"
-bastion_instance_type = "t2.micro"
+bastion_instance_type = "t3a.small"
 isMonitoring          = true
 project               = "DoubleDigit-Solutions"

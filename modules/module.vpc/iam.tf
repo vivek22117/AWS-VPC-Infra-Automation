@@ -1,3 +1,51 @@
+# used for accessing Account ID and ARN
+data "aws_caller_identity" "current" {}
+
+resource "aws_iam_role" "terraform_access_role" {
+  name = "TerraformDeploymentRole"
+  path = "/"
+
+  assume_role_policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": "sts:AssumeRole",
+            "Effect": "Allow",
+            "Principal": {
+               "AWS": [
+                  "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+                ]
+            }
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "terraform_policy_role_att" {
+  policy_arn = aws_iam_policy.terraform_access_policy.arn
+  role       = aws_iam_role.terraform_access_role.name
+}
+
+resource "aws_iam_policy" "terraform_access_policy" {
+  name        = "EKSClusterAutoScalingPolicy"
+  description = "Give admin access for terraform deployment"
+  policy      = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "*",
+            "Resource": "*"
+        }
+    ]
+}
+EOF
+}
+
+
 resource "aws_iam_role" "bastion_host_role" {
   name = "BastionHostEC2Role"
   path = "/"
