@@ -22,9 +22,9 @@ EOF
 
 #RSVP ec2 instance policy
 resource "aws_iam_policy" "bastion_host_policy" {
-  name        = "BastionHostEC2Policy"
+  name = "BastionHostEC2Policy"
   description = "Policy to access AWS Resources"
-  path        = "/"
+  path = "/"
 
   policy = <<EOF
 {
@@ -72,6 +72,43 @@ resource "aws_iam_policy" "bastion_host_policy" {
                 "ec2messages:SendReply"
             ],
             "Resource": "*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:ListBucket"
+          ],
+         "Resource": [
+            "*"
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:PutObject",
+            "s3:GetObject",
+            "s3:DeleteObject",
+            "s3:PutObjectAcl"
+          ],
+          "Resource": [
+             "arn:aws:s3:::*/*"
+          ]
+        },
+        {
+          "Action": [
+            "es:*"
+          ],
+          "Effect": "Allow",
+          "Resource": "*"
+        },
+        {
+           "Effect": "Allow",
+           "Action": [
+               "rds-db:connect"
+           ],
+           "Resource": [
+               "*"
+           ]
         }
     ]
 }
@@ -81,7 +118,7 @@ EOF
 
 resource "aws_iam_role_policy_attachment" "ec2_policy_role_attach" {
   policy_arn = aws_iam_policy.bastion_host_policy.arn
-  role       = aws_iam_role.bastion_host_role.name
+  role = aws_iam_role.bastion_host_role.name
 }
 
 resource "aws_iam_instance_profile" "bastion_host_profile" {
