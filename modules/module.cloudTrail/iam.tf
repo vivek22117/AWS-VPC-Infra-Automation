@@ -28,7 +28,7 @@ resource "aws_iam_policy" "cloudtrail_logs_role_policy" {
   policy = templatefile("${path.module}/scripts/cloud-trail-access.json", {
     region        = var.default_region
     account_id    = data.aws_caller_identity.current.id
-    log_group_arn = aws_cloudwatch_log_group.cloudtrail_logGroup.arn
+    log_group_arn = "${aws_cloudwatch_log_group.cloudtrail_logGroup.arn}:*"
   })
 }
 
