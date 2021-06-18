@@ -6,7 +6,7 @@ component_name = "dd-solutions"
 
 log_retention_days = 3
 
-instance_type                     = "t2.small"
+instance_type                     = "t3a.small"
 key_name                          = "doubledigit-solutions"
 max_price                         = "0.0075"
 volume_size                       = "40"
