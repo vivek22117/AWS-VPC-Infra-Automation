@@ -17,7 +17,7 @@ resource "aws_cloudtrail" "vpc_cloudTrail" {
   is_multi_region_trail = var.is_multi_region_trail
   include_global_service_events = var.include_global_service_events
   is_organization_trail         = var.is_organization_trail
-  cloud_watch_logs_group_arn    = aws_cloudwatch_log_group.cloudtrail_logGroup.arn
+  cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.cloudtrail_logGroup.arn}:*"
   cloud_watch_logs_role_arn     = aws_iam_role.cloudtrial_logs_access_role.arn
 
   tags = merge(local.common_tags, map("Name", "${var.environment}-CloudTrail"))
