@@ -115,7 +115,7 @@ variable "owner" {
 
 variable "environment" {
   type        = string
-  description = "Environmet to be used"
+  description = "Environment to be used"
 }
 
 #####=============Local variables===============#####

@@ -97,7 +97,7 @@ resource "aws_s3_bucket_policy" "s3_bucket_trail_policy" {
 # setup cloudwatch logs to receive cloudtrail events and Audit Filter for Alarms   #
 ####################################################################################
 resource "aws_cloudwatch_log_group" "cloudtrail_logGroup" {
-  name = "doubledigitCloudtrail"
+  name = "doubledigit-cloudtrail"
 
   retention_in_days = var.log_retention
   tags              = local.common_tags

@@ -12,3 +12,11 @@ output "cloudtrail_arn" {
   value       = join("", aws_cloudtrail.vpc_cloudTrail.*.arn)
   description = "The ARN of the cloud-trail"
 }
+
+output "cloutrail_sqs_alarm_events_arn" {
+  value = aws_sqs_queue.security_alerts_sqs.arn
+}
+
+output "cloutrail_sqs_alarm_events_name" {
+  value = aws_sqs_queue.security_alerts_sqs.name
+}
