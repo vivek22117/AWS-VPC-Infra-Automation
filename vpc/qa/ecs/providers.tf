@@ -18,7 +18,7 @@ provider "archive" {
 # Interpolation sytanx is not allowed in Backend          #
 ###########################################################
 terraform {
-  required_version = ">=0.12"
+  required_version = ">=0.13"
 
   backend "s3" {
     profile = "admin"
