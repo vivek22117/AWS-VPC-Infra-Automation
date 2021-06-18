@@ -11,9 +11,9 @@ log_retention = 3
 
 cloudtrail_bucket_name             = "doubledigit-cloudtrail"
 s3_key_prefix                      = "audit"
-s3_bucket_days_to_expiration       = 15
+s3_bucket_days_to_expiration       = 40
 enable_s3_lifecycle                = true
-s3_bucket_days_to_transition       = 10
+s3_bucket_days_to_transition       = 30
 s3_bucket_transition_storage_class = "ONEZONE_IA"
 bucket_acl                         = "private"
 
