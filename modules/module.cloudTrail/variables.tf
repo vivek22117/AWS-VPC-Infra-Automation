@@ -105,7 +105,7 @@ variable "metric_name_space" {
 ######################################################
 variable "team" {
   type        = string
-  description = "Owner team for this applcation infrastructure"
+  description = "Owner team for this application infrastructure"
 }
 
 variable "owner" {

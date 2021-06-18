@@ -1,5 +1,5 @@
 ####################################################
-#        Dev VPC moudle configuration              #
+#        Dev VPC module configuration              #
 ####################################################
 module "vpc-cloudtrail" {
   source = "../../modules/module.cloudTrail"
