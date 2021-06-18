@@ -1,4 +1,4 @@
-name: 'ECS Cluster Infra Pipeline'
+name: 'Cloudtrial Infra Pipeline'
 
 on:
   workflow_dispatch:
