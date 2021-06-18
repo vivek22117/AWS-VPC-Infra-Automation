@@ -45,7 +45,6 @@ resource "aws_cloudtrail" "vpc_cloudTrail" {
 ################################################################
 resource "aws_s3_bucket" "cloudtrail_s3_bucket" {
   bucket = "${var.cloudtrail_bucket_name}-${var.environment}-${var.default_region}"
-  region = var.default_region
   acl    = var.bucket_acl
 
   force_destroy = true
