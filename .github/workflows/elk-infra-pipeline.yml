@@ -1,0 +1,87 @@
+name: 'ELK Cluster Infra Pipeline'
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'ELK Cluster'
+        required: false
+        default: 'initiate'
+      tags:
+        required: false
+        description: 'Test scenario tags'
+
+env:
+  tf_version: '0.13.5'
+  tf_working_dir_app: './vpc/qa/elk-cluster/'
+  aws_region: 'us-east-1'
+
+jobs:
+  terraform:
+    name: 'ELK-Cluster-Deployment-Pipeline'
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Get the current branch name
+        shell: bash
+        run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+        id: extract_branch
+
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      #  Configure AWS Credentials using IAM Role
+      - name: AWS IAM Assume Role
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_QA }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_QA }}
+          aws-region: ${{ env.aws_region }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+
+      # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init For ELK Cluster
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: ${{ env.tf_version }}
+          tf_actions_working_dir: ${{ env.tf_working_dir_app }}
+          tf_actions_subcommand: 'init'
+          tf_actions_comment: false
+          args: '-backend-config="backend-config-qa.config'
+
+
+      - name: 'Terraform Validate'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: ${{ env.tf_version }}
+          tf_actions_subcommand: 'validate'
+          tf_actions_working_dir: ${{ env.tf_working_dir_app }}
+          tf_actions_comment: false
+
+      - name: Terraform Plan ELK Cluster
+        id: app-plan
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: ${{ env.tf_version }}
+          tf_actions_working_dir: ${{ env.tf_working_dir_app }}
+          tf_actions_comment: false
+          tf_actions_subcommand: 'plan'
+          args: '-var="environment=qa" -var-file="terraform.tfvars"'
+
+      - name: Terraform Apply For ELK Cluster
+        if: steps.app-plan.outputs.tf_actions_plan_has_changes == 'true'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: ${{ env.tf_version }}
+          tf_actions_working_dir: ${{ env.tf_working_dir_app }}
+          tf_actions_subcommand: 'apply'
+          tf_actions_comment: false
+          args: '-auto-approve -var="environment=qa" -var-file="terraform.tfvars"'
