@@ -1,4 +1,5 @@
 default_region = "us-east-1"
+project = "qa-admin"
 
 sg_name = "dd-es-sg"
 es_domain_name = "dd-logging-es"

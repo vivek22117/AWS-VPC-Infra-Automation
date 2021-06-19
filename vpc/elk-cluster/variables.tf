@@ -4,6 +4,12 @@ variable "default_region" {
   description = "AWS region to provision"
 }
 
+variable "profile" {
+  type        = string
+  description = "AWS Profile name for credentials"
+}
+
+
 #################################
 #  Default Variables            #
 #################################
