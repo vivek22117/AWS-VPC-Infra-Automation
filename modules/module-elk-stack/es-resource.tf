@@ -68,7 +68,7 @@ resource "aws_elasticsearch_domain" "dd_log_es" {
     zone_awareness_enabled = var.zone_awareness_enabled
 
     zone_awareness_config {
-      availability_zone_count = length(data.terraform_remote_state.vpc.outputs.private_subnets)
+      availability_zone_count = 2
     }
   }
 
@@ -88,7 +88,10 @@ POLICY
 
   vpc_options {
     security_group_ids = [aws_security_group.es_sg.id]
-    subnet_ids         = data.terraform_remote_state.vpc.outputs.private_subnets
+    subnet_ids         = [
+        data.terraform_remote_state.vpc.outputs.private_subnets[0],
+        data.terraform_remote_state.vpc.outputs.private_subnets[1]
+      ]
   }
 
   advanced_options = {
