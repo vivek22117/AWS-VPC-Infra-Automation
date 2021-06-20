@@ -246,7 +246,6 @@ variable "map_additional_iam_users" {
 
 variable "local_exec_interpreter" {
   type        = string
-  default     = "/bin/bash"
   description = "shell to use for local exec"
 }
 
