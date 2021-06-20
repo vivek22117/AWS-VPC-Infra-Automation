@@ -2,7 +2,7 @@
 #        QA VPC moudle configuration              #
 ####################################################
 module "vpc-es-cluster" {
-  source = "../../../modules/module.ecs-cluster"
+  source = "../../modules/module.ecs-cluster"
 
   profile        = var.profile
   environment    = var.environment
