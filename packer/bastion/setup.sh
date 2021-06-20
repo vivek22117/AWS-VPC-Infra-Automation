@@ -16,6 +16,12 @@ sudo systemctl enable amazon-ssm-agent
 sudo systemctl start amazon-ssm-agent
 
 
+echo "Install AWS Cli"
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo  ./aws/install -i /usr/local/aws-cli -b /usr/local/bin
+
+
 echo "Install NodeExporter"
 cd /tmp
 wget https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz

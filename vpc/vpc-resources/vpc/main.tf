@@ -4,7 +4,9 @@
 module "vpc-test" {
   source = "../../../modules/module.vpc"
 
+//  Not used via pipeline
   profile        = var.profile
+
   environment    = var.environment
   default_region = var.default_region
 
