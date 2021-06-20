@@ -7,9 +7,9 @@ on:
         description: 'ELK Cluster'
         required: false
         default: 'initiate'
-      tags:
-        required: false
-        description: 'Test scenario tags'
+      action:
+        required: true
+        description: 'create or destroy'
 
 env:
   tf_version: '0.13.5'
@@ -77,11 +77,21 @@ jobs:
           args: '-var="environment=qa" -var-file="terraform.tfvars"'
 
       - name: Terraform Apply For ELK Cluster
-        if: steps.app-plan.outputs.tf_actions_plan_has_changes == 'true'
+        if: steps.app-plan.outputs.tf_actions_plan_has_changes == 'true' && github.event.inputs.action == 'create'
         uses: hashicorp/terraform-github-actions@master
         with:
           tf_actions_version: ${{ env.tf_version }}
           tf_actions_working_dir: ${{ env.tf_working_dir_app }}
           tf_actions_subcommand: 'apply'
+          tf_actions_comment: false
+          args: '-auto-approve -var="environment=qa" -var-file="terraform.tfvars"'
+
+      - name: Terraform Destroy For ELK Cluster
+        if: github.event.inputs.action == 'destroy'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: ${{ env.tf_version }}
+          tf_actions_working_dir: ${{ env.tf_working_dir_app }}
+          tf_actions_subcommand: 'destroy'
           tf_actions_comment: false
           args: '-auto-approve -var="environment=qa" -var-file="terraform.tfvars"'
