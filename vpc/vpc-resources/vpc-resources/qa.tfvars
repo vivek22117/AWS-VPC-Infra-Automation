@@ -1,4 +1,3 @@
-profile        = "qa-admin"
 default_region = "us-east-1"
 
 
