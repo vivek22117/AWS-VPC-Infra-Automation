@@ -27,7 +27,7 @@ locals {
     full_access_user: aws_iam_role.eks_full_access_role.arn
   })
 
-  additional_iam_roles = [
+  map_additional_iam_roles = [
     for key, value in local.additional_iam_roles : {
       rolearn : value
       username : key
@@ -39,7 +39,7 @@ locals {
 
 
   map_worker_roles_yaml            = trimspace(yamlencode(local.map_worker_roles))
-  map_additional_iam_roles_yaml    = trimspace(yamlencode(local.additional_iam_roles))
+  map_additional_iam_roles_yaml    = trimspace(yamlencode(local.map_additional_iam_roles))
 }
 
 data "template_file" "configmap_auth" {
