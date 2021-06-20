@@ -18,7 +18,6 @@
                 }
             }
         },
-,
         {
             "Sid": "ViewOwnUserInfo",
             "Effect": "Allow",

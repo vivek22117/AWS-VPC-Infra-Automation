@@ -49,7 +49,7 @@
           "Resource": [
             "arn:aws:ec2:*:*:instance/*",
             "arn:aws:ssm:*::document/AWS-StartPortForwardingSession"
-          ]
+          ],
           "Condition": {
             "StringLike": {
               "ssm:resourceTag/ssm-session": "enabled"
