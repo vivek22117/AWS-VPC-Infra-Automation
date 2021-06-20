@@ -4,17 +4,23 @@ on:
   workflow_dispatch:
     inputs:
       logLevel:
-        description: 'VPC Additional Infra'
+        description: 'VPC resources infra'
         required: false
         default: 'initiate'
       action:
         required: true
         description: 'create or destroy'
+        default: 'create'
+      env:
+        required: true
+        description: 'qa or test or prod'
+        default: 'test'
 
 env:
   tf_version: '0.13.5'
   tf_working_dir_app: './vpc/qa/vpc/'
   aws_region: 'us-east-1'
+  environment: ${{ github.event.inputs.env }}
 
 jobs:
   terraform:
@@ -55,7 +61,7 @@ jobs:
           tf_actions_working_dir: ${{ env.tf_working_dir_app }}
           tf_actions_subcommand: 'init'
           tf_actions_comment: false
-          args: '-backend-config="backend-config-qa.config'
+          args: '-backend-config="backend-config-${{ env.environment }}.config'
 
 
       - name: 'Terraform Validate'
@@ -74,7 +80,7 @@ jobs:
           tf_actions_working_dir: ${{ env.tf_working_dir_app }}
           tf_actions_comment: false
           tf_actions_subcommand: 'plan'
-          args: '-var="environment=qa" -var-file="terraform.tfvars"'
+          args: '-var="environment=${{ env.environment }}" -var-file="terraform.tfvars"'
 
       - name: Terraform Apply For VPC Resources
         if: steps.app-plan.outputs.tf_actions_plan_has_changes == 'true' && github.event.inputs.action == 'create'
@@ -84,7 +90,7 @@ jobs:
           tf_actions_working_dir: ${{ env.tf_working_dir_app }}
           tf_actions_subcommand: 'apply'
           tf_actions_comment: false
-          args: '-auto-approve -var="environment=qa" -var-file="terraform.tfvars"'
+          args: '-auto-approve -var="environment=${{ env.environment }}" -var-file="terraform.tfvars"'
 
 
       - name: Terraform Destroy For VPC Resources
@@ -95,4 +101,4 @@ jobs:
           tf_actions_working_dir: ${{ env.tf_working_dir_app }}
           tf_actions_subcommand: 'destroy'
           tf_actions_comment: false
-          args: '-auto-approve -var="environment=qa" -var-file="terraform.tfvars"'
+          args: '-auto-approve -var="environment=${{ env.environment }}" -var-file="terraform.tfvars"'
