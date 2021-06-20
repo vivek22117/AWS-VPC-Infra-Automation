@@ -5,9 +5,9 @@ resource "aws_s3_bucket" "s3_logging_bucket" {
 
   force_destroy = true
 
-  lifecycle {
-    prevent_destroy = "true" // Terraform meta parameter
-  }
+//  lifecycle {
+//    prevent_destroy = "true" // Terraform meta parameter
+//  }
 
   server_side_encryption_configuration {
     rule {
@@ -77,7 +77,7 @@ resource "aws_s3_bucket" "s3_dataLake_bucket" {
   bucket = "${var.dataLake_bucket_prefix}-${var.environment}-${var.default_region}"
   acl    = "private"
 
-  force_destroy = false
+  force_destroy = true
 
 //  lifecycle {
 //    prevent_destroy = "true" // Terraform meta parameter
