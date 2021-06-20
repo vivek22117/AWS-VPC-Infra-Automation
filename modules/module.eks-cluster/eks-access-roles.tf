@@ -86,7 +86,7 @@ resource "aws_iam_policy" "eks_full_access_policy" {
   name        = "EKSFullAccessPolicy"
 
   description = "EKS full access"
-  policy      = data.template_file.eks_full_access_template.rendered
+  policy      = templatefile("${path.module}/policy-doc/eks-full-access.json.tpl", {})
 }
 
 
