@@ -18,7 +18,7 @@ on:
 
 env:
   tf_version: '0.13.5'
-  tf_working_dir_app: './vpc/qa/vpc/'
+  tf_working_dir_app: './vpc/network/'
   aws_region: 'us-east-1'
   environment: ${{ github.event.inputs.env }}
 
