@@ -80,7 +80,7 @@ jobs:
           tf_actions_working_dir: ${{ env.tf_working_dir_app }}
           tf_actions_comment: false
           tf_actions_subcommand: 'plan'
-          args: '-var="environment=${{ env.environment }}" -var-file="terraform.tfvars"'
+          args: '-var="environment=${{ env.environment }}" -var-file="${{ env.environment }}.tfvars"'
 
       - name: Terraform Apply For VPC Resources
         if: steps.app-plan.outputs.tf_actions_plan_has_changes == 'true' && github.event.inputs.action == 'create'
@@ -90,7 +90,7 @@ jobs:
           tf_actions_working_dir: ${{ env.tf_working_dir_app }}
           tf_actions_subcommand: 'apply'
           tf_actions_comment: false
-          args: '-auto-approve -var="environment=${{ env.environment }}" -var-file="terraform.tfvars"'
+          args: '-auto-approve -var="environment=${{ env.environment }}" -var-file="${{ env.environment }}.tfvars"'
 
 
       - name: Terraform Destroy For VPC Resources
@@ -101,4 +101,4 @@ jobs:
           tf_actions_working_dir: ${{ env.tf_working_dir_app }}
           tf_actions_subcommand: 'destroy'
           tf_actions_comment: false
-          args: '-auto-approve -var="environment=${{ env.environment }}" -var-file="terraform.tfvars"'
+          args: '-auto-approve -var="environment=${{ env.environment }}" -var-file="${{ env.environment }}.tfvars"'
