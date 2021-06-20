@@ -85,6 +85,8 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "eks_read_policy_user_att" {
+  depends_on = [aws_iam_policy.eks_read_policy]
+
   policy_arn = aws_iam_policy.eks_read_policy.arn
   role       = aws_iam_role.eks_user_role.name
 }
