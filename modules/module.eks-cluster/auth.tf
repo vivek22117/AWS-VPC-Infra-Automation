@@ -2,7 +2,7 @@
 locals {
   certificate_authority_data_list          = coalescelist(aws_eks_cluster.doubledigit_eks.certificate_authority, [[{ data : "" }]])
   certificate_authority_data_list_internal = local.certificate_authority_data_list[0]
-  certificate_authority_data_map           = local.certificate_authority_data_list_internal[0]
+  certificate_authority_data_map           = local.certificate_authority_data_list_internal
   certificate_authority_data               = local.certificate_authority_data_map["data"]
 
   configmap_auth_template_file = var.configmap_auth_template_file == "" ? join("/", [path.module, "data-script/configmap-auth.yaml.tpl"]) : var.configmap_auth_template_file
