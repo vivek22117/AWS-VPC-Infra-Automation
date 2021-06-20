@@ -15,6 +15,9 @@ resource "aws_iam_role" "terraform_access_role" {
             "Principal": {
                "AWS": [
                   "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+                ],
+              "Service": [
+                 "ec2.amazonaws.com"
                 ]
             }
         }
@@ -29,7 +32,7 @@ resource "aws_iam_role_policy_attachment" "terraform_policy_role_att" {
 }
 
 resource "aws_iam_policy" "terraform_access_policy" {
-  name        = "EKSClusterAutoScalingPolicy"
+  name        = "AWSInfraCreatorPolicy"
   description = "Give admin access for terraform deployment"
   policy      = <<EOF
 {
