@@ -61,7 +61,7 @@ resource "local_file" "configmap_auth" {
 }
 
 resource "aws_s3_bucket_object" "artifactory_bucket_object" {
-  key                    = "deploy/eks"
+  key                    = "deploy/eks/config-auth.yaml"
   bucket                 = data.terraform_remote_state.vpc.outputs.artifactory_s3_name
   content  = join("", data.template_file.configmap_auth.*.rendered)
   server_side_encryption = "AES256"

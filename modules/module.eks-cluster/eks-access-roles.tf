@@ -45,7 +45,9 @@ resource "aws_iam_role" "eks_read_role" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "eck_read_policy_role_att" {
+resource "aws_iam_role_policy_attachment" "eks_read_policy_role_att" {
+  depends_on = [aws_iam_policy.eks_read_policy, aws_iam_role.eks_read_role]
+
   policy_arn = aws_iam_policy.eks_read_policy.arn
   role       = aws_iam_role.eks_read_role.name
 }
@@ -82,7 +84,7 @@ resource "aws_iam_role" "eks_user_role" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "ecs_read_policy_user_att" {
+resource "aws_iam_role_policy_attachment" "eks_read_policy_user_att" {
   policy_arn = aws_iam_policy.eks_read_policy.arn
   role       = aws_iam_role.eks_user_role.name
 }
@@ -122,6 +124,8 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "eks_admin_policy_role_att" {
+  depends_on = [aws_iam_policy.eks_full_access_policy, aws_iam_role.eks_full_access_role]
+
   policy_arn = aws_iam_policy.eks_full_access_policy.arn
   role       = aws_iam_role.eks_full_access_role.name
 }
