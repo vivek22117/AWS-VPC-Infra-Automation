@@ -45,9 +45,18 @@ resource "aws_iam_role" "eks_read_role" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "ecs_read_policy_role_att" {
+resource "aws_iam_role_policy_attachment" "eck_read_policy_role_att" {
   policy_arn = aws_iam_policy.eks_read_policy.arn
   role       = aws_iam_role.eks_read_role.name
+}
+
+resource "aws_iam_instance_profile" "eks_read_access_profile" {
+  name = "EKSReadAccessInstanceProfile"
+  role = aws_iam_role.eks_read_role.name
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 
@@ -112,11 +121,19 @@ resource "aws_iam_role" "eks_full_access_role" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "ecs_admin_policy_role_att" {
+resource "aws_iam_role_policy_attachment" "eks_admin_policy_role_att" {
   policy_arn = aws_iam_policy.eks_full_access_policy.arn
   role       = aws_iam_role.eks_full_access_role.name
 }
 
+resource "aws_iam_instance_profile" "eks_admin_access_profile" {
+  name = "EKSAdminAccessInstanceProfile"
+  role = aws_iam_role.eks_full_access_role.name
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
 
 ###############################################################
 #             Bastion Host IAM Role                           #
