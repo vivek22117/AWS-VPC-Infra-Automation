@@ -10,9 +10,10 @@ locals {
 
   cluster_name = aws_eks_cluster.doubledigit_eks.id
 
+
   # Add worker nodes role ARNs (could be from many worker groups) to the ConfigMap
   map_worker_roles = [
-    for role_arn in tolist(aws_iam_role.dd_eks_nodes_role.arn) : {
+    for role_arn in tolist([aws_iam_role.dd_eks_nodes_role.arn]) : {
       rolearn : role_arn
       username : "system:node:{{EC2PrivateDNSName}}"
       groups : [
