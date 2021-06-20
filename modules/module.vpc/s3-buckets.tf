@@ -111,7 +111,7 @@ resource "aws_s3_bucket" "s3_dataLake_bucket" {
     }
 
     expiration {
-      days = 90
+      days = 180
     }
 
     noncurrent_version_expiration {
