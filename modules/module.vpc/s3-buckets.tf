@@ -3,7 +3,7 @@ resource "aws_s3_bucket" "s3_logging_bucket" {
   bucket = "${var.logging_bucket_prefix}-${var.environment}-${var.default_region}"
   acl    = "private"
 
-  force_destroy = false
+  force_destroy = true
 
   lifecycle {
     prevent_destroy = "true" // Terraform meta parameter
@@ -40,7 +40,7 @@ resource "aws_s3_bucket" "s3_artifactory_bucket" {
   bucket = "${var.artifactory_bucket_prefix}-${var.environment}-${var.default_region}"
   acl    = "private"
 
-  force_destroy = false
+  force_destroy = true
 
 //  lifecycle {
 //    prevent_destroy = "true" // Terraform meta parameter
