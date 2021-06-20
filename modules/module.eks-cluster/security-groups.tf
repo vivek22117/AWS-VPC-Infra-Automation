@@ -139,17 +139,6 @@ resource "aws_security_group_rule" "all_ports_eks_sg" {
   source_security_group_id = aws_security_group.eks_cluster.id
 }
 
-resource "aws_security_group_rule" "eks_cluster_ingress_node_https" {
-  type                     = "ingress"
-  description              = "Allow pods to communicate with the cluster API server"
-  from_port                = 443
-  to_port                  = 443
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.eks_nodes_sg.id
-  source_security_group_id = aws_security_group.eks_cluster.id
-}
-
-
 #################################################
 #       VPC Endpoints Security Group            #
 #################################################
