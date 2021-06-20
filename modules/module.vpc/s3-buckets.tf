@@ -64,7 +64,7 @@ resource "aws_s3_bucket" "s3_artifactory_bucket" {
     prefix  = "deploy/"
 
     noncurrent_version_expiration {
-      days = 1
+      days = 30
     }
   }
 
@@ -106,7 +106,7 @@ resource "aws_s3_bucket" "s3_dataLake_bucket" {
     }
 
     transition {
-      days          = 60
+      days          = 90
       storage_class = "GLACIER"
     }
 
