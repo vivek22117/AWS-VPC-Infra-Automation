@@ -2,7 +2,6 @@
 resource "aws_s3_bucket" "s3_logging_bucket" {
   bucket = "${var.logging_bucket_prefix}-${var.environment}-${var.default_region}"
   acl    = "private"
-  region = var.default_region
 
   force_destroy = false
 
@@ -40,7 +39,6 @@ resource "aws_s3_bucket" "s3_logging_bucket" {
 resource "aws_s3_bucket" "s3_artifactory_bucket" {
   bucket = "${var.artifactory_bucket_prefix}-${var.environment}-${var.default_region}"
   acl    = "private"
-  region = var.default_region
 
   force_destroy = false
 
@@ -78,7 +76,6 @@ resource "aws_s3_bucket" "s3_artifactory_bucket" {
 resource "aws_s3_bucket" "s3_dataLake_bucket" {
   bucket = "${var.dataLake_bucket_prefix}-${var.environment}-${var.default_region}"
   acl    = "private"
-  region = var.default_region
 
   force_destroy = false
 
