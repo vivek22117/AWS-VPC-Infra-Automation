@@ -23,9 +23,5 @@ data "terraform_remote_state" "backend" {
   }
 }
 
-data "template_file" "eks_read_only_template" {
-  template = "${file("${path.module}/policy-doc/eks-full-access.json")}"
-}
-
 
 data "aws_caller_identity" "current" {}
