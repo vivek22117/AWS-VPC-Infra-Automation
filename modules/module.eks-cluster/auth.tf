@@ -24,8 +24,8 @@ locals {
   ]
 
   additional_iam_roles = tomap({
-    read_only_user: aws_iam_role.eks_read_role.arn
-    full_access_user: aws_iam_role.eks_full_access_role.arn
+    read_only_user : aws_iam_role.eks_read_role.arn
+    full_access_user : aws_iam_role.eks_full_access_role.arn
   })
 
   map_additional_iam_roles = [
@@ -39,8 +39,8 @@ locals {
   ]
 
 
-  map_worker_roles_yaml            = trimspace(yamlencode(local.map_worker_roles))
-  map_additional_iam_roles_yaml    = trimspace(yamlencode(local.map_additional_iam_roles))
+  map_worker_roles_yaml         = trimspace(yamlencode(local.map_worker_roles))
+  map_additional_iam_roles_yaml = trimspace(yamlencode(local.map_additional_iam_roles))
 }
 
 data "template_file" "configmap_auth" {
@@ -48,13 +48,13 @@ data "template_file" "configmap_auth" {
   template = file(local.configmap_auth_template_file)
 
   vars = {
-    map_worker_roles_yaml            = local.map_worker_roles_yaml
-    map_additional_iam_roles_yaml    = local.map_additional_iam_roles_yaml
+    map_worker_roles_yaml         = local.map_worker_roles_yaml
+    map_additional_iam_roles_yaml = local.map_additional_iam_roles_yaml
   }
 }
 
 resource "local_file" "configmap_auth" {
-  count    = var.apply_config_map_aws_auth ? 1 : 0
+  count = var.apply_config_map_aws_auth ? 1 : 0
 
   content  = join("", data.template_file.configmap_auth.*.rendered)
   filename = local.configmap_auth_file
@@ -63,7 +63,7 @@ resource "local_file" "configmap_auth" {
 resource "aws_s3_bucket_object" "artifactory_bucket_object" {
   key                    = "deploy/eks/config-auth.yaml"
   bucket                 = data.terraform_remote_state.vpc.outputs.artifactory_s3_name
-  content  = join("", data.template_file.configmap_auth.*.rendered)
+  content                = join("", data.template_file.configmap_auth.*.rendered)
   server_side_encryption = "AES256"
 }
 

@@ -7,7 +7,7 @@ resource "aws_iam_group" "eks_access_group" {
 }
 
 resource "aws_iam_policy" "eks_read_policy" {
-  name        = "EKSReadOnlyPolicy"
+  name = "EKSReadOnlyPolicy"
 
   description = "EKS read only access"
   policy      = templatefile("${path.module}/policy-doc/eks-read-access.json", {})
@@ -96,7 +96,7 @@ resource "aws_iam_role_policy_attachment" "eks_read_policy_user_att" {
 #           EKS full access User & Policy          #
 ####################################################
 resource "aws_iam_policy" "eks_full_access_policy" {
-  name        = "EKSFullAccessPolicy"
+  name = "EKSFullAccessPolicy"
 
   description = "EKS full access"
   policy      = templatefile("${path.module}/policy-doc/eks-full-access.json", {})

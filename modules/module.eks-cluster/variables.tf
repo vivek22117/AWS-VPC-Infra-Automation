@@ -250,7 +250,7 @@ variable "local_exec_interpreter" {
 }
 
 variable "eks-iam-group" {
-  type = string
+  type        = string
   description = "IAM group to manage EKS users"
 }
 
