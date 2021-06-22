@@ -67,31 +67,30 @@ resource "aws_s3_bucket_object" "artifactory_bucket_object" {
   server_side_encryption = "AES256"
 }
 
-//resource "null_resource" "apply_configmap_auth" {
-//  count = var.apply_config_map_aws_auth ? 1 : 0
-//
-//  triggers = {
-//    cluster_updated                     = join("", aws_eks_cluster.doubledigit_eks.id)
-//    worker_roles_updated                = local.map_worker_roles_yaml
-//    additional_roles_updated            = local.map_additional_iam_roles_yaml
-//    additional_users_updated            = local.map_additional_iam_users_yaml
-//    configmap_auth_file_content_changed = join("", local_file.configmap_auth.*.content)
-//    configmap_auth_file_id_changed      = join("", local_file.configmap_auth.*.id)
-//  }
-//
-//  depends_on = [local_file.configmap_auth]
-//
-//  provisioner "local-exec" {
-//    interpreter = [var.local_exec_interpreter, "-c"]
-//
-//    command = <<EOT
-//      set -e
-//
-//      echo 'Applying Auth ConfigMap with kubectl...'
-//      aws eks update-kubeconfig --name=${local.cluster_name} --region=${var.default_region} --kubeconfig=${var.kubeconfig_path} ${var.aws_eks_update_kubeconfig_additional_arguments}
-//      kubectl version --kubeconfig ${var.kubeconfig_path}
-//      kubectl apply -f ${local.configmap_auth_file} --kubeconfig ${var.kubeconfig_path}
-//      echo 'Applied Auth ConfigMap with kubectl'
-//    EOT
-//  }
-//}
+resource "null_resource" "apply_configmap_auth" {
+  count = var.apply_config_map_aws_auth ? 1 : 0
+
+  triggers = {
+    cluster_updated                     = join("", aws_eks_cluster.doubledigit_eks.id)
+    worker_roles_updated                = local.map_worker_roles_yaml
+    additional_roles_updated            = local.map_additional_iam_roles_yaml
+    configmap_auth_file_content_changed = join("", local_file.configmap_auth.*.content)
+    configmap_auth_file_id_changed      = join("", local_file.configmap_auth.*.id)
+  }
+
+  depends_on = [local_file.configmap_auth]
+
+  provisioner "local-exec" {
+    interpreter = [var.local_exec_interpreter, "-c"]
+
+    command = <<EOT
+      set -e
+
+      echo 'Applying Auth ConfigMap with kubectl...'
+      aws eks update-kubeconfig --name=${local.cluster_name} --region=${var.default_region} --kubeconfig=${var.kubeconfig_path} ${var.aws_eks_update_kubeconfig_additional_arguments}
+      kubectl version --kubeconfig ${var.kubeconfig_path}
+      kubectl apply -f ${local.configmap_auth_file} --kubeconfig ${var.kubeconfig_path}
+      echo 'Applied Auth ConfigMap with kubectl'
+    EOT
+  }
+}
