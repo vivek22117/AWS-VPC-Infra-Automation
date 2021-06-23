@@ -36,7 +36,7 @@ data "tls_certificate" "eks_oidc_thumbprint" {
   url = aws_eks_cluster.doubledigit_eks.identity.0.oidc.0.issuer
 }
 
-resource "aws_iam_openid_connect_provider" "default" {
+resource "aws_iam_openid_connect_provider" "eks_oidc" {
   depends_on = [aws_eks_cluster.doubledigit_eks]
 
   url   = aws_eks_cluster.doubledigit_eks.identity.0.oidc.0.issuer
