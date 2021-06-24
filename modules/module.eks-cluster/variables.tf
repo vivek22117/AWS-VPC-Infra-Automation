@@ -254,3 +254,7 @@ variable "eks-iam-group" {
   description = "IAM group to manage EKS users"
 }
 
+variable "kubeconfig_path" {
+  type = string
+  description = "Config path to configure context and update the aws-auth config file"
+}
