@@ -45,6 +45,7 @@ locals {
 
 data "template_file" "configmap_auth" {
   count    = var.apply_config_map_aws_auth ? 1 : 0
+
   template = file(local.configmap_auth_template_file)
 
   vars = {
@@ -78,7 +79,7 @@ resource "null_resource" "apply_configmap_auth" {
     configmap_auth_file_id_changed      = join("", local_file.configmap_auth.*.id)
   }
 
-  depends_on = [local_file.configmap_auth]
+  depends_on = [aws_eks_cluster.doubledigit_eks, local_file.configmap_auth]
 
   provisioner "local-exec" {
     interpreter = [var.local_exec_interpreter, "-c"]
