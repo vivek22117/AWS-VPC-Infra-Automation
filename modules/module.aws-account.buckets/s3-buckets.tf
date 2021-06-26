@@ -5,9 +5,9 @@ resource "aws_s3_bucket" "s3_logging_bucket" {
 
   force_destroy = true
 
-//  lifecycle {
-//    prevent_destroy = "true" // Terraform meta parameter
-//  }
+  lifecycle {
+    prevent_destroy = "true"
+  }
 
   server_side_encryption_configuration {
     rule {
@@ -42,9 +42,9 @@ resource "aws_s3_bucket" "s3_artifactory_bucket" {
 
   force_destroy = true
 
-//  lifecycle {
-//    prevent_destroy = "true" // Terraform meta parameter
-//  }
+  lifecycle {
+    prevent_destroy = "true"
+  }
 
   server_side_encryption_configuration {
     rule {
@@ -79,9 +79,9 @@ resource "aws_s3_bucket" "s3_dataLake_bucket" {
 
   force_destroy = true
 
-//  lifecycle {
-//    prevent_destroy = "true" // Terraform meta parameter
-//  }
+  lifecycle {
+    prevent_destroy = "true"
+  }
 
   server_side_encryption_configuration {
     rule {
