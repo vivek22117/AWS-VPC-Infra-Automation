@@ -2,7 +2,7 @@
 #             Remote state configuration to fetch         #
 #                  vpc, artifactory bucket                #
 ###########################################################
-data "terraform_remote_state" "eks-vpc" {
+data "terraform_remote_state" "eks_vpc" {
   backend = "s3"
 
   config = {
