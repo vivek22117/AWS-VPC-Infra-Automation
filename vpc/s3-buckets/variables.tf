@@ -25,7 +25,7 @@ variable "dataLake_bucket_prefix" {
 }
 
 variable "logging_bucket_prefix" {
-  type = string
+  type        = string
   description = "Bucket to store logging data"
 }
 
@@ -71,7 +71,7 @@ locals {
     Team        = var.team
     Environment = var.environment
     Monitoring  = var.isMonitoring
-    Project = var.project
-    Component = var.component
+    Project     = var.project
+    Component   = var.component
   }
 }

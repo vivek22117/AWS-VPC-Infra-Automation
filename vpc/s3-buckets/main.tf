@@ -4,19 +4,19 @@
 module "s3_resources" {
   source = "../../modules/module.aws-account.buckets"
 
-//  Only used while local run
-  profile        = var.profile
+  //  Only used while local run
+  profile = var.profile
 
   default_region = var.default_region
 
   artifactory_bucket_prefix = var.artifactory_bucket_prefix
-  logging_bucket_prefix = var.logging_bucket_prefix
-  dataLake_bucket_prefix = var.dataLake_bucket_prefix
+  logging_bucket_prefix     = var.logging_bucket_prefix
+  dataLake_bucket_prefix    = var.dataLake_bucket_prefix
 
-  team        = var.team
-  owner       = var.owner
-  environment = var.environment
+  team         = var.team
+  owner        = var.owner
+  environment  = var.environment
   isMonitoring = var.isMonitoring
-  component = var.component
-  project = var.project
+  component    = var.component
+  project      = var.project
 }
