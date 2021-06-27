@@ -2,7 +2,7 @@
 # AWS provider configuration                       #
 ####################################################
 provider "aws" {
-//  region  = var.default_region
+  region  = var.default_region
   profile = var.profile
 
   version = ">=2.28.0"
