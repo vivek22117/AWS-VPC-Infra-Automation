@@ -4,9 +4,6 @@
 module "s3_resources" {
   source = "../../modules/module.aws-account.buckets"
 
-  //  Only used while local run
-  profile = var.profile
-
   default_region = var.default_region
 
   artifactory_bucket_prefix = var.artifactory_bucket_prefix
