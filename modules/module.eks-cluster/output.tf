@@ -83,11 +83,11 @@ output "eks_cluster_certificate_authority" {
   value = aws_eks_cluster.doubledigit_eks.certificate_authority
 }
 
-output "eks_cluster_iam_role" {
+output "eks_cluster_iam_role_arn" {
   value = aws_iam_role.eks_cluster_iam.arn
 }
 
-output "eks_cluster_worker_role" {
+output "eks_cluster_worker_role_arn" {
   value = aws_iam_role.eks_nodes_role.arn
 }
 
