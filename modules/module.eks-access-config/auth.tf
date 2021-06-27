@@ -10,9 +10,11 @@ locals {
 
   cluster_name = join("", data.terraform_remote_state.eks_vpc.outputs.eks_cluster_id)
 
+  eks_workers_role_arns = join("", data.terraform_remote_state.eks_vpc.outputs.eks_cluster_worker_role)
+
   # Add worker nodes role ARNs (could be from many worker groups) to the ConfigMap
   map_worker_roles = [
-  for role_arn in var.workers_role_arns : {
+  for role_arn in local.eks_workers_role_arns : {
     rolearn : role_arn
     username : "system:node:{{EC2PrivateDNSName}}"
     groups : [
