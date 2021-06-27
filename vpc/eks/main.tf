@@ -21,7 +21,6 @@ module "eks-vpc" {
   owner        = var.owner
   isMonitoring = var.isMonitoring
 
-  ec2_ssh_key = var.ec2_ssh_key
   launch_template = var.launch_template
 
   cluster_name    = var.cluster_name

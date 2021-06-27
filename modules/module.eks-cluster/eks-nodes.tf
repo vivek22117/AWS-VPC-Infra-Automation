@@ -20,12 +20,9 @@ resource "aws_eks_node_group" "eks_private_ng" {
     min_size     = var.pvt_min_size
   }
 
-  dynamic "remote_access" {
-    for_each = var.ec2_ssh_key != null && var.ec2_ssh_key != "" ? ["true"] : []
-    content {
-      ec2_ssh_key               = var.ec2_ssh_key
-      source_security_group_ids = [aws_security_group.eks_nodes_sg.id]
-    }
+  remote_access {
+    ec2_ssh_key = data.terraform_remote_state.s3_buckets.outputs.eks_node_key_name
+    source_security_group_ids = [aws_security_group.eks_nodes_sg.id]
   }
 
   dynamic "launch_template" {
@@ -76,12 +73,9 @@ resource "aws_eks_node_group" "eks_public_ng" {
     min_size     = var.public_min_size
   }
 
-  dynamic "remote_access" {
-    for_each = var.ec2_ssh_key != null && var.ec2_ssh_key != "" ? ["true"] : []
-    content {
-      ec2_ssh_key               = var.ec2_ssh_key
-      source_security_group_ids = [aws_security_group.eks_nodes_sg.id]
-    }
+  remote_access {
+    ec2_ssh_key = data.terraform_remote_state.s3_buckets.outputs.eks_node_key_name
+    source_security_group_ids = [aws_security_group.eks_nodes_sg.id]
   }
 
   dynamic "launch_template" {

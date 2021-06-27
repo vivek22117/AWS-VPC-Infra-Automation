@@ -1,12 +1,3 @@
-########################################################
-#    Key pair to be used for different applications    #
-########################################################
-resource "aws_key_pair" "bastion_key" {
-  public_key = var.public_key
-  key_name   = "bastion-eks-key"
-}
-
-
 ##################################################################
 #   Bastion host launch template and act as Jump Instance        #
 ##################################################################
@@ -14,7 +5,7 @@ resource "aws_launch_template" "eks_bastion_lt" {
   name_prefix = "${var.eks_bastion_name_prefix}${var.environment}"
 
   image_id               = data.aws_ami.eks_bastion.id
-  key_name               = aws_key_pair.bastion_key.key_name
+  key_name               = data.terraform_remote_state.s3_buckets.outputs.eks_bastion_key_name
   instance_type          = var.bastion_instance_type
   instance_initiated_shutdown_behavior = "terminate"
 

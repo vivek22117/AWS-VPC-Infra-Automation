@@ -56,11 +56,6 @@ variable "enable_nat_gateway" {
   description = "want to create nat-gateway or not"
 }
 
-variable "ec2_ssh_key" {
-  type        = string
-  description = "Name of the SSH key pair"
-}
-
 variable "launch_template" {
   type        = map(string)
   description = "Configuration block with Launch Template settings. `name`, `id` and `version` parameters are available."
