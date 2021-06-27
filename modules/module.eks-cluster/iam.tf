@@ -62,7 +62,7 @@ resource "aws_iam_role_policy_attachment" "cluster_elb_sl_role_attach" {
 #################################################
 #       EKS Cluster Nodes IAM Role              #
 #################################################
-resource "aws_iam_role" "dd_eks_nodes_role" {
+resource "aws_iam_role" "eks_nodes_role" {
   name               = "${var.eks_cluster_name}-worker-${var.environment}"
   assume_role_policy = data.aws_iam_policy_document.eks_workers.json
 }
