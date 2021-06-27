@@ -1,13 +1,13 @@
 ###################################################
 # Fetch remote state for S3 deployment bucket     #
 ###################################################
-data "terraform_remote_state" "vpc" {
+data "terraform_remote_state" "s3_buckets" {
   backend = "s3"
 
   config = {
     profile = "test-admin"
     bucket  = "${var.s3_bucket_prefix}-${var.environment}-${var.default_region}"
-    key     = "state/${var.environment}/vpc/terraform.tfstate"
+    key     = "state/${var.environment}/s3-buckets/terraform.tfstate"
     region  = var.default_region
   }
 }
