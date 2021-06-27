@@ -2,7 +2,7 @@
 #       Bastion Host Security Group             #
 #################################################
 resource "aws_security_group" "bastion_host_sg" {
-  name = "eks-bastion-sg-${aws_vpc.vpc.id}"
+  name = "eks-bastion-sg-${var.environment}"
 
   description = "Allow SSH from owner IP"
   vpc_id      = aws_vpc.vpc.id
@@ -35,7 +35,7 @@ resource "aws_security_group" "bastion_host_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = merge(local.common_tags, map("Name", "eks-${var.environment}-bastion-sg"))
+  tags = merge(local.common_tags, map("Name", "EKS-Bastion-SG-${var.environment}"))
 }
 
 
@@ -47,7 +47,7 @@ resource "aws_security_group" "eks_cluster" {
   description = "Cluster communication with worker nodes"
   vpc_id      = aws_vpc.vpc.id
 
-  tags = merge(local.common_tags, map("Name", "${var.environment}-eks-sg"))
+  tags = merge(local.common_tags, map("Name", "EKS-SG-${var.environment}"))
 }
 
 resource "aws_security_group_rule" "eks_cluster_inbound" {
@@ -106,7 +106,7 @@ resource "aws_security_group" "eks_nodes_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = merge(local.common_tags, map("Name", "${var.environment}-eks-nodes-sg"))
+  tags = merge(local.common_tags, map("Name", "EKS-NODE-SG-${var.environment}"))
 }
 
 resource "aws_security_group_rule" "all_ports_within" {
