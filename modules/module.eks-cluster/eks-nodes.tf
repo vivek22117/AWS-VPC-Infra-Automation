@@ -6,7 +6,7 @@ resource "aws_eks_node_group" "eks_private_ng" {
 
   node_group_name = var.pvt_node_group_name
   node_role_arn   = aws_iam_role.eks_nodes_role.arn
-  subnet_ids      = aws_subnet.private[*].id
+  subnet_ids      = data.terraform_remote_state.eks_vpc.outputs.private_subnets
   ami_type        = var.ami_type
   disk_size       = var.disk_size
   instance_types  = var.instance_types
@@ -59,7 +59,7 @@ resource "aws_eks_node_group" "eks_public_ng" {
 
   node_group_name = var.pub_node_group_name
   node_role_arn   = aws_iam_role.eks_nodes_role.arn
-  subnet_ids      = aws_subnet.public[*].id
+  subnet_ids      = data.terraform_remote_state.eks_vpc.outputs.public_subnets
   ami_type        = var.ami_type
   disk_size       = var.disk_size
   instance_types  = var.instance_types

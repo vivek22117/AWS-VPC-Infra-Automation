@@ -19,7 +19,9 @@ resource "aws_eks_cluster" "doubledigit_eks" {
     security_group_ids      = [aws_security_group.eks_cluster.id, aws_security_group.eks_nodes_sg.id]
     endpoint_private_access = var.endpoint_private_access
     endpoint_public_access  = var.endpoint_public_access
-    subnet_ids              = flatten([aws_subnet.private.*.id, aws_subnet.public.*.id])
+    subnet_ids              = flatten(
+      [data.terraform_remote_state.eks_vpc.outputs.private_subnets,
+      data.terraform_remote_state.eks_vpc.outputs.public_subnets])
   }
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.

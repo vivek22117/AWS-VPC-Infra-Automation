@@ -5,7 +5,7 @@ resource "aws_security_group" "bastion_host_sg" {
   name = "eks-bastion-sg-${var.environment}"
 
   description = "Allow SSH from owner IP"
-  vpc_id      = aws_vpc.vpc.id
+  vpc_id      = data.terraform_remote_state.eks_vpc.outputs.vpc_id
 
   egress {
     from_port   = 0
@@ -45,7 +45,7 @@ resource "aws_security_group" "bastion_host_sg" {
 resource "aws_security_group" "eks_cluster" {
   name        = "eks-sg-${var.environment}"
   description = "Cluster communication with worker nodes"
-  vpc_id      = aws_vpc.vpc.id
+  vpc_id      = data.terraform_remote_state.eks_vpc.outputs.vpc_id
 
   tags = merge(local.common_tags, map("Name", "EKS-SG-${var.environment}"))
 }
@@ -88,7 +88,7 @@ resource "aws_security_group_rule" "eks_cluster_vpc_inbound" {
   to_port           = 443
   protocol          = "tcp"
   security_group_id = aws_security_group.eks_cluster.id
-  cidr_blocks       = [aws_vpc.vpc.cidr_block]
+  cidr_blocks       = [data.terraform_remote_state.eks_vpc.outputs.vpc_cidr_block]
 }
 
 resource "aws_security_group_rule" "eks_cluster_outbound_internet" {
@@ -107,7 +107,7 @@ resource "aws_security_group_rule" "eks_cluster_outbound_internet" {
 resource "aws_security_group" "eks_nodes_sg" {
   name        = "eks-nodes-sg-${var.environment}"
   description = "Security group for all nodes in the cluster"
-  vpc_id      = aws_vpc.vpc.id
+  vpc_id      = data.terraform_remote_state.eks_vpc.outputs.vpc_id
 
   egress {
     from_port   = 0
@@ -146,7 +146,7 @@ resource "aws_security_group_rule" "eks_node_allow_ssh" {
   to_port                  = 22
   protocol                 = "tcp"
   security_group_id        = aws_security_group.eks_nodes_sg.id
-  cidr_blocks       = [aws_vpc.vpc.cidr_block]
+  cidr_blocks       = [data.terraform_remote_state.eks_vpc.outputs.cidr_block]
 }
 
 resource "aws_security_group_rule" "eks_cluster_ingress_node_https" {
@@ -167,44 +167,6 @@ resource "aws_security_group_rule" "all_ports_eks_sg" {
   protocol                 = "tcp"
   security_group_id        = aws_security_group.eks_nodes_sg.id
   source_security_group_id = aws_security_group.eks_cluster.id
-}
-
-#################################################
-#       VPC Endpoints Security Group            #
-#################################################
-resource "aws_security_group" "vpce" {
-  name   = "vpce-sg"
-  vpc_id = aws_vpc.vpc.id
-
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = [aws_vpc.vpc.cidr_block]
-  }
-
-  tags = merge(local.common_tags, map("Name", "${var.environment}-vpce-sg"))
-}
-
-resource "aws_security_group" "ecs_task" {
-  depends_on = [aws_vpc_endpoint.s3_endpoint]
-
-  name   = "ecs"
-  vpc_id = aws_vpc.vpc.id
-  egress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = [aws_vpc.vpc.cidr_block]
-  }
-
-  egress {
-    from_port       = 443
-    to_port         = 443
-    protocol        = "tcp"
-    prefix_list_ids = [aws_vpc_endpoint.s3_endpoint.prefix_list_id]
-  }
-  tags = merge(local.common_tags, map("Name", "${var.environment}-ecs-task-sg"))
 }
 
 
