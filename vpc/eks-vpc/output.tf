@@ -42,3 +42,7 @@ output "public_rt" {
 output "vpc_cidr_block" {
   value = module.eks-vpc.vpc_cidr_block
 }
+
+output "eks_bastion_sg_id" {
+  value = module.eks-vpc.eks_bastion_sg_id
+}

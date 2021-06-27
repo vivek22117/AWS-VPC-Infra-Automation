@@ -38,19 +38,3 @@ output "eks_cluster_iam_role_arn" {
 output "eks_cluster_worker_role_arn" {
   value = aws_iam_role.eks_nodes_role.arn
 }
-
-output "vpce_sg" {
-  value = aws_security_group.vpce.id
-}
-
-output "ecs_task_sg" {
-  value = aws_security_group.ecs_task.id
-}
-
-output "vpc_s3_endpoint" {
-  value = aws_vpc_endpoint.s3_endpoint.id
-}
-
-output "vpc_logs_endpoint" {
-  value = aws_vpc_endpoint.private_link_cw_logs.id
-}

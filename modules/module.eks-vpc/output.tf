@@ -46,3 +46,7 @@ output "vpc_cidr_block" {
 output "vpc_main_rt" {
   value = aws_route_table.vpc_main_rt.id
 }
+
+output "eks_bastion_sg_id" {
+  value = aws_security_group.bastion_host_sg.id
+}

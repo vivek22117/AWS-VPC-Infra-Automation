@@ -1,45 +1,4 @@
 #################################################
-#       Bastion Host Security Group             #
-#################################################
-resource "aws_security_group" "bastion_host_sg" {
-  name = "eks-bastion-sg-${var.environment}"
-
-  description = "Allow SSH from owner IP"
-  vpc_id      = data.terraform_remote_state.eks_vpc.outputs.vpc_id
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 3306
-    to_port     = 3306
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = merge(local.common_tags, map("Name", "EKS-Bastion-SG-${var.environment}"))
-}
-
-
-#################################################
 #       EKS Cluster Security Group              #
 #################################################
 resource "aws_security_group" "eks_cluster" {
@@ -78,7 +37,7 @@ resource "aws_security_group_rule" "eks_cluster_inbound_bastion" {
   to_port                  = 443
   protocol                 = "tcp"
   security_group_id        = aws_security_group.eks_cluster.id
-  source_security_group_id = aws_security_group.bastion_host_sg.id
+  source_security_group_id = data.terraform_remote_state.eks_vpc.outputs.eks_bastion_sg_id
 }
 
 resource "aws_security_group_rule" "eks_cluster_vpc_inbound" {
