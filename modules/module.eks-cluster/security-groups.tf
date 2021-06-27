@@ -70,7 +70,7 @@ resource "aws_security_group_rule" "eks_cluster_inbound_bastion" {
   source_security_group_id = aws_security_group.bastion_host_sg.id
 }
 
-resource "aws_security_group_rule" "eks_cluster_outbound" {
+resource "aws_security_group_rule" "eks_cluster_vpc_inbound" {
   type              = "egress"
   description       = "Allow cluster API Server to communicate with the worker nodes"
   from_port         = 443
