@@ -1,11 +1,6 @@
 ######################################################################
 # Global variables for VPC, Subnet, Routes and Bastion Host          #
 ######################################################################
-variable "profile" {
-  type        = string
-  description = "AWS Profile name for credentials"
-}
-
 variable "default_region" {
   type        = string
   description = "AWS region to deploy resources"
@@ -203,58 +198,3 @@ variable "cluster_version" {
 }
 
 
-variable "configmap_auth_template_file" {
-  type        = string
-  description = "Path to `config_auth_template_file`"
-}
-
-variable "configmap_auth_file" {
-  type        = string
-  default     = ""
-  description = "Path to `configmap_auth_file`"
-}
-
-variable "apply_config_map_aws_auth" {
-  type        = bool
-  default     = true
-  description = "Whether to generate local files from `kubeconfig` and `config-map-aws-auth` templates and perform `kubectl apply` to apply the ConfigMap to allow worker nodes to join the EKS cluster"
-}
-
-variable "map_additional_iam_roles" {
-  description = "Additional IAM roles to add to `config-map-aws-auth` ConfigMap"
-
-  type = list(object({
-    rolearn  = string
-    username = string
-    groups   = list(string)
-  }))
-
-  default = []
-}
-
-variable "map_additional_iam_users" {
-  description = "Additional IAM users to add to `config-map-aws-auth` ConfigMap"
-
-  type = list(object({
-    userarn  = string
-    username = string
-    groups   = list(string)
-  }))
-
-  default = []
-}
-
-variable "local_exec_interpreter" {
-  type        = string
-  description = "shell to use for local exec"
-}
-
-variable "eks-iam-group" {
-  type        = string
-  description = "IAM group to manage EKS users"
-}
-
-variable "kubeconfig_path" {
-  type = string
-  description = "Config path to configure context and update the aws-auth config file"
-}

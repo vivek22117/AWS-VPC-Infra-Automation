@@ -1,5 +1,4 @@
 default_region = "us-east-1"
-profile = ""
 
 cidr_block         = "10.11.0.0/20"
 instance_tenancy   = "default"
@@ -52,8 +51,8 @@ public_min_size         = 1
 log_retention     = 3
 enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
 
-configmap_auth_template_file = ""
-configmap_auth_file = ""
-apply_config_map_aws_auth = true
-local_exec_interpreter = "/bin/bash"
-eks-iam-group = "eks-developers"
+//configmap_auth_template_file = ""
+//configmap_auth_file = ""
+//apply_config_map_aws_auth = true
+//local_exec_interpreter = "/bin/bash"
+//eks-iam-group = "eks-developers"

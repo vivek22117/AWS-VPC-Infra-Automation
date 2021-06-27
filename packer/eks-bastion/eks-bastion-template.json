@@ -31,7 +31,7 @@
        "environment_vars": [
          "TERRAFORM_VER={{user `terraform_version`}}"
        ],
-      "execute_command" : "sudo -E -S sh '{{ .Vars }} {{ .Path }}' ",
+      "execute_command" : "{{ .Vars }} sudo -E -S sh '{{ .Path }}'",
       "pause_before": "10s"
     }
   ]

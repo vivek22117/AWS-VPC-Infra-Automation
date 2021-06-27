@@ -33,7 +33,7 @@ sudo systemctl start amazon-ssm-agent
 echo "Install Terraform"
 wget https://releases.hashicorp.com/terraform/${TERRAFORM_VER}/terraform_${TERRAFORM_VER}_linux_amd64.zip
 unzip terraform_${TERRAFORM_VER}_linux_amd64.zip
-sudo mv terraform /usr/local/bin/
+mv terraform /usr/local/bin/
 terraform version
 
 

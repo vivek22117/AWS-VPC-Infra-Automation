@@ -4,10 +4,6 @@
 module "eks-vpc" {
   source = "../../modules/module.eks-cluster"
 
-//  Used only while running in local
-  profile        = var.profile
-
-
   environment    = var.environment
   default_region = var.default_region
 
@@ -47,14 +43,5 @@ module "eks-vpc" {
   public_min_size         = var.public_min_size
   log_retention           = var.log_retention
   enabled_log_types       = var.enabled_log_types
-
-  eks-iam-group = var.eks-iam-group
-  configmap_auth_template_file = var.configmap_auth_template_file
-  configmap_auth_file = var.configmap_auth_file
-  apply_config_map_aws_auth = var.apply_config_map_aws_auth
-  local_exec_interpreter = var.local_exec_interpreter
-
-  map_additional_iam_roles = var.map_additional_iam_roles
-  map_additional_iam_users = var.map_additional_iam_users
 
 }
