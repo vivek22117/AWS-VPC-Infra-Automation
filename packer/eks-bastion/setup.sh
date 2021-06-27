@@ -6,6 +6,14 @@ sudo yum update -y
 sudo yum install wget unzip -y
 sleep 5
 
+
+echo "Install Terraform"
+wget https://releases.hashicorp.com/terraform/${TERRAFORM_VER}/terraform_${TERRAFORM_VER}_linux_amd64.zip
+unzip terraform_${TERRAFORM_VER}_linux_amd64.zip
+sudo mv terraform /usr/local/bin/
+terraform version
+
+
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
 sudo  ./aws/install -i /usr/local/aws-cli -b /usr/local/bin
