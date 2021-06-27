@@ -6,7 +6,6 @@ enable_dns         = "true"
 support_dns        = "true"
 enable_nat_gateway = true
 db_subnet_gp       = "eks-dbsubnet-group"
-ec2_ssh_key = "bastion-key"
 
 private_azs_with_cidr = {
   us-east-1a = "10.11.0.0/24"
