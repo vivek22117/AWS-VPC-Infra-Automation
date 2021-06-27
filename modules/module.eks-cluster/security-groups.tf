@@ -105,7 +105,7 @@ resource "aws_security_group_rule" "eks_node_allow_ssh" {
   to_port                  = 22
   protocol                 = "tcp"
   security_group_id        = aws_security_group.eks_nodes_sg.id
-  cidr_blocks       = [data.terraform_remote_state.eks_vpc.outputs.cidr_block]
+  cidr_blocks       = [data.terraform_remote_state.eks_vpc.outputs.vpc_cidr_block]
 }
 
 resource "aws_security_group_rule" "eks_cluster_ingress_node_https" {
