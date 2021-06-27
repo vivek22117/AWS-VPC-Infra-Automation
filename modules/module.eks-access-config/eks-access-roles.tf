@@ -1,16 +1,26 @@
 ####################################################
-#             EKS read only Group & Policy         #
+#             EKS read only & full access          #
 ####################################################
-resource "aws_iam_group" "eks_access_group" {
-  name = var.eks_iam_group
-  path = "/"
-}
-
 resource "aws_iam_policy" "eks_read_policy" {
   name        = "EKSReadOnlyPolicy"
 
   description = "EKS read only access"
   policy      = data.template_file.eks_read_only_template.rendered
+}
+
+resource "aws_iam_policy" "eks_full_access_policy" {
+  name        = "EKSFullAccessPolicy"
+
+  description = "EKS full access"
+  policy      = data.template_file.eks_full_access_template.rendered
+}
+
+####################################################
+#             EKS read only Group & Policy         #
+####################################################
+resource "aws_iam_group" "eks_access_group" {
+  name = var.eks_iam_group
+  path = "/"
 }
 
 resource "aws_iam_group_policy_attachment" "eks_read_access_att" {
@@ -21,7 +31,7 @@ resource "aws_iam_group_policy_attachment" "eks_read_access_att" {
 
 
 ####################################################
-#          EKS read only Role/User & Policy        #
+#          EKS read only Role for EC2/User         #
 ####################################################
 resource "aws_iam_role" "eks_read_role" {
   name = "EKSReadOnlyRoleForEC2"
@@ -52,7 +62,7 @@ resource "aws_iam_role_policy_attachment" "ecs_read_policy_role_att" {
 
 
 resource "aws_iam_role" "eks_user_role" {
-  name = "EKSReadOnlyRoleForUser"
+  name = "ReadOnlyRoleForEKSUser"
   path = "/"
 
   assume_role_policy = <<EOF
@@ -64,10 +74,9 @@ resource "aws_iam_role" "eks_user_role" {
             "Effect": "Allow",
             "Principal": {
                "AWS": [
-                  "arn:aws:iam::123456789012:root"
+                  "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
                 ]
-            },
-            "Condition": { "Bool": { "aws:MultiFactorAuthPresent": "true" } }
+            }
         }
     ]
 }
@@ -81,16 +90,8 @@ resource "aws_iam_role_policy_attachment" "ecs_read_policy_user_att" {
 
 
 ####################################################
-#           EKS full access User & Policy          #
+#           EKS full access Role & Policy          #
 ####################################################
-resource "aws_iam_policy" "eks_full_access_policy" {
-  name        = "EKSFullAccessPolicy"
-
-  description = "EKS full access"
-  policy      = data.template_file.eks_full_access_template.rendered
-}
-
-
 resource "aws_iam_role" "eks_full_access_role" {
   name = "EKSFullAccessRoleForEC2"
   path = "/"
@@ -118,114 +119,3 @@ resource "aws_iam_role_policy_attachment" "ecs_admin_policy_role_att" {
   role       = aws_iam_role.eks_full_access_role.name
 }
 
-
-###############################################################
-#             Bastion Host IAM Role                           #
-###############################################################
-resource "aws_iam_role" "bastion_host_role" {
-  name = "BastionHostEC2RoleForEKS"
-  path = "/"
-
-  assume_role_policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": "sts:AssumeRole",
-            "Effect": "Allow",
-            "Principal": {
-               "Service": [
-                  "ec2.amazonaws.com"
-                ]
-            }
-        }
-    ]
-}
-EOF
-}
-
-resource "aws_iam_policy" "bastion_host_policy" {
-  name        = "BastionHostEC2PolicyForEKS"
-  description = "Policy to access AWS Resources"
-  path        = "/"
-
-  policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "ssm:DescribeAssociation",
-                "ssm:GetDeployablePatchSnapshotForInstance",
-                "ssm:GetDocument",
-                "ssm:DescribeDocument",
-                "ssm:GetManifest",
-                "ssm:GetParameter",
-                "ssm:GetParameters",
-                "ssm:ListAssociations",
-                "ssm:ListInstanceAssociations",
-                "ssm:PutInventory",
-                "ssm:PutComplianceItems",
-                "ssm:PutConfigurePackageResult",
-                "ssm:UpdateAssociationStatus",
-                "ssm:UpdateInstanceAssociationStatus",
-                "ssm:UpdateInstanceInformation"
-            ],
-            "Resource": "*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "ssmmessages:CreateControlChannel",
-                "ssmmessages:CreateDataChannel",
-                "ssmmessages:OpenControlChannel",
-                "ssmmessages:OpenDataChannel"
-            ],
-            "Resource": "*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "ec2messages:AcknowledgeMessage",
-                "ec2messages:DeleteMessage",
-                "ec2messages:FailMessage",
-                "ec2messages:GetEndpoint",
-                "ec2messages:GetMessages",
-                "ec2messages:SendReply"
-            ],
-            "Resource": "*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "eks:*"
-            ],
-            "Resource": "*"
-        },
-        {
-            "Sid": "NavigateInConsole",
-            "Effect": "Allow",
-            "Action": [
-                "iam:*"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
-EOF
-}
-
-resource "aws_iam_role_policy_attachment" "ec2_policy_role_attach" {
-  policy_arn = aws_iam_policy.bastion_host_policy.arn
-  role       = aws_iam_role.bastion_host_role.name
-}
-
-resource "aws_iam_instance_profile" "bastion_host_profile" {
-  name = "BastionHostInstanceProfileForEKS"
-  role = aws_iam_role.bastion_host_role.name
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}

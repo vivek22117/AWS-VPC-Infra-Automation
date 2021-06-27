@@ -31,3 +31,5 @@ data "template_file" "eks_read_only_template" {
 data "template_file" "eks_full_access_template" {
   template = file("${path.module}/policy-doc/eks-read-access.json.tpl")
 }
+
+data "aws_caller_identity" "current" {}

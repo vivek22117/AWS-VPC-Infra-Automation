@@ -20,7 +20,7 @@ resource "aws_iam_role" "bastion_host_role" {
 EOF
 }
 
-#RSVP ec2 instance policy
+
 resource "aws_iam_policy" "bastion_host_policy" {
   name        = "BastionHostEC2PolicyForEKS"
   description = "Policy to access AWS Resources"
