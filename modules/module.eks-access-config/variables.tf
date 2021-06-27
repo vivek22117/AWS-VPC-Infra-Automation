@@ -11,54 +11,13 @@ variable "default_region" {
   description = "AWS region to deploy resources"
 }
 
-variable "cluster_name" {
-  type        = string
-  description = "Name of EKS cluster"
-}
 
-variable "cidr_block" {
-  type        = string
-  description = "Cidr range for vpc"
-}
-
-variable "instance_tenancy" {
-  type        = string
-  description = "Type of instance tenancy required default/dedicated"
-}
-
-variable "enable_dns" {
-  type        = string
-  description = "To use private DNS within the VPC"
-}
-
-variable "support_dns" {
-  type        = string
-  description = "To use private DNS support within the VPC"
-}
-
-variable "private_azs_with_cidr" {
-  type        = map(string)
-  description = "Name of azs with cidr to be used for infrastructure"
-}
-
-variable "public_azs_with_cidr" {
-  type        = map(string)
-  description = "Name of azs with cidr to be used for infrastructure"
-}
-
-variable "db_azs_with_cidr" {
-  type        = map(string)
-  description = "Name of azs with cidr to be used for Database infrastructure"
-}
-
-variable "db_subnet_gp" {
-  type        = string
-  description = "DB subnet group name for RDS and Aurora instances"
-}
-
-variable "enable_nat_gateway" {
-  type        = string
-  description = "want to create nat-gateway or not"
+#########################################################
+#              Variables for EKS Bastion                #
+#########################################################
+variable "eks_bastion_name_prefix" {
+  type = string
+  description = "EKS bastion name prefix"
 }
 
 variable "bastion_instance_type" {
@@ -66,9 +25,14 @@ variable "bastion_instance_type" {
   description = "Instance type for Bastion Host"
 }
 
+variable "volume_size" {
+  type = number
+  description = "EBS size for EKS bastion host"
+}
+
 variable "spot_allocation_st" {
   type        = string
-  description = "How to allocate capacity across the Spot pools. Valid values: lowest-price, capacity-optimized."
+  description = "How to allocate capacity across the Spot pools. Valid values: lowest-price, capacity-optimized, capacity-optimized-prioritized"
 }
 
 variable "spot_price" {
@@ -76,15 +40,24 @@ variable "spot_price" {
   description = "EC2 Spot price"
 }
 
-variable "ec2_ssh_key" {
-  type = string
-  description = "Name of the SSH key pair"
+variable "eks_bastion_asg_max_size" {
+  type = number
+  description = "Max size for EKS bastion ASG"
 }
 
-variable "launch_template" {
-  type        = map(string)
-  description = "Configuration block with Launch Template settings. `name`, `id` and `version` parameters are available."
-  default     = {}
+variable "eks_bastion_asg_min_size" {
+  type = number
+  description = "Min size for EKS bastion ASG"
+}
+
+variable "eks_bastion_asg_desired_capacity" {
+  type = number
+  description = "Desired size for EKS bastion ASG"
+}
+
+variable "termination_policies" {
+  type = list(string)
+  description = "Terminatin policy for EKS ASG group"
 }
 
 #########################################################
@@ -125,6 +98,28 @@ variable "isMonitoring" {
   description = "Monitoring is enabled or disabled for the resources creating"
 }
 
+variable "project" {
+  type        = string
+  description = "Monitoring is enabled or disabled for the resources creating"
+}
+
+variable "component" {
+  type        = string
+  description = "Component name for the resource"
+}
+
+
+#####=============Local variables===============#####
+locals {
+  common_tags = {
+    Owner       = var.owner
+    Team        = var.team
+    Environment = var.environment
+    Monitoring  = var.isMonitoring
+    Project = var.project
+    Component = var.component
+  }
+}
 
 #####=============ASG Standards Tags===============#####
 variable "custom_tags" {
@@ -140,103 +135,6 @@ variable "custom_tags" {
   }
 }
 
-#####=============Local variables===============#####
-locals {
-  common_tags = {
-    owner       = var.owner
-    team        = var.team
-    environment = var.environment
-    monitoring  = var.isMonitoring
-    Project     = "DoubleDigit-Solutions"
-  }
-}
-
-#####================EKS Variables======================#####
-variable "eks_cluster_name" {
-  type        = string
-  description = "EKS cluster name"
-}
-
-variable "endpoint_private_access" {
-  type        = bool
-  description = "Amazon EKS private API server endpoint is enabled. Default is false"
-}
-
-variable "endpoint_public_access" {
-  type        = bool
-  description = "Amazon EKS public API server endpoint is enabled. Default is true"
-}
-
-variable "pvt_node_group_name" {
-  type        = string
-  description = "EKS cluster private Node Group name"
-}
-
-variable "pub_node_group_name" {
-  type        = string
-  description = "EKS cluster public Node Group name"
-}
-
-variable "ami_type" {
-  type        = string
-  description = "Type of Amazon Machine Image (AMI) associated with the EKS Node Group. Valid values AL2_x86_64, AL2_x86_64_GPU, AL2_ARM_64"
-}
-
-variable "disk_size" {
-  type        = number
-  description = "Disk size in GiB for worker nodes."
-}
-
-variable "instance_types" {
-  type        = list(string)
-  description = "Set of instance types associated with the EKS Node Group."
-}
-
-variable "pvt_desired_size" {
-  type        = number
-  description = "Desired number of EKS Private worker nodes."
-}
-
-variable "pvt_max_size" {
-  type        = number
-  description = "Maximum number of EKS Private worker nodes."
-}
-
-variable "pvt_min_size" {
-  type        = number
-  description = "Minimum number of EKS Private worker nodes."
-}
-
-variable "public_desired_size" {
-  type        = number
-  description = "Desired number of EKS Private worker nodes."
-}
-
-variable "public_max_size" {
-  type        = number
-  description = "Maximum number of EKS Private worker nodes."
-}
-
-variable "public_min_size" {
-  type        = number
-  description = "Minimum number of EKS Private worker nodes."
-}
-
-variable "log_retention" {
-  type        = number
-  description = "Number of days to store EKS logs"
-}
-
-variable "enabled_log_types" {
-  type        = list(string)
-  description = "Amazon EKS control plane logging provides audit and diagnostic logs directly from the Amazon EKS control plane to CloudWatch Logs, valid values 'api', 'audit', 'authenticator', 'controllerManager', 'scheduler'"
-  default = ["api"]
-}
-
-variable "cluster_version" {
-  type        = string
-  description = "Desired Kubernetes master version."
-}
 
 #####================EKS ConfigMap Variables======================#####
 variable "eks_iam_group" {
@@ -244,11 +142,6 @@ variable "eks_iam_group" {
   description = "Name of the IAM group to make EKS user"
 }
 
-variable "enabled" {
-  type        = bool
-  description = "Whether to create the resources. Set to `false` to prevent the module from creating any resources"
-  default     = true
-}
 
 variable "local_exec_interpreter" {
   type        = string

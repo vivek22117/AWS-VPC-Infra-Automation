@@ -1,7 +1,7 @@
 ####################################################
 #             Bastion host AMI for EKS             #
 ####################################################
-data "aws_ami" "eks-bastion" {
+data "aws_ami" "eks_bastion" {
   owners      = ["self"]
   most_recent = true
 

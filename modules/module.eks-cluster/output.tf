@@ -83,11 +83,13 @@ output "eks_cluster_certificate_authority" {
   value = aws_eks_cluster.doubledigit_eks.certificate_authority
 }
 
-output "eks_cluster_certificate_authority_data" {
-  description = "The Kubernetes cluster certificate authority data"
-  value       = local.certificate_authority_data
+output "eks_cluster_iam_role" {
+  value = aws_iam_role.eks_cluster_iam.arn
 }
 
+output "eks_cluster_worker_role" {
+  value = aws_iam_role.eks_nodes_role.arn
+}
 
 output "vpce_sg" {
   value = aws_security_group.vpce.id

@@ -81,22 +81,22 @@ data "aws_iam_policy_document" "eks_workers" {
 
 resource "aws_iam_role_policy_attachment" "aws_eks_worker_node_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = aws_iam_role.dd_eks_nodes_role.name
+  role       = aws_iam_role.eks_nodes_role.name
 }
 
 resource "aws_iam_role_policy_attachment" "aws_eks_cni_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = aws_iam_role.dd_eks_nodes_role.name
+  role       = aws_iam_role.eks_nodes_role.name
 }
 
 resource "aws_iam_role_policy_attachment" "ec2_read_only" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = aws_iam_role.dd_eks_nodes_role.name
+  role       = aws_iam_role.eks_nodes_role.name
 }
 
 resource "aws_iam_role_policy_attachment" "cluster_autoscaling" {
   policy_arn = aws_iam_policy.cluster_autoscaling_policy.arn
-  role       = aws_iam_role.dd_eks_nodes_role.name
+  role       = aws_iam_role.eks_nodes_role.name
 }
 
 resource "aws_iam_policy" "cluster_autoscaling_policy" {
@@ -125,5 +125,5 @@ EOF
 
 resource "aws_iam_instance_profile" "eks_node_role_profile" {
   name = "${var.cluster_name}-eks-node-instance-profile"
-  role = aws_iam_role.dd_eks_nodes_role.name
+  role = aws_iam_role.eks_nodes_role.name
 }
