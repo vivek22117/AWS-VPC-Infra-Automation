@@ -2,10 +2,10 @@
 #       Bastion Host Security Group             #
 #################################################
 resource "aws_security_group" "bastion_host_sg" {
-  name = "bastion-sg-${data.terraform_remote_state.vpc.outputs.vpc_id}"
+  name = "bastion-sg-${data.terraform_remote_state.eks_vpc.outputs.vpc_id}"
 
   description = "Allow SSH from owner IP"
-  vpc_id      = data.terraform_remote_state.vpc.outputs.vpc_id
+  vpc_id      = data.terraform_remote_state.eks_vpc.outputs.vpc_id
 
   egress {
     from_port   = 0
