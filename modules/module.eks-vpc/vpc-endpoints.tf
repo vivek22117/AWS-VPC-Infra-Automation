@@ -98,5 +98,5 @@ resource "aws_vpc_endpoint" "ec2" {
   subnet_ids          = flatten([aws_subnet.private.*.id])
   security_group_ids  = [aws_security_group.vpce.id]
 
-  tags = merge(local.common_tags, map("Name", "${var.environment}-EC2-endpoint"))
+  tags = merge(local.common_tags, map("Name", "${var.environment}-ec2-endpoint"))
 }
