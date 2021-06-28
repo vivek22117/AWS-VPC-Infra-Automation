@@ -21,7 +21,7 @@ resource "aws_eks_node_group" "eks_private_ng" {
   }
 
   remote_access {
-    ec2_ssh_key = data.terraform_remote_state.s3_buckets.outputs.eks_node_key_name
+    ec2_ssh_key               = data.terraform_remote_state.s3_buckets.outputs.eks_node_key_name
     source_security_group_ids = [aws_security_group.eks_nodes_sg.id]
   }
 
@@ -74,7 +74,7 @@ resource "aws_eks_node_group" "eks_public_ng" {
   }
 
   remote_access {
-    ec2_ssh_key = data.terraform_remote_state.s3_buckets.outputs.eks_node_key_name
+    ec2_ssh_key               = data.terraform_remote_state.s3_buckets.outputs.eks_node_key_name
     source_security_group_ids = [aws_security_group.eks_nodes_sg.id]
   }
 

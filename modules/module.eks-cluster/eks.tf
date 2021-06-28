@@ -19,9 +19,9 @@ resource "aws_eks_cluster" "doubledigit_eks" {
     security_group_ids      = [aws_security_group.eks_cluster.id, aws_security_group.eks_nodes_sg.id]
     endpoint_private_access = var.endpoint_private_access
     endpoint_public_access  = var.endpoint_public_access
-    subnet_ids              = flatten(
+    subnet_ids = flatten(
       [data.terraform_remote_state.eks_vpc.outputs.private_subnets,
-      data.terraform_remote_state.eks_vpc.outputs.public_subnets])
+    data.terraform_remote_state.eks_vpc.outputs.public_subnets])
   }
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
@@ -41,7 +41,7 @@ data "tls_certificate" "eks_oidc_thumbprint" {
 resource "aws_iam_openid_connect_provider" "eks_oidc" {
   depends_on = [aws_eks_cluster.doubledigit_eks]
 
-  url   = aws_eks_cluster.doubledigit_eks.identity.0.oidc.0.issuer
+  url = aws_eks_cluster.doubledigit_eks.identity.0.oidc.0.issuer
 
   client_id_list = ["sts.amazonaws.com"]
 
