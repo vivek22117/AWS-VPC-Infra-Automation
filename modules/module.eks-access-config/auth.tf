@@ -14,14 +14,14 @@ locals {
 
   # Add worker nodes role ARNs (could be from many worker groups) to the ConfigMap
   map_worker_roles = [
-  for role_arn in local.eks_workers_role_arns : {
-    rolearn : role_arn
-    username : "system:node:{{EC2PrivateDNSName}}"
-    groups : [
-      "system:bootstrappers",
-      "system:nodes"
-    ]
-  }
+    for role_arn in local.eks_workers_role_arns : {
+      rolearn : role_arn
+      username : "system:node:{{EC2PrivateDNSName}}"
+      groups : [
+        "system:bootstrappers",
+        "system:nodes"
+      ]
+    }
   ]
 
   additional_iam_roles = tomap({
@@ -48,7 +48,7 @@ locals {
 }
 
 data "template_file" "configmap_auth" {
-  count    = var.apply_config_map_aws_auth ? 1 : 0
+  count = var.apply_config_map_aws_auth ? 1 : 0
 
   template = file(local.configmap_auth_template_file)
 

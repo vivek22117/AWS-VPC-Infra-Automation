@@ -16,7 +16,7 @@ variable "default_region" {
 #              Variables for EKS Bastion                #
 #########################################################
 variable "eks_bastion_name_prefix" {
-  type = string
+  type        = string
   description = "EKS bastion name prefix"
 }
 
@@ -26,7 +26,7 @@ variable "bastion_instance_type" {
 }
 
 variable "volume_size" {
-  type = number
+  type        = number
   description = "EBS size for EKS bastion host"
 }
 
@@ -41,22 +41,22 @@ variable "spot_price" {
 }
 
 variable "eks_bastion_asg_max_size" {
-  type = number
+  type        = number
   description = "Max size for EKS bastion ASG"
 }
 
 variable "eks_bastion_asg_min_size" {
-  type = number
+  type        = number
   description = "Min size for EKS bastion ASG"
 }
 
 variable "eks_bastion_asg_desired_capacity" {
-  type = number
+  type        = number
   description = "Desired size for EKS bastion ASG"
 }
 
 variable "termination_policies" {
-  type = list(string)
+  type        = list(string)
   description = "Terminatin policy for EKS ASG group"
 }
 
@@ -110,8 +110,8 @@ locals {
     Team        = var.team
     Environment = var.environment
     Monitoring  = var.isMonitoring
-    Project = var.project
-    Component = var.component
+    Project     = var.project
+    Component   = var.component
   }
 }
 
@@ -132,7 +132,7 @@ variable "custom_tags" {
 
 #####================EKS ConfigMap Variables======================#####
 variable "eks_iam_group" {
-  type = string
+  type        = string
   description = "Name of the IAM group to make EKS user"
 }
 

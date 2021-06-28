@@ -4,9 +4,9 @@
 resource "aws_launch_template" "eks_bastion_lt" {
   name_prefix = "${var.eks_bastion_name_prefix}${var.environment}"
 
-  image_id               = data.aws_ami.eks_bastion.id
-  key_name               = data.terraform_remote_state.s3_buckets.outputs.eks_bastion_key_name
-  instance_type          = var.bastion_instance_type
+  image_id                             = data.aws_ami.eks_bastion.id
+  key_name                             = data.terraform_remote_state.s3_buckets.outputs.eks_bastion_key_name
+  instance_type                        = var.bastion_instance_type
   instance_initiated_shutdown_behavior = "terminate"
 
   iam_instance_profile {
@@ -45,13 +45,13 @@ resource "aws_launch_template" "eks_bastion_lt" {
 #         Bastion host ASG                      #
 #################################################
 resource "aws_autoscaling_group" "bastion_asg" {
-  name_prefix         = "eks-bastion-asg-${var.environment}"
+  name_prefix = "eks-bastion-asg-${var.environment}"
 
-  vpc_zone_identifier = data.terraform_remote_state.eks_vpc.outputs.public_subnets
-  termination_policies      = var.termination_policies
-  max_size                  = var.eks_bastion_asg_max_size
-  min_size                  = var.eks_bastion_asg_min_size
-  desired_capacity          = var.eks_bastion_asg_desired_capacity
+  vpc_zone_identifier  = data.terraform_remote_state.eks_vpc.outputs.public_subnets
+  termination_policies = var.termination_policies
+  max_size             = var.eks_bastion_asg_max_size
+  min_size             = var.eks_bastion_asg_min_size
+  desired_capacity     = var.eks_bastion_asg_desired_capacity
 
   default_cooldown = var.default_cooldown
 

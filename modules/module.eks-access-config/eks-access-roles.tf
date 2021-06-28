@@ -2,14 +2,14 @@
 #             EKS read only & full access          #
 ####################################################
 resource "aws_iam_policy" "eks_read_policy" {
-  name        = "EKSReadOnlyPolicy"
+  name = "EKSReadOnlyPolicy"
 
   description = "EKS read only access"
   policy      = data.template_file.eks_read_only_template.rendered
 }
 
 resource "aws_iam_policy" "eks_full_access_policy" {
-  name        = "EKSFullAccessPolicy"
+  name = "EKSFullAccessPolicy"
 
   description = "EKS full access"
   policy      = data.template_file.eks_full_access_template.rendered
