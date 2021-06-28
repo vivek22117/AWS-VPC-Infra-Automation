@@ -7,14 +7,14 @@ data "aws_caller_identity" "current" {}
 resource "aws_cloudtrail" "vpc_cloudTrail" {
   depends_on = [aws_s3_bucket.cloudtrail_s3_bucket,
     aws_cloudwatch_log_group.cloudtrail_logGroup,
-    aws_s3_bucket_policy.s3_bucket_trail_policy]
+  aws_s3_bucket_policy.s3_bucket_trail_policy]
 
   name                          = "${var.environment}-CloudTrail"
   enable_logging                = var.enable_logging
   s3_bucket_name                = aws_s3_bucket.cloudtrail_s3_bucket.id
   s3_key_prefix                 = var.s3_key_prefix
   enable_log_file_validation    = var.enable_log_file_validation
-  is_multi_region_trail = var.is_multi_region_trail
+  is_multi_region_trail         = var.is_multi_region_trail
   include_global_service_events = var.include_global_service_events
   is_organization_trail         = var.is_organization_trail
   cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.cloudtrail_logGroup.arn}:*"
