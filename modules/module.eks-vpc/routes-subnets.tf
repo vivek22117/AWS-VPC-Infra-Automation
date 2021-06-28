@@ -153,6 +153,8 @@ resource "aws_route" "private_nat_gateway" {
 }
 
 resource "aws_route_table_association" "private_association" {
+  depends_on = [aws_route_table.private, aws_subnet.private]
+
   count = length(var.private_azs_with_cidr)
 
   route_table_id = aws_route_table.private.*.id[count.index]
@@ -180,6 +182,8 @@ resource "aws_route_table" "public" {
 }
 
 resource "aws_route_table_association" "public_association" {
+  depends_on = [aws_route_table.public, aws_subnet.public]
+
   count = length(var.public_azs_with_cidr)
 
   route_table_id = aws_route_table.public.id
@@ -211,6 +215,8 @@ resource "aws_route" "private_ng_route" {
 }
 
 resource "aws_route_table_association" "db_subnet_association" {
+  depends_on = [aws_route_table.db_rt, aws_subnet.db_subnet]
+
   count = length(var.db_azs_with_cidr)
 
   route_table_id = aws_route_table.db_rt.*.id[count.index]
