@@ -37,9 +37,9 @@ resource "aws_launch_template" "ecs_cluster_lt" {
   network_interfaces {
     device_index                = 0
     associate_public_ip_address = false
-    security_groups             = [aws_security_group.ecs_instance_sg.id,
-                                  data.terraform_remote_state.vpc-resources.outputs.ecs_task_sg]
-    delete_on_termination       = true
+    security_groups = [aws_security_group.ecs_instance_sg.id,
+    data.terraform_remote_state.vpc-resources.outputs.ecs_task_sg]
+    delete_on_termination = true
   }
 
   placement {
@@ -74,8 +74,8 @@ resource "aws_alb" "ecs_cluster_alb" {
   subnets            = data.terraform_remote_state.vpc.outputs.public_subnets
   internal           = "false"
   security_groups    = [aws_security_group.ecs_alb_sg.id]
-  enable_http2 = "true"
-  idle_timeout = 600
+  enable_http2       = "true"
+  idle_timeout       = 600
 
   tags = {
     Name = "${var.component_name}-${var.environment}-alb"
@@ -130,12 +130,12 @@ resource "aws_lb_target_group" "ecs_alb_default_target_group" {
     timeout             = 5
     interval            = 30
     path                = "/"
-    matcher = "200,301,302"
+    matcher             = "200,301,302"
   }
 }
 
 resource "aws_autoscaling_group" "ecs_monitoring_cluster_asg" {
-  name_prefix         = "${var.component_name}-ecs-asg-${var.environment}"
+  name_prefix = "${var.component_name}-ecs-asg-${var.environment}"
 
   vpc_zone_identifier = data.terraform_remote_state.vpc.outputs.private_subnets
 

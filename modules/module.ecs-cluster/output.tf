@@ -1,20 +1,20 @@
 output "ecs-cluster-log-group" {
-  value = aws_cloudwatch_log_group.dd_ecs_cluster_log_group.name
+  value       = aws_cloudwatch_log_group.dd_ecs_cluster_log_group.name
   description = "AWS cloud-watch log group name"
 }
 
 output "ecs-clustser-name" {
-  value = aws_ecs_cluster.dd_ecs_cluster.name
+  value       = aws_ecs_cluster.dd_ecs_cluster.name
   description = "AWS DD ECS cluster name"
 }
 
 output "ecs-cluster-lb-arn" {
-  value = aws_alb.ecs_cluster_alb.arn
+  value       = aws_alb.ecs_cluster_alb.arn
   description = "ECS cluster load balancer ARN!"
 }
 
 output "ecs-cluster-id" {
-  value = aws_ecs_cluster.dd_ecs_cluster.id
+  value       = aws_ecs_cluster.dd_ecs_cluster.id
   description = "AWS DD ECS Cluster id!"
 }
 

@@ -131,7 +131,7 @@ variable "custom_tags" {
     tool       = "Terraform"
     monitoring = "true"
     Name       = "ECS-Cluster",
-    Project = "DoubleDigit-Solutions"
+    Project    = "DoubleDigit-Solutions"
   }
 }
 
