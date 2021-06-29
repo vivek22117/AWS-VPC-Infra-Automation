@@ -20,33 +20,33 @@ resource "aws_ec2_transit_gateway" "ddsolutions_tgw" {
 resource "aws_route" "vpc_dev_rt_route" {
   depends_on = ["aws_ec2_transit_gateway.ddsolutions_tgw"]
 
-  route_table_id = data.terraform_remote_state.vpc_dev.outputs.vpc_main_rt
+  route_table_id         = data.terraform_remote_state.vpc_dev.outputs.vpc_main_rt
   destination_cidr_block = "10.0.0.8"
-  transit_gateway_id = aws_ec2_transit_gateway.ddsolutions_tgw.id
+  transit_gateway_id     = aws_ec2_transit_gateway.ddsolutions_tgw.id
 }
 
 resource "aws_route" "vpc_test_rt_route" {
   depends_on = ["aws_ec2_transit_gateway.ddsolutions_tgw"]
 
-  route_table_id = data.terraform_remote_state.vpc_test.outputs.vpc_main_rt
+  route_table_id         = data.terraform_remote_state.vpc_test.outputs.vpc_main_rt
   destination_cidr_block = "10.0.0.8"
-  transit_gateway_id = aws_ec2_transit_gateway.ddsolutions_tgw.id
+  transit_gateway_id     = aws_ec2_transit_gateway.ddsolutions_tgw.id
 }
 
 resource "aws_route" "vpc_shared_rt_route" {
   depends_on = ["aws_ec2_transit_gateway.ddsolutions_tgw"]
 
-  route_table_id = data.terraform_remote_state.vpc_shared.outputs.vpc_main_rt
+  route_table_id         = data.terraform_remote_state.vpc_shared.outputs.vpc_main_rt
   destination_cidr_block = "10.0.0.8"
-  transit_gateway_id = aws_ec2_transit_gateway.ddsolutions_tgw.id
+  transit_gateway_id     = aws_ec2_transit_gateway.ddsolutions_tgw.id
 }
 
 resource "aws_route" "vpc_prod_rt_route" {
   depends_on = ["aws_ec2_transit_gateway.ddsolutions_tgw"]
 
-  route_table_id = data.terraform_remote_state.vpc_prod.outputs.vpc_main_rt
+  route_table_id         = data.terraform_remote_state.vpc_prod.outputs.vpc_main_rt
   destination_cidr_block = "10.0.0.8"
-  transit_gateway_id = aws_ec2_transit_gateway.ddsolutions_tgw.id
+  transit_gateway_id     = aws_ec2_transit_gateway.ddsolutions_tgw.id
 }
 
 
@@ -64,10 +64,10 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_att_vpc_dev" {
   transit_gateway_default_route_table_propagation = false
 
   tags = merge(
-  local.common_tags,
-  {
-    Name = "tgw-att-${data.terraform_remote_state.vpc_dev.outputs.vpc_id}"
-  }
+    local.common_tags,
+    {
+      Name = "tgw-att-${data.terraform_remote_state.vpc_dev.outputs.vpc_id}"
+    }
   )
 }
 
@@ -82,10 +82,10 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_att_vpc_prod" {
   transit_gateway_default_route_table_propagation = false
 
   tags = merge(
-  local.common_tags,
-  {
-    Name = "tgw-att-${data.terraform_remote_state.vpc_prod.outputs.vpc_id}"
-  }
+    local.common_tags,
+    {
+      Name = "tgw-att-${data.terraform_remote_state.vpc_prod.outputs.vpc_id}"
+    }
   )
 }
 
@@ -100,10 +100,10 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_att_vpc_test" {
   transit_gateway_default_route_table_propagation = false
 
   tags = merge(
-  local.common_tags,
-  {
-    Name = "tgw-att-${data.terraform_remote_state.vpc_test.outputs.vpc_id}"
-  }
+    local.common_tags,
+    {
+      Name = "tgw-att-${data.terraform_remote_state.vpc_test.outputs.vpc_id}"
+    }
   )
 }
 
@@ -118,10 +118,10 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_att_vpc_shared" {
   transit_gateway_default_route_table_propagation = false
 
   tags = merge(
-  local.common_tags,
-  {
-    Name = "tgw-att-${data.terraform_remote_state.vpc_shared.outputs.vpc_id}"
-  }
+    local.common_tags,
+    {
+      Name = "tgw-att-${data.terraform_remote_state.vpc_shared.outputs.vpc_id}"
+    }
   )
 }
 
@@ -134,10 +134,10 @@ resource "aws_ec2_transit_gateway_route_table" "tgw_dev_rt" {
   transit_gateway_id = aws_ec2_transit_gateway.ddsolutions_tgw.id
 
   tags = merge(
-  local.common_tags,
-  {
-    Name = "tgw-dev-rt"
-  }
+    local.common_tags,
+    {
+      Name = "tgw-dev-rt"
+    }
   )
 }
 
@@ -147,10 +147,10 @@ resource "aws_ec2_transit_gateway_route_table" "tgw_shared_rt" {
   transit_gateway_id = aws_ec2_transit_gateway.ddsolutions_tgw.id
 
   tags = merge(
-  local.common_tags,
-  {
-    Name = "tgw-shared-rt"
-  }
+    local.common_tags,
+    {
+      Name = "tgw-shared-rt"
+    }
   )
 }
 
@@ -160,10 +160,10 @@ resource "aws_ec2_transit_gateway_route_table" "tgw_prod_rt" {
   transit_gateway_id = aws_ec2_transit_gateway.ddsolutions_tgw.id
 
   tags = merge(
-  local.common_tags,
-  {
-    Name = "tgw-prod-rt"
-  }
+    local.common_tags,
+    {
+      Name = "tgw-prod-rt"
+    }
   )
 }
 
@@ -173,10 +173,10 @@ resource "aws_ec2_transit_gateway_route_table" "tgw_test_rt" {
   transit_gateway_id = aws_ec2_transit_gateway.ddsolutions_tgw.id
 
   tags = merge(
-  local.common_tags,
-  {
-    Name = "tgw-test-rt"
-  }
+    local.common_tags,
+    {
+      Name = "tgw-test-rt"
+    }
   )
 }
 
