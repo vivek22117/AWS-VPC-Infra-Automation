@@ -4,22 +4,22 @@ variable "schedule_expression" {
 }
 
 variable "lambda_fun_arn" {
-  type = string
+  type        = string
   description = "Lambda ARN for integration"
 }
 
 variable "lambda_fun_name" {
-  type = string
+  type        = string
   description = "Lambda function name"
 }
 
 variable "aws_event_type" {
-  type = string
+  type        = string
   description = "Event type to trigger lambda"
 }
 
 variable "event_pattern" {
-  type = string
+  type        = string
   description = "JSON event pattern for CW event rule"
 }
 
