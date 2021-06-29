@@ -6,9 +6,9 @@ data "terraform_remote_state" "vpc" {
 
   config = {
     profile = var.profile
-    bucket = "${var.s3_bucket_prefix}-${var.environment}-${var.default_region}"
-    key    = "state/${var.environment}/vpc/terraform.tfstate"
-    region = var.default_region
+    bucket  = "${var.s3_bucket_prefix}-${var.environment}-${var.default_region}"
+    key     = "state/${var.environment}/vpc/terraform.tfstate"
+    region  = var.default_region
   }
 }
 

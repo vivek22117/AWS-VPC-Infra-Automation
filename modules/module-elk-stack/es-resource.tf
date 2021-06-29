@@ -88,10 +88,10 @@ POLICY
 
   vpc_options {
     security_group_ids = [aws_security_group.es_sg.id]
-    subnet_ids         = [
-        data.terraform_remote_state.vpc.outputs.private_subnets[0],
-        data.terraform_remote_state.vpc.outputs.private_subnets[1]
-      ]
+    subnet_ids = [
+      data.terraform_remote_state.vpc.outputs.private_subnets[0],
+      data.terraform_remote_state.vpc.outputs.private_subnets[1]
+    ]
   }
 
   advanced_options = {
@@ -129,12 +129,12 @@ POLICY
 }
 
 resource "aws_cloudwatch_log_group" "dd_es_lg" {
-  name = "dd-es-log-group"
+  name              = "dd-es-log-group"
   retention_in_days = 7
 }
 
 resource "aws_cloudwatch_log_group" "dd_es_app_lg" {
-  name = "dd-es-app-log-group"
+  name              = "dd-es-app-log-group"
   retention_in_days = 7
 }
 
