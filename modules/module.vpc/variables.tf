@@ -109,7 +109,7 @@ variable "custom_tags" {
     tool       = "Terraform"
     monitoring = "true"
     Name       = "Bastion-Host"
-    Project = "DoubleDigit-Solutions"
+    Project    = "DoubleDigit-Solutions"
   }
 }
 
@@ -120,6 +120,6 @@ locals {
     team        = var.team
     environment = var.environment
     monitoring  = var.isMonitoring
-    Project = var.project
+    Project     = var.project
   }
 }
