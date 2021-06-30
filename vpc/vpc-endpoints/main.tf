@@ -4,8 +4,8 @@
 module "vpc_other_resources" {
   source = "../../modules/module.vpc-resources"
 
-//  Only used while local run
-  profile        = var.profile
+  //  Only used while local run
+  profile = var.profile
 
 
   default_region = var.default_region
