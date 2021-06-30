@@ -4,8 +4,8 @@
 module "vpc-test" {
   source = "../../modules/module.vpc"
 
-//  Not used via pipeline
-  profile        = var.profile
+  //  Not used via pipeline
+  profile = var.profile
 
   environment    = var.environment
   default_region = var.default_region
@@ -20,8 +20,8 @@ module "vpc-test" {
   enable_nat_gateway    = var.enable_nat_gateway
 
   artifactory_bucket_prefix = var.artifactory_bucket_prefix
-  logging_bucket_prefix = var.logging_bucket_prefix
-  dataLake_bucket_prefix = var.dataLake_bucket_prefix
+  logging_bucket_prefix     = var.logging_bucket_prefix
+  dataLake_bucket_prefix    = var.dataLake_bucket_prefix
 
   team         = var.team
   owner        = var.owner
