@@ -26,8 +26,8 @@ db_azs_with_cidr = {
 }
 
 
-team                  = "DoubleDigitTeam"
-owner                 = "Vivek"
-isMonitoring          = true
+team         = "DoubleDigitTeam"
+owner        = "Vivek"
+isMonitoring = true
 
-cluster_name            = "DD-EKS"
+cluster_name = "DD-EKS"
