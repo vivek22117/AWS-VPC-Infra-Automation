@@ -67,7 +67,7 @@ variable "dataLake_bucket_prefix" {
 }
 
 variable "logging_bucket_prefix" {
-  type = string
+  type        = string
   description = "Bucket to store logging data"
 }
 
