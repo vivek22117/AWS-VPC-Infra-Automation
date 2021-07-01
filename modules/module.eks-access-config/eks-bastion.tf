@@ -4,9 +4,9 @@
 resource "aws_launch_template" "eks_bastion_lt" {
   name_prefix = "${var.eks_bastion_name_prefix}${var.environment}"
 
-  image_id                             = data.aws_ami.eks_bastion.id
-  key_name                             = data.terraform_remote_state.s3_buckets.outputs.eks_bastion_key_name
-  instance_type                        = var.bastion_instance_type
+  image_id = data.aws_ami.eks_bastion.id
+  key_name = data.terraform_remote_state.s3_buckets.outputs.eks_bastion_key_name
+  instance_type = var.bastion_instance_type
   instance_initiated_shutdown_behavior = "terminate"
 
   iam_instance_profile {
@@ -14,18 +14,19 @@ resource "aws_launch_template" "eks_bastion_lt" {
   }
 
   network_interfaces {
-    device_index                = 0
+    device_index = 0
     associate_public_ip_address = false
-    security_groups             = [aws_security_group.bastion_host_sg.id]
-    delete_on_termination       = true
+    security_groups = [
+      aws_security_group.bastion_host_sg.id]
+    delete_on_termination = true
   }
 
   block_device_mappings {
     device_name = "/dev/xvda"
 
     ebs {
-      volume_size           = var.volume_size
-      volume_type           = "gp2"
+      volume_size = var.volume_size
+      volume_type = "gp2"
       delete_on_termination = true
     }
   }
@@ -36,7 +37,7 @@ resource "aws_launch_template" "eks_bastion_lt" {
 
   tag_specifications {
     resource_type = "instance"
-    tags          = merge(local.common_tags, map("Project", "DoubleDigit-Solutions"))
+    tags = merge(local.common_tags, map("Project", "DoubleDigit-Solutions"))
   }
 }
 
@@ -47,28 +48,17 @@ resource "aws_launch_template" "eks_bastion_lt" {
 resource "aws_autoscaling_group" "bastion_asg" {
   name_prefix = "eks-bastion-asg-${var.environment}"
 
-  vpc_zone_identifier  = data.terraform_remote_state.eks_vpc.outputs.public_subnets
+  vpc_zone_identifier = data.terraform_remote_state.eks_vpc.outputs.public_subnets
   termination_policies = var.termination_policies
-  max_size             = var.eks_bastion_asg_max_size
-  min_size             = var.eks_bastion_asg_min_size
-  desired_capacity     = var.eks_bastion_asg_desired_capacity
+  max_size = var.eks_bastion_asg_max_size
+  min_size = var.eks_bastion_asg_min_size
+  desired_capacity = var.eks_bastion_asg_desired_capacity
 
   default_cooldown = var.default_cooldown
 
-  mixed_instances_policy {
-    instances_distribution {
-      on_demand_base_capacity                  = 0
-      on_demand_percentage_above_base_capacity = 25
-      spot_instance_pools                      = 2
-      spot_allocation_strategy                 = var.spot_allocation_st
-      spot_max_price                           = var.spot_price
-    }
-    launch_template {
-      launch_template_specification {
-        launch_template_id = aws_launch_template.eks_bastion_lt.id
-        version            = "$Latest"
-      }
-    }
+  launch_template {
+    id  = aws_launch_template.eks_bastion_lt.id
+    version = "$Latest"
   }
 
   lifecycle {
@@ -78,8 +68,8 @@ resource "aws_autoscaling_group" "bastion_asg" {
   dynamic "tag" {
     for_each = var.custom_tags
     content {
-      key                 = tag.key
-      value               = tag.value
+      key = tag.key
+      value = tag.value
       propagate_at_launch = true
     }
   }
