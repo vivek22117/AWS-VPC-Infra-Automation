@@ -35,16 +35,6 @@ variable "volume_size" {
   description = "EBS size for EKS bastion host"
 }
 
-variable "spot_allocation_st" {
-  type        = string
-  description = "How to allocate capacity across the Spot pools. Valid values: lowest-price, capacity-optimized, capacity-optimized-prioritized"
-}
-
-variable "spot_price" {
-  type        = string
-  description = "EC2 Spot price"
-}
-
 variable "eks_bastion_asg_max_size" {
   type        = number
   description = "Max size for EKS bastion ASG"
