@@ -26,7 +26,7 @@ variable "bastion_instance_type" {
 }
 
 variable "default_cooldown" {
-  type = string
+  type        = string
   description = "The amount of time, in seconds, after a scaling activity completes before another scaling activity can start."
 }
 
