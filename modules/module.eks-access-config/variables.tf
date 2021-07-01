@@ -25,6 +25,11 @@ variable "bastion_instance_type" {
   description = "Instance type for Bastion Host"
 }
 
+variable "default_cooldown" {
+  type = string
+  description = "The amount of time, in seconds, after a scaling activity completes before another scaling activity can start."
+}
+
 variable "volume_size" {
   type        = number
   description = "EBS size for EKS bastion host"
