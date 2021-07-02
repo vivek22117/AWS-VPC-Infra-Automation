@@ -9,8 +9,8 @@ module "eks-vpc" {
 
 
   eks_bastion_name_prefix = var.eks_bastion_name_prefix
-  bastion_instance_type = var.bastion_instance_type
-  default_cooldown = var.default_cooldown
+  bastion_instance_type   = var.bastion_instance_type
+  default_cooldown        = var.default_cooldown
 
 
 }
