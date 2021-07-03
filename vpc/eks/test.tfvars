@@ -54,7 +54,7 @@ cluster_egress_cidrs = ["0.0.0.0/0"]
 
 eks_cluster_name        = "DD-EKS"
 endpoint_private_access = true
-endpoint_public_access  = true
+endpoint_public_access  = false
 pvt_node_group_name     = "Private-DD-NodeGroup-11"
 pub_node_group_name     = "Public-DD-NodeGroup-11"
 ami_type                = "AL2_x86_64"

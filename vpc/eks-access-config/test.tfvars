@@ -8,7 +8,7 @@ component = "Managed-EKS"
 
 eks_bastion_name_prefix = "eks-bastion-"
 bastion_instance_type   = "t3a.small"
-default_cooldown        = "300s"
+default_cooldown        = 300
 volume_size = 20
 
 eks_bastion_asg_desired_capacity = 1
