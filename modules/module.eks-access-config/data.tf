@@ -45,9 +45,9 @@ data "template_file" "eks_bastion_user_data" {
   template = file("${path.module}/data-scripts/configure-eks.sh")
 
   vars = {
+    eks_create_role_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/eks-creator"
     cluster_name = data.terraform_remote_state.eks_cluster.outputs.eks_cluster_id
     default_region = var.default_region
-    kubeconfig_path = var.kubeconfig_path
     artifactory_bucket_name = data.terraform_remote_state.s3_buckets.outputs.artifactory_s3_name
   }
 }

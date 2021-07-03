@@ -95,6 +95,14 @@ resource "aws_iam_policy" "bastion_host_policy" {
                 "s3:*"
             ],
             "Resource": "*"
+        },
+        {
+            "Sid": "S3FullAccess",
+            "Effect": "Allow",
+            "Action": [
+                "sts:AssumeRole"
+            ],
+            "Resource": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/eks-creator"
         }
     ]
 }
