@@ -23,6 +23,7 @@ locals {
   additional_iam_roles = tomap({
     read_only_user : aws_iam_role.eks_read_role.arn
     full_access_user : aws_iam_role.eks_full_access_role.arn
+    bastion_host_access: aws_iam_role.bastion_host_role.arn
   })
 
   map_additional_iam_roles = [
