@@ -25,7 +25,7 @@ resource "aws_eks_cluster" "doubledigit_eks" {
 
   tags = local.common_tags
 
-  kubernetes_network_config = {
+  kubernetes_network_config {
     service_ipv4_cidr = var.cluster_service_ipv4_cidr
   }
 
