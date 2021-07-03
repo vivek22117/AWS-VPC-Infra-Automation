@@ -52,6 +52,7 @@ data "template_file" "configmap_auth" {
     map_worker_roles_yaml         = local.map_worker_roles_yaml
     map_additional_iam_roles_yaml = local.map_additional_iam_roles_yaml
     map_additional_iam_users_yaml = local.map_additional_iam_users_yaml
+    map_additional_aws_accounts_yaml = local.map_additional_aws_accounts_yaml
   }
 }
 
