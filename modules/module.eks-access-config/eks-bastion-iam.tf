@@ -97,7 +97,7 @@ resource "aws_iam_policy" "bastion_host_policy" {
             "Resource": "*"
         },
         {
-            "Sid": "S3FullAccess",
+            "Sid": "STSAssumeRoleAccess",
             "Effect": "Allow",
             "Action": [
                 "sts:AssumeRole"
