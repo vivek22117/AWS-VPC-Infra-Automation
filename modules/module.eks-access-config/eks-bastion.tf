@@ -9,6 +9,8 @@ resource "aws_launch_template" "eks_bastion_lt" {
   instance_type                        = var.bastion_instance_type
   instance_initiated_shutdown_behavior = "terminate"
 
+  user_data = base64encode(data.template_file.eks_bastion_user_data.rendered)
+
   iam_instance_profile {
     name = aws_iam_instance_profile.bastion_host_profile.name
   }
@@ -16,8 +18,7 @@ resource "aws_launch_template" "eks_bastion_lt" {
   network_interfaces {
     device_index                = 0
     associate_public_ip_address = false
-    security_groups = [
-    aws_security_group.bastion_host_sg.id]
+    security_groups = [data.terraform_remote_state.eks_vpc.outputs.eks_bastion_sg_id]
     delete_on_termination = true
   }
 

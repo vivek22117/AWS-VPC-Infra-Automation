@@ -1,11 +1,6 @@
 ######################################################################
 # Global variables for VPC, Subnet, Routes and Bastion Host          #
 ######################################################################
-variable "profile" {
-  type        = string
-  description = "AWS Profile name for credentials"
-}
-
 variable "default_region" {
   type        = string
   description = "AWS region to deploy resources"
@@ -34,6 +29,7 @@ variable "volume_size" {
   type        = number
   description = "EBS size for EKS bastion host"
 }
+
 
 variable "eks_bastion_asg_max_size" {
   type        = number
