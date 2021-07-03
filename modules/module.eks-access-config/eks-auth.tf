@@ -2,7 +2,7 @@
 locals {
   certificate_authority_data_list          = coalescelist(data.terraform_remote_state.eks_cluster.outputs.eks_cluster_certificate_authority, [[{ data : "" }]])
   certificate_authority_data_list_internal = local.certificate_authority_data_list[0]
-  certificate_authority_data_map           = local.certificate_authority_data_list_internal[0]
+  certificate_authority_data_map           = local.certificate_authority_data_list_internal
   certificate_authority_data               = local.certificate_authority_data_map["data"]
 
   configmap_auth_template_file = var.configmap_auth_template_file == "" ? join("/", [path.module, "data-scripts/configmap-auth.yaml.tpl"]) : var.configmap_auth_template_file
