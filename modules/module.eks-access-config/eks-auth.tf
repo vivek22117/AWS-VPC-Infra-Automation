@@ -12,7 +12,7 @@ locals {
 
   # Add worker nodes role ARNs (could be from many worker groups) to the ConfigMap
   map_worker_roles = [
-    for role_arn in tolist([data.terraform_remote_state.eks_cluster.outputs.eks_cluster_worker_role]) : {
+    for role_arn in tolist([data.terraform_remote_state.eks_cluster.outputs.eks_cluster_worker_role_arn]) : {
       rolearn : role_arn
       username : "system:node:{{EC2PrivateDNSName}}"
       groups : [
