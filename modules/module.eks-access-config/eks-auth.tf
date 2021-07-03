@@ -14,7 +14,7 @@ locals {
 
   # Add worker nodes role ARNs (could be from many worker groups) to the ConfigMap
   map_worker_roles = [
-    for role_arn in local.eks_workers_role_arns : {
+    for role_arn in tolist(local.eks_workers_role_arns) : {
       rolearn : role_arn
       username : "system:node:{{EC2PrivateDNSName}}"
       groups : [
