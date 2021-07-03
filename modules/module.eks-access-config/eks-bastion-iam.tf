@@ -87,6 +87,14 @@ resource "aws_iam_policy" "bastion_host_policy" {
                 "iam:*"
             ],
             "Resource": "*"
+        },
+        {
+            "Sid": "S3FullAccess",
+            "Effect": "Allow",
+            "Action": [
+                "s3:*"
+            ],
+            "Resource": "*"
         }
     ]
 }
