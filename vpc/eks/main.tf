@@ -25,6 +25,12 @@ module "eks-vpc" {
 
   cluster_name    = var.cluster_name
   cluster_version = var.cluster_version
+  common_tags = var.common_tags
+  cluster_service_ipv4_cidr = var.cluster_service_ipv4_cidr
+  eks_cluster_create_timeout = var.eks_cluster_create_timeout
+  eks_cluster_delete_timeout = var.eks_cluster_delete_timeout
+  cluster_encryption_resources = var.cluster_encryption_resources
+  cluster_egress_cidrs = var.cluster_egress_cidrs
 
   eks_cluster_name        = var.eks_cluster_name
   endpoint_private_access = var.endpoint_private_access

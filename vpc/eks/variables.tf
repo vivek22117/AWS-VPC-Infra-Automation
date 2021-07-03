@@ -11,6 +11,59 @@ variable "cluster_name" {
   description = "Name of EKS cluster"
 }
 
+variable "cluster_log_kms_key_id" {
+  type        = string
+  default     = ""
+  description = "If a KMS Key ARN is set, this key will be used to encrypt the corresponding log group. Please be sure that the KMS Key has an appropriate key policy (https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/encrypt-log-data-kms.html)"
+}
+
+variable "common_tags" {
+  description = "A map of tags to add to all resources"
+  type        = map(string)
+  default     = {}
+}
+
+variable "subnets" {
+  description = "A list of subnets to place the EKS cluster and workers within."
+  type        = list(string)
+  default = []
+}
+
+variable "cluster_endpoint_public_access_cidrs" {
+  description = "List of CIDR blocks which can access the Amazon EKS public API server endpoint."
+  type        = list(string)
+  default     = []
+}
+
+variable "cluster_service_ipv4_cidr" {
+  type        = string
+  description = "service ipv4 cidr for the kubernetes cluster"
+  default     = ""
+}
+
+variable "eks_cluster_create_timeout" {
+  type        = string
+  description = "Timeout value when creating the EKS cluster."
+  default     = "30m"
+}
+
+variable "eks_cluster_delete_timeout" {
+  type        = string
+  description = "Timeout value when deleting the EKS cluster."
+  default     = "30m"
+}
+
+variable "cluster_encryption_resources" {
+  type = list(string)
+  description = "Encryption configuration for the cluster resources"
+  default = []
+}
+
+variable "cluster_egress_cidrs" {
+  type        = list(string)
+  description = "List of CIDR blocks that are permitted for cluster egress traffic."
+}
+
 variable "cidr_block" {
   type        = string
   description = "Cidr range for vpc"

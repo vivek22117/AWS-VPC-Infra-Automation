@@ -32,6 +32,26 @@ isMonitoring = true
 
 cluster_version         = "1.17"
 cluster_name            = "DD-EKS"
+cluster_log_kms_key_id = ""
+
+common_tags = {
+  Owner       = "Vivek"
+  Team        = "DoubleDigit-Team"
+  Environment = "eks-test"
+  Monitoring  = true
+  Project     = "DoubleDigit-Solutions"
+}
+
+subnets = []
+cluster_endpoint_public_access_cidrs = []
+cluster_service_ipv4_cidr = null
+
+eks_cluster_create_timeout = "30m"
+eks_cluster_delete_timeout = "30m"
+
+cluster_encryption_resources = ["secrets"]
+cluster_egress_cidrs = ["0.0.0.0/0"]
+
 eks_cluster_name        = "DD-EKS"
 endpoint_private_access = true
 endpoint_public_access  = true
