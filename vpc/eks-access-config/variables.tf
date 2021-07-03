@@ -48,7 +48,7 @@ variable "eks_bastion_asg_desired_capacity" {
 
 variable "termination_policies" {
   type        = list(string)
-  description = "Terminatin policy for EKS ASG group"
+  description = "Termination policy for EKS ASG group"
 }
 
 #########################################################
@@ -127,13 +127,6 @@ variable "eks_iam_group" {
   description = "Name of the IAM group to make EKS user"
 }
 
-
-variable "local_exec_interpreter" {
-  type        = string
-  default     = "/bin/bash"
-  description = "shell to use for local exec"
-}
-
 variable "apply_config_map_aws_auth" {
   type        = bool
   default     = true
@@ -186,16 +179,5 @@ variable "configmap_auth_file" {
   type        = string
   default     = ""
   description = "Path to `configmap_auth_file`"
-}
-
-variable "aws_eks_update_kubeconfig_additional_arguments" {
-  type        = string
-  default     = ""
-  description = "Additional arguments for `aws eks update-kubeconfig` command, e.g. `--role-arn xxxxxxxxx`. For more info, see https://docs.aws.amazon.com/cli/latest/reference/eks/update-kubeconfig.html"
-}
-
-variable "workers_role_arns" {
-  type        = list(string)
-  description = "List of Role ARNs of the worker nodes"
 }
 

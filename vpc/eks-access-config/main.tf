@@ -26,7 +26,6 @@ module "eks-vpc" {
   eks_iam_group = var.eks_iam_group
 
 
-  local_exec_interpreter = var.local_exec_interpreter
   apply_config_map_aws_auth = var.apply_config_map_aws_auth
   map_additional_aws_accounts = var.map_additional_aws_accounts
   map_additional_iam_roles = var.map_additional_iam_roles
