@@ -47,6 +47,14 @@ resource "aws_launch_template" "eks_bastion_lt" {
 #         Bastion host ASG                      #
 #################################################
 resource "aws_autoscaling_group" "bastion_asg" {
+  depends_on = [
+    aws_launch_template.eks_bastion_lt,
+    aws_iam_role.eks_read_role,
+    aws_iam_role.eks_full_access_role,
+    data.template_file.configmap_auth,
+    aws_s3_bucket_object.artifactory_bucket_object
+  ]
+
   name_prefix = "eks-bastion-asg-${var.environment}"
 
   vpc_zone_identifier  = data.terraform_remote_state.eks_vpc.outputs.public_subnets

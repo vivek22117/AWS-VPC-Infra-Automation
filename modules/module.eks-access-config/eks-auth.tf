@@ -44,6 +44,8 @@ locals {
 }
 
 data "template_file" "configmap_auth" {
+  depends_on = [aws_iam_role.eks_full_access_role, aws_iam_role.eks_read_role]
+
   count = var.apply_config_map_aws_auth ? 1 : 0
 
   template = file(local.configmap_auth_template_file)
@@ -57,6 +59,8 @@ data "template_file" "configmap_auth" {
 }
 
 resource "local_file" "configmap_auth" {
+  depends_on = [data.template_file.configmap_auth]
+
   count = var.apply_config_map_aws_auth ? 1 : 0
 
   content  = join("", data.template_file.configmap_auth.*.rendered)
@@ -64,6 +68,8 @@ resource "local_file" "configmap_auth" {
 }
 
 resource "aws_s3_bucket_object" "artifactory_bucket_object" {
+  depends_on = [local_file.configmap_auth, data.template_file.configmap_auth]
+
   key                    = "deploy/eks/config-auth.yaml"
   bucket                 = data.terraform_remote_state.s3_buckets.outputs.artifactory_s3_name
   content                = join("", data.template_file.configmap_auth.*.rendered)
