@@ -43,7 +43,7 @@ common_tags = {
 }
 
 subnets = []
-cluster_endpoint_public_access_cidrs = []
+cluster_endpoint_public_access_cidrs = null
 cluster_service_ipv4_cidr = null
 
 eks_cluster_create_timeout = "30m"

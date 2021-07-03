@@ -24,7 +24,7 @@ env:
 
 jobs:
   terraform:
-    name: 'EKS-Cluster-Resources-Pipeline'
+    name: 'EKS-Cluster-Resources-Pipeline-${{ github.event.inputs.action }}'
     runs-on: ubuntu-latest
 
     defaults:
