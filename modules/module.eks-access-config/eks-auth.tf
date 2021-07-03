@@ -8,8 +8,6 @@ locals {
   configmap_auth_template_file = var.configmap_auth_template_file == "" ? join("/", [path.module, "data-scripts/configmap-auth.yaml.tpl"]) : var.configmap_auth_template_file
   configmap_auth_file          = var.configmap_auth_file == "" ? join("/", [path.module, "data-scripts/configmap-auth.yaml"]) : var.configmap_auth_file
 
-  cluster_name = join("", data.terraform_remote_state.eks_cluster.outputs.eks_cluster_id)
-
   # Add worker nodes role ARNs (could be from many worker groups) to the ConfigMap
   map_worker_roles = [
     for role_arn in tolist([data.terraform_remote_state.eks_cluster.outputs.eks_cluster_worker_role_arn]) : {
