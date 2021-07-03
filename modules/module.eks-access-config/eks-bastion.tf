@@ -48,9 +48,6 @@ resource "aws_launch_template" "eks_bastion_lt" {
 #################################################
 resource "aws_autoscaling_group" "bastion_asg" {
   depends_on = [
-    aws_launch_template.eks_bastion_lt,
-    aws_iam_role.eks_read_role,
-    aws_iam_role.eks_full_access_role,
     data.template_file.configmap_auth,
     aws_s3_bucket_object.artifactory_bucket_object
   ]
