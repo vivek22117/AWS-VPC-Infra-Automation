@@ -11,6 +11,59 @@ variable "cluster_name" {
   description = "Name of EKS cluster"
 }
 
+variable "cluster_log_kms_key_id" {
+  type        = string
+  default     = ""
+  description = "If a KMS Key ARN is set, this key will be used to encrypt the corresponding log group. Please be sure that the KMS Key has an appropriate key policy (https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/encrypt-log-data-kms.html)"
+}
+
+variable "common_tags" {
+  type        = map(string)
+  description = "A map of tags to add to all resources"
+  default     = {}
+}
+
+variable "subnets" {
+  type        = list(string)
+  description = "A list of subnets to place the EKS cluster and workers within."
+  default = []
+}
+
+variable "cluster_endpoint_public_access_cidrs" {
+  type        = list(string)
+  description = "List of CIDR blocks which can access the Amazon EKS public API server endpoint."
+  default     = []
+}
+
+variable "cluster_service_ipv4_cidr" {
+  type        = string
+  description = "The CIDR block to assign Kubernetes service IP addresses"
+  default     = null
+}
+
+variable "eks_cluster_create_timeout" {
+  type        = string
+  description = "Timeout value when creating the EKS cluster."
+  default     = "30m"
+}
+
+variable "eks_cluster_delete_timeout" {
+  type        = string
+  description = "Timeout value when deleting the EKS cluster."
+  default     = "30m"
+}
+
+variable "cluster_encryption_resources" {
+  type = list(string)
+  description = "Encryption configuration for the cluster resources"
+  default = []
+}
+
+variable "cluster_egress_cidrs" {
+  type        = list(string)
+  description = "List of CIDR blocks that are permitted for cluster egress traffic."
+}
+
 variable "cidr_block" {
   type        = string
   description = "Cidr range for vpc"
@@ -94,16 +147,6 @@ variable "isMonitoring" {
   description = "Monitoring is enabled or disabled for the resources creating"
 }
 
-#####=============Local variables===============#####
-locals {
-  common_tags = {
-    owner       = var.owner
-    team        = var.team
-    environment = var.environment
-    monitoring  = var.isMonitoring
-    Project     = "DoubleDigit-Solutions"
-  }
-}
 
 #####================EKS Variables======================#####
 variable "eks_cluster_name" {

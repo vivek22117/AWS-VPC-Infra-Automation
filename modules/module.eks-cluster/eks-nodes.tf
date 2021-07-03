@@ -44,6 +44,8 @@ resource "aws_eks_node_group" "eks_private_ng" {
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
   # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
   depends_on = [
+    aws_eks_cluster.doubledigit_eks,
+    aws_security_group.eks_nodes_sg,
     aws_iam_role_policy_attachment.aws_eks_worker_node_policy,
     aws_iam_role_policy_attachment.aws_eks_cni_policy,
     aws_iam_role_policy_attachment.ec2_read_only,
@@ -97,6 +99,8 @@ resource "aws_eks_node_group" "eks_public_ng" {
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
   # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
   depends_on = [
+    aws_eks_cluster.doubledigit_eks,
+    aws_security_group.eks_nodes_sg,
     aws_iam_role_policy_attachment.aws_eks_worker_node_policy,
     aws_iam_role_policy_attachment.aws_eks_cni_policy,
     aws_iam_role_policy_attachment.ec2_read_only,

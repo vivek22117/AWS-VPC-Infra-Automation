@@ -9,7 +9,7 @@ resource "aws_security_group" "eks_cluster" {
   tags = merge(local.common_tags, map("Name", "EKS-SG-${var.environment}"))
 }
 
-resource "aws_security_group_rule" "eks_cluster_node_inbound" {
+resource "aws_security_group_rule" "eks_cluster_workers_inbound" {
   type                     = "ingress"
   description              = "Allow worker nodes to communicate with the cluster API Server"
   from_port                = 443
@@ -57,7 +57,7 @@ resource "aws_security_group_rule" "eks_cluster_outbound_internet" {
   to_port           = 0
   protocol          = "-1"
   security_group_id = aws_security_group.eks_cluster.id
-  cidr_blocks       = ["0.0.0.0/0"]
+  cidr_blocks       = var.cluster_egress_cidrs
 }
 
 #################################################
