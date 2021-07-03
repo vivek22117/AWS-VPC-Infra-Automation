@@ -9,6 +9,6 @@ aws eks update-kubeconfig --name=${cluster_name} --region=${default_region} --ku
 
 kubectl version --kubeconfig ${kubeconfig_path}
 
-kubectl apply -f ${configmap_auth_file} --kubeconfig ${kubeconfig_path}
+kubectl apply -f config-auth.yaml --kubeconfig ${kubeconfig_path}
 
 echo 'Applied Auth ConfigMap with kubectl'
