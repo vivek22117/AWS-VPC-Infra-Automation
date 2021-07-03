@@ -1,7 +1,7 @@
 ####################################################
-#        Dev EKS-VPC module configuration          #
+#        EKS Access Infra module configuration     #
 ####################################################
-module "eks-vpc" {
+module "eks_access_infra" {
   source = "../../modules/module.eks-access-config"
 
   environment    = var.environment
