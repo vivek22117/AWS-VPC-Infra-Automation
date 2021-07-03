@@ -94,10 +94,6 @@ resource "aws_iam_role_policy_attachment" "ec2_read_only" {
   role       = aws_iam_role.eks_nodes_role.name
 }
 
-resource "aws_iam_role_policy_attachment" "cluster_autoscaling" {
-  policy_arn = aws_iam_policy.cluster_autoscaling_policy.arn
-  role       = aws_iam_role.eks_nodes_role.name
-}
 
 resource "aws_iam_policy" "cluster_autoscaling_policy" {
   name        = "EKSClusterAutoScalingPolicy"
@@ -122,6 +118,12 @@ resource "aws_iam_policy" "cluster_autoscaling_policy" {
 }
 EOF
 }
+
+resource "aws_iam_role_policy_attachment" "cluster_autoscaling" {
+  policy_arn = aws_iam_policy.cluster_autoscaling_policy.arn
+  role       = aws_iam_role.eks_nodes_role.name
+}
+
 
 resource "aws_iam_instance_profile" "eks_node_role_profile" {
   name = "${var.cluster_name}-eks-node-instance-profile"
