@@ -52,7 +52,7 @@ resource "aws_autoscaling_group" "bastion_asg" {
     aws_s3_bucket_object.artifactory_bucket_object
   ]
 
-  name_prefix = "eks-bastion-asg-${var.environment}"
+  name = "${aws_launch_template.eks_bastion_lt.name}-asg"
 
   vpc_zone_identifier  = data.terraform_remote_state.eks_vpc.outputs.public_subnets
   termination_policies = var.termination_policies
@@ -64,7 +64,7 @@ resource "aws_autoscaling_group" "bastion_asg" {
 
   launch_template {
     id      = aws_launch_template.eks_bastion_lt.id
-    version = "$Latest"
+    version = aws_launch_template.eks_bastion_lt.latest_version
   }
 
   lifecycle {
