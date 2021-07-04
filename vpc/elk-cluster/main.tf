@@ -4,7 +4,6 @@
 module "doubledigit-logging-es" {
   source = "../../modules/module-elk-stack"
 
-  profile        = var.profile
   environment    = var.environment
   default_region = var.default_region
 
