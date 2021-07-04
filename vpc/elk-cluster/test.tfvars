@@ -2,7 +2,7 @@ default_region = "us-east-1"
 
 sg_name                                = "dd-es-sg"
 es_domain_name                         = "dd-logging-es"
-elasticsearch_version                  = "7.7"
+elasticsearch_version                  = "7.9"
 encryption_enabled                     = "true"
 instance_type                          = "t3.small.elasticsearch"
 instance_count                         = "2"
