@@ -24,7 +24,7 @@ env:
 
 jobs:
   terraform:
-    name: 'ELK-Cluster-Deployment-Pipeline'
+    name: 'ELK-Cluster-Deployment-Pipeline-${{ github.event.inputs.action }}'
     runs-on: ubuntu-latest
 
     defaults:
