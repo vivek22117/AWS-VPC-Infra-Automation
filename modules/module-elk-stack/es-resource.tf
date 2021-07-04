@@ -15,8 +15,8 @@ resource "aws_security_group_rule" "secure_cidrs" {
   from_port         = 1024
   to_port           = 65535
   protocol          = "TCP"
-  cidr_blocks       = [data.terraform_remote_state.vpc.outputs.vpc_cidr]
   security_group_id = aws_security_group.es_sg.id
+  cidr_blocks       = [data.terraform_remote_state.vpc.outputs.vpc_cidr_block]
 }
 
 resource "aws_security_group_rule" "secure_sgs" {
@@ -35,7 +35,7 @@ resource "aws_security_group_rule" "secure_vpc_cidr" {
   from_port         = 443
   to_port           = 443
   protocol          = "tcp"
-  cidr_blocks       = [data.terraform_remote_state.vpc.outputs.vpc_cidr]
+  cidr_blocks       = [data.terraform_remote_state.vpc.outputs.vpc_cidr_block]
   security_group_id = aws_security_group.es_sg.id
 }
 
@@ -89,8 +89,8 @@ POLICY
   vpc_options {
     security_group_ids = [aws_security_group.es_sg.id]
     subnet_ids = [
-      data.terraform_remote_state.vpc.outputs.private_subnets[0],
-      data.terraform_remote_state.vpc.outputs.private_subnets[1]
+      data.terraform_remote_state.vpc.outputs.public_subnets[0],
+      data.terraform_remote_state.vpc.outputs.public_subnets[1]
     ]
   }
 
