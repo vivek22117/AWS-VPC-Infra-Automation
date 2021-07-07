@@ -12,7 +12,7 @@ variable "default_region" {
 #########################################################
 variable "s3_bucket_prefix" {
   type        = string
-  default     = "dd-terraform-tfstate"
+  default     = "doubledigit-tfstate"
   description = "Prefix for s3 bucket"
 }
 
