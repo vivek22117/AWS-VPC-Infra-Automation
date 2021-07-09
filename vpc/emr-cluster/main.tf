@@ -1,7 +1,7 @@
 ####################################################
-#        QA VPC moudle configuration              #
+#        QA VPC module configuration              #
 ####################################################
-module "emr_clustser" {
+module "emr_cluster" {
   source = "../../modules/module.emr-cluster"
 
   bid_price = var.bid_price

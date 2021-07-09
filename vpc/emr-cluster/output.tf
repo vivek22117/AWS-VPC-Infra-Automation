@@ -1,11 +1,11 @@
 output "emr_cluster_id" {
-  value = aws_emr_cluster.cluster.id
+  value = module.emr_cluster.emr_cluster_id
 }
 
 output "name" {
-  value = aws_emr_cluster.cluster.name
+  value = module.emr_cluster.name
 }
 
 output "master_public_dns" {
-  value = aws_emr_cluster.cluster.master_public_dns
+  value = module.emr_cluster.master_public_dns
 }
