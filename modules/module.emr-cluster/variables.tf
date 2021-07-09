@@ -64,7 +64,7 @@ variable "kms_description" {
   description = "KMS key to encrypt data at rest in HDFS"
 }
 
-variable "deletion_time_limit" {
+variable "kms_deletion_time_limit" {
   type        = number
   description = "The duration in days after which the key is deleted after destruction of the resource"
 }
@@ -109,6 +109,11 @@ variable "ssh_key_name" {
 variable "core_instance_type" {
   type        = string
   description = "Slave instance type"
+}
+
+variable "core_instance_bid_price" {
+  type        = string
+  description = "Bid price for slave instances"
 }
 
 variable "ebs_volume_size" {

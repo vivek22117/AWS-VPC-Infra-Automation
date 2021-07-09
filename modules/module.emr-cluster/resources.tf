@@ -8,12 +8,12 @@
 //  etag   = filemd5("${path.module}/../../rsvp-processor/target/emr-rsvp-processor-1.0-SNAPSHOT-jar-with-dependencies.jar")
 //}
 
-//resource "aws_s3_bucket_object" "ria_emr_jar" {
-//  bucket                 = data.terraform_remote_state.backend.outputs.artifactory_bucket_name
-//  key                    = var.rsvp_emr_jar_key
-//  source                 = "${path.module}/../../ria-data-processor/target/ria-data-processor-jar-with-dependencies.jar"
-//  etag   = filemd5("${path.module}/../../ria-data-processor/target/ria-data-processor-jar-with-dependencies.jar")
-//}
+resource "aws_s3_bucket_object" "ria_emr_jar" {
+  bucket                 = data.terraform_remote_state.backend.outputs.artifactory_bucket_name
+  key                    = var.rsvp_emr_jar_key
+  source                 = "${path.module}/../../ria-data-processor/target/ria-data-processor-jar-with-dependencies.jar"
+  etag   = filemd5("${path.module}/../../ria-data-processor/target/ria-data-processor-jar-with-dependencies.jar")
+}
 
 
 resource "aws_emr_security_configuration" "security_configuration" {
@@ -56,7 +56,7 @@ resource "aws_emr_cluster" "cluster" {
   core_instance_group {
     instance_type  = var.core_instance_type
     instance_count = var.core_instance_count
-    bid_price      = var.bid_price
+    bid_price      = var.core_instance_bid_price
 
     ebs_config {
       size                 = var.ebs_volume_size
