@@ -25,11 +25,11 @@ resource "aws_db_instance" "dd_postgresql" {
     ]
   }
 
-  engine         = "postgres"
-//  engine_version = var.engine_version
+  engine = "postgres"
+  //  engine_version = var.engine_version
 
-  identifier                      = format("${var.database_identifier}%s", var.environment)
-//  snapshot_identifier             = var.snapshot_identifier
+  identifier = format("${var.database_identifier}%s", var.environment)
+  //  snapshot_identifier             = var.snapshot_identifier
   instance_class                  = var.instance_type
   storage_type                    = var.storage_type
   name                            = var.database_name
