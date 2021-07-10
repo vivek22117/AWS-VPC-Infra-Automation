@@ -11,12 +11,12 @@ resource "aws_security_group" "driver_sg" {
 }
 
 resource "aws_security_group_rule" "allow_all_outbound_traffic" {
-  type                     = "egress"
-  from_port                = 0
-  to_port                  = 0
-  protocol                 = "-1"
-  security_group_id        = aws_security_group.driver_sg.id
-  cidr_blocks =   ["0.0.0.0/0"]
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  security_group_id = aws_security_group.driver_sg.id
+  cidr_blocks       = ["0.0.0.0/0"]
 }
 
 ###================Master/Driver Inbound Rules=================###
@@ -107,12 +107,12 @@ resource "aws_security_group" "nodes_sg" {
 }
 
 resource "aws_security_group_rule" "allow_all_outbound_traffic_in_node_sg" {
-  type                     = "egress"
-  from_port                = 0
-  to_port                  = 0
-  protocol                 = "-1"
-  security_group_id        = aws_security_group.nodes_sg.id
-  cidr_blocks =   ["0.0.0.0/0"]
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  security_group_id = aws_security_group.nodes_sg.id
+  cidr_blocks       = ["0.0.0.0/0"]
 }
 
 ###================Master/Driver Inbound Rules=================###
@@ -193,12 +193,12 @@ resource "aws_security_group" "service_sg" {
 }
 
 resource "aws_security_group_rule" "allow_all_outbound_traffic_in_service_sg" {
-  type                     = "egress"
-  from_port                = 0
-  to_port                  = 0
-  protocol                 = "-1"
-  security_group_id        = aws_security_group.service_sg.id
-  cidr_blocks =   ["0.0.0.0/0"]
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  security_group_id = aws_security_group.service_sg.id
+  cidr_blocks       = ["0.0.0.0/0"]
 }
 
 resource "aws_security_group_rule" "allow_port_9443_from_Master" {

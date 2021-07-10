@@ -80,7 +80,7 @@ variable "key_rotation_enabled" {
 }
 
 variable "enable_visibility" {
-  type = bool
+  type        = bool
   description = "Whether the job flow is visible to all IAM users of the AWS account associated with the job flow"
 }
 
@@ -209,58 +209,58 @@ variable "enable_s3_sse" {
 }
 
 variable "dynamic_partition_enabled" {
-  type = string
+  type        = string
   description = "Dynamic partition pruning improves job performance by selecting specific partitions"
 }
 
 variable "distinct_enabled" {
-  type = string
+  type        = string
   description = "This optimization eliminates duplicate values in each collection before computing the intersection"
 }
 
 ###=======================EMR Steps Configuration========================================####
 variable "driver_memory" {
-  type = string
+  type        = string
   description = "Driver memory allocated to Maseter instance for spark configuration"
 }
 
 variable "driver_cores" {
-  type = string
+  type        = string
   description = "Driver cores allocated to master instance"
 }
 
 variable "num_executors" {
-  type = string
+  type        = string
   description = "Number of executors created using core instances"
 }
 
 variable "executor_memory" {
-  type = string
+  type        = string
   description = "Memory allocated to each executor created"
 }
 
 variable "executor_cores" {
-  type = string
+  type        = string
   description = "Number of cores in each executor"
 }
 
 variable "rsvp_reader_class" {
-  type = string
+  type        = string
   description = "Class name for RSVP record reader"
 }
 
 variable "jar_location" {
-  type = string
+  type        = string
   description = "S3 location for spark jar"
 }
 
 variable "rsvp_emr_jar_key" {
-  type = string
+  type        = string
   description = "Bucket key for rsvp processor jar"
 }
 
 variable "first_step_name" {
-  type = string
+  type        = string
   description = "First emr step name"
 }
 //Local variables

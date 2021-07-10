@@ -9,9 +9,9 @@
 //}
 
 resource "aws_s3_bucket_object" "ria_emr_jar" {
-  bucket                 = data.terraform_remote_state.backend.outputs.artifactory_bucket_name
-  key                    = var.rsvp_emr_jar_key
-  source                 = "${path.module}/../../ria-data-processor/target/ria-data-processor-jar-with-dependencies.jar"
+  bucket = data.terraform_remote_state.backend.outputs.artifactory_bucket_name
+  key    = var.rsvp_emr_jar_key
+  source = "${path.module}/../../ria-data-processor/target/ria-data-processor-jar-with-dependencies.jar"
   etag   = filemd5("${path.module}/../../ria-data-processor/target/ria-data-processor-jar-with-dependencies.jar")
 }
 
@@ -23,17 +23,17 @@ resource "aws_emr_security_configuration" "security_configuration" {
 }
 
 resource "aws_emr_cluster" "cluster" {
-  name          = "${var.cluster_name}-${var.environment}"
+  name = "${var.cluster_name}-${var.environment}"
 
   release_label = var.emr_release
   applications  = ["Spark", "Zeppelin", "Hadoop", "Ganglia"]
 
-  log_uri       = "s3://${data.terraform_remote_state.backend.outputs.dataLake_bucket_name}/emr/rsvp/logs/"
+  log_uri = "s3://${data.terraform_remote_state.backend.outputs.dataLake_bucket_name}/emr/rsvp/logs/"
 
   termination_protection            = false
   keep_job_flow_alive_when_no_steps = true
-  visible_to_all_users = var.enable_visibility
-//  custom_ami_id = data.aws_ami.emr.id
+  visible_to_all_users              = var.enable_visibility
+  //  custom_ami_id = data.aws_ami.emr.id
 
   ec2_attributes {
     subnet_id                         = data.terraform_remote_state.vpc.outputs.private_subnets[1]
@@ -65,7 +65,7 @@ resource "aws_emr_cluster" "cluster" {
     }
   }
 
-/*  bootstrap_action {
+  /*  bootstrap_action {
     path = "s3://doubledigit-aritifactory-qa-us-east-1/bootstrap-actions/setup-config.sh"
     name = "setup-config.sh"
   }*/
@@ -74,12 +74,12 @@ resource "aws_emr_cluster" "cluster" {
     Name        = "${var.cluster_name}-${var.environment}"
     Environment = var.environment
     Region      = var.default_region
-    Project = "DoubleDigit-Solutions"
+    Project     = "DoubleDigit-Solutions"
   }
 
   service_role           = aws_iam_role.emr_rsvp_processor_service_role.arn
   security_configuration = aws_emr_security_configuration.security_configuration.name
-//  configurations         = data.template_file.configuration.rendered
+  //  configurations         = data.template_file.configuration.rendered
 
 
   step_concurrency_level = 1
@@ -92,9 +92,9 @@ resource "aws_emr_cluster" "cluster" {
     for_each = jsondecode(data.template_file.emr_steps.rendered)
     content {
       action_on_failure = step.value.action_on_failure
-      name = step.value.name
+      name              = step.value.name
       hadoop_jar_step {
-        jar = step.value.hadoop_jar_step.jar
+        jar  = step.value.hadoop_jar_step.jar
         args = step.value.hadoop_jar_step.args
       }
     }
