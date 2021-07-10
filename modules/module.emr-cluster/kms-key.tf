@@ -7,8 +7,8 @@ resource "aws_kms_key" "emr_encryption_key" {
   key_usage = "ENCRYPT_DECRYPT"
   //  policy                  = data.template_file.kms_policy.rendered
   deletion_window_in_days = var.kms_deletion_time_limit
-  is_enabled = var.is_key_enabled
-  enable_key_rotation = var.key_rotation_enabled
+  is_enabled              = var.is_key_enabled
+  enable_key_rotation     = var.key_rotation_enabled
 
   tags = merge(local.common_tags, map("Name", "EMR_KMS_KEY"))
 
