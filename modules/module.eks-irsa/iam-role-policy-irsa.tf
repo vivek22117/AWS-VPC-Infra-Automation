@@ -22,7 +22,6 @@ locals {
   }
 }
 
-# security/policy
 resource "aws_iam_role" "irsa_role" {
   count = var.enabled ? 1 : 0
 
@@ -34,7 +33,7 @@ resource "aws_iam_role" "irsa_role" {
       Action = "sts:AssumeRoleWithWebIdentity"
       Effect = "Allow"
       Principal = {
-        Federated = var.oidc_arn
+        Federated = data.terraform_remote_state.eks_cluster.outputs.eks_cluster_identity_oidc_issuer_arn
       }
       Condition = {
         StringEquals = {
@@ -52,5 +51,5 @@ resource "aws_iam_role_policy_attachment" "irsa_role_policy_att" {
   for_each   = var.enabled ? { for key, val in var.policy_arns : key => val } : {}
 
   policy_arn = each.value
-  role       = aws_iam_role.irsa[0].name
+  role       = aws_iam_role.irsa_role[0].name
 }

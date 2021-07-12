@@ -70,12 +70,12 @@ variable "enabled" {
 
 variable "namespace" {
   type        = string
-  description = "The namespace where kubernetes service account is"
+  description = "The namespace where kubernetes service account is, example 'kube-system'"
 }
 
 variable "service_account" {
   type        = string
-  description = "The name of kubernetes service account"
+  description = "The name of kubernetes service account, example 'aws-node'"
 }
 
 variable "policy_arns" {
