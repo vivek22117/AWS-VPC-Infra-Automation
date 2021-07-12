@@ -8,7 +8,7 @@ output "arn" {
   description = "The ARN of generated IAM role"
 }
 
-output "kubecli" {
+output "kubectl_cli" {
   value = (var.enabled ? join(" ", [
     format("kubectl -n %s create sa %s", var.namespace, var.service_account),
     "&&",

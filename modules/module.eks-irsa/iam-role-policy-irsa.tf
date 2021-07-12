@@ -11,6 +11,8 @@ locals {
   suffix = var.enabled ? random_string.irsa_suffix.0.result : ""
   name   = var.name == null ? substr(join("-", ["irsa", local.suffix]), 0, 64) : substr(var.name, 0, 64)
   oidc_fully_qualified_subjects = format("system:serviceaccount:%s:%s", var.namespace, var.service_account)
+  oidc_principal = var.oidc_arn == "" ?
+                   data.terraform_remote_state.eks_cluster.outputs.eks_cluster_identity_oidc_issuer_arn : var.oidc_arn
 
   common_tags = {
     Owner       = var.owner
@@ -30,10 +32,11 @@ resource "aws_iam_role" "irsa_role" {
 
   assume_role_policy = jsonencode({
     Statement = [{
+      Version = "2012-10-17"
       Action = "sts:AssumeRoleWithWebIdentity"
       Effect = "Allow"
       Principal = {
-        Federated = data.terraform_remote_state.eks_cluster.outputs.eks_cluster_identity_oidc_issuer_arn
+        Federated = local.oidc_principal
       }
       Condition = {
         StringEquals = {
@@ -41,7 +44,6 @@ resource "aws_iam_role" "irsa_role" {
         }
       }
     }]
-    Version = "2012-10-17"
   })
 
   tags = merge(local.common_tags, map("Name", local.name))
