@@ -64,7 +64,9 @@ resource "aws_eks_cluster" "doubledigit_eks" {
   ]
 }
 
-
+#########################################################################
+#                Configure EKS OIDC Provider                            #
+#########################################################################
 data "tls_certificate" "eks_oidc_thumbprint" {
   url = aws_eks_cluster.doubledigit_eks.identity.0.oidc.0.issuer
 }
