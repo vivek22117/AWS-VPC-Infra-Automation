@@ -1,9 +1,9 @@
 output "name" {
-  value       = module.eks_irsa.name
+  value = module.eks_irsa.name
 }
 
 output "arn" {
-  value       = module.eks_irsa.arn
+  value = module.eks_irsa.arn
 }
 
 output "kubectl_cli" {
@@ -11,9 +11,9 @@ output "kubectl_cli" {
     format("kubectl -n %s create sa %s", var.namespace, var.service_account),
     "&&",
     format("kubectl -n %s annotate sa %s %s",
-    var.namespace,
-    var.service_account,
-    join("=", ["eks.amazonaws.com/role-arn", module.eks_irsa.kubectl_cli])
+      var.namespace,
+      var.service_account,
+      join("=", ["eks.amazonaws.com/role-arn", module.eks_irsa.kubectl_cli])
     ),
   ]) : null)
   description = "The kubernetes configuration file for creating IAM role with service account"
