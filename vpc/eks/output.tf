@@ -28,6 +28,9 @@ output "eks_cluster_identity_oidc_issuer_arn" {
   value       = module.eks-vpc.eks_cluster_identity_oidc_issuer_arn
 }
 
+output "eks_cluster_identity_oidc_url" {
+  value = module.eks-vpc.eks_cluster_identity_oidc_url
+}
 
 output "eks_cluster_iam_role_arn" {
   value = module.eks-vpc.eks_cluster_iam_role_arn

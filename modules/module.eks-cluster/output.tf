@@ -27,6 +27,10 @@ output "eks_cluster_identity_oidc_issuer_arn" {
   value       = aws_iam_openid_connect_provider.eks_oidc_provider.arn
 }
 
+output "eks_cluster_identity_oidc_url" {
+  value = replace(aws_iam_openid_connect_provider.eks_oidc_provider.url, "https://", "")
+}
+
 output "eks_cluster_certificate_authority" {
   value = aws_eks_cluster.doubledigit_eks.certificate_authority
 }
