@@ -78,9 +78,14 @@ variable "helm" {
   }
 }
 
-variable "oidc" {
-  description = "The Open ID Connect properties"
-  type        = map
+variable "oidc_url" {
+  description = "A URL of the OIDC Provider"
+  type        = string
+}
+
+variable "oidc_arn" {
+  description = "An ARN of the OIDC Provider"
+  type        = string
 }
 
 
