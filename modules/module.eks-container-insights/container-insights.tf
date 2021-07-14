@@ -1,13 +1,35 @@
+resource "random_string" "container_insights_suffix" {
+  count   = var.enabled ? 1 : 0
+
+  length  = 5
+  upper   = false
+  lower   = true
+  number  = false
+  special = false
+}
+
+
+locals {
+  suffix = var.petname && var.enabled ? random_string.container_insights_suffix.0.result : ""
+  cluster_name = var.cluster_name == "" ? data.terraform_remote_state.eks_cluster.outputs.eks_cluster_id : var.cluster_name
+
+  oidc_principal = var.oidc_arn == "" ?
+  data.terraform_remote_state.eks_cluster.outputs.eks_cluster_identity_oidc_issuer_arn : var.oidc_arn
+
+  oidc_url = var.oidc_url == "" ? data.terraform_remote_state.eks_cluster.outputs.eks_cluster_identity_oidc_issuer : var.oidc_url
+}
+
+
 module "irsa-metrics" {
   source         = "../module.eks-irsa"
 
   count          = var.enabled ? 1 : 0
 
-  name           = join("-", compact(["irsa", var.cluster_name, "amazon-cloudwatch", local.suffix]))
+  name           = join("-", compact(["irsa", local.cluster_name, "amazon-cloudwatch", local.suffix]))
   namespace      = "amazon-cloudwatch"
   service_account = "amazon-cloudwatch"
-  oidc_url       = var.oidc.url
-  oidc_arn       = var.oidc.arn
+  oidc_url       = local.oidc_url
+  oidc_arn       = local.oidc_principal
   policy_arns    = ["arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"]
 
   enabled = var.enabled
@@ -33,7 +55,7 @@ resource "helm_release" "metrics" {
 
   dynamic "set" {
     for_each = {
-      "clusterName"                                               = var.cluster_name
+      "clusterName"                                               = local.cluster_name
       "serviceAccount.name"                                       = "amazon-cloudwatch"
       "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn" = module.irsa-metrics[0].arn[0]
     }
@@ -49,11 +71,11 @@ module "irsa-logs" {
 
   count          = var.enabled ? 1 : 0
 
-  name           = join("-", compact(["irsa", var.cluster_name, "aws-for-fluent-bit", local.suffix]))
+  name           = join("-", compact(["irsa", local.cluster_name, "aws-for-fluent-bit", local.suffix]))
   namespace      = "kube-system"
   service_account = "aws-for-fluent-bit"
-  oidc_url       = var.oidc.url
-  oidc_arn       = var.oidc.arn
+  oidc_url       = local.oidc_url
+  oidc_arn       = local.oidc_principal
   policy_arns    = ["arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"]
 
   enabled = var.enabled
