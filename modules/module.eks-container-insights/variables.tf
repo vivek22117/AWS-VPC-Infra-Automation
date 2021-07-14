@@ -64,48 +64,40 @@ locals {
 
 #####========================IRSA Config Variables====================#####
 variable "enabled" {
+  description = "A conditional indicator to enable cluster-autoscale"
   type        = bool
-  description = "A conditional indicator to enable"
+  default     = true
 }
 
-variable "namespace" {
-  type        = string
-  description = "The namespace where kubernetes service account is"
+variable "helm" {
+  description = "The helm release configuration"
+  type        = map
+  default = {
+    repository      = "https://aws.github.io/eks-charts"
+    cleanup_on_fail = true
+  }
 }
 
-variable "service_account" {
-  type        = string
-  description = "The name of kubernetes service account"
+variable "oidc" {
+  description = "The Open ID Connect properties"
+  type        = map
 }
 
-variable "policy_arns" {
-  description = "A list of policy ARNs to attach the role"
-  type        = list(string)
-  default     = []
-}
 
-variable "oidc_url" {
-  description = "A URL of the OIDC Provider"
-  type        = string
-}
-
-variable "oidc_arn" {
-  description = "An ARN of the OIDC Provider"
+variable "cluster_name" {
+  description = "The kubernetes cluster name"
   type        = string
 }
 
-
-variable "name" {
-  description = "The logical name of the module instance"
-  type        = string
-  default     = null
+variable "petname" {
+  description = "An indicator whether to append a random identifier to the end of the name to avoid duplication"
+  type        = bool
+  default     = true
 }
 
-
-variable "common_tags" {
+### tags
+variable "tags" {
   description = "The key-value maps for tagging"
   type        = map(string)
   default     = {}
 }
-
-
