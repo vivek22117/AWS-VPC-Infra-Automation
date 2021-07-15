@@ -8,6 +8,10 @@ resource "random_string" "container_insights_suffix" {
   special = false
 }
 
+data "aws_region" "current" {
+  count = var.enabled ? 1 : 0
+}
+
 
 locals {
   suffix = var.petname && var.enabled ? random_string.container_insights_suffix.0.result : ""
@@ -16,7 +20,7 @@ locals {
   oidc_principal = var.oidc_arn == "" ?
   data.terraform_remote_state.eks_cluster.outputs.eks_cluster_identity_oidc_issuer_arn : var.oidc_arn
 
-  oidc_url = var.oidc_url == "" ? data.terraform_remote_state.eks_cluster.outputs.eks_cluster_identity_oidc_issuer : var.oidc_url
+  oidc_url = var.oidc_url == "" ? data.terraform_remote_state.eks_cluster.outputs.eks_cluster_identity_oidc_url : var.oidc_url
 }
 
 
