@@ -13,6 +13,7 @@ locals {
   oidc_fully_qualified_subjects = format("system:serviceaccount:%s:%s", var.namespace, var.service_account)
   oidc_principal = var.oidc_arn == "" ?
                    data.terraform_remote_state.eks_cluster.outputs.eks_cluster_identity_oidc_issuer_arn : var.oidc_arn
+  oidc_url = var.oidc_url == "" ? data.terraform_remote_state.eks_cluster.outputs.eks_cluster_identity_oidc_url : var.oidc_url
 
   common_tags = {
     Owner       = var.owner
@@ -40,7 +41,7 @@ resource "aws_iam_role" "irsa_role" {
       }
       Condition = {
         StringEquals = {
-          format("%s:sub", var.oidc_url) = local.oidc_fully_qualified_subjects
+          format("%s:sub", local.oidc_url) = local.oidc_fully_qualified_subjects
         }
       }
     }]
