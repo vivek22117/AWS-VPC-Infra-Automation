@@ -93,16 +93,3 @@ variable "cluster_name" {
   description = "The kubernetes cluster name"
   type        = string
 }
-
-variable "petname" {
-  description = "An indicator whether to append a random identifier to the end of the name to avoid duplication"
-  type        = bool
-  default     = true
-}
-
-### tags
-variable "tags" {
-  description = "The key-value maps for tagging"
-  type        = map(string)
-  default     = {}
-}
