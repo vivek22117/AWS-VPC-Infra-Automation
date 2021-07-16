@@ -94,11 +94,6 @@ variable "cluster_name" {
   type        = string
 }
 
-variable "petname" {
-  description = "An indicator whether to append a random identifier to the end of the name to avoid duplication"
-  type        = bool
-  default     = true
-}
 
 ### tags
 variable "tags" {

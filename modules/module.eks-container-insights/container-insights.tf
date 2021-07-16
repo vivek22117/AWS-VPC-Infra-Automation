@@ -14,7 +14,7 @@ data "aws_region" "current" {
 
 
 locals {
-  suffix = var.petname && var.enabled ? random_string.container_insights_suffix.0.result : ""
+  suffix = var.enabled ? random_string.container_insights_suffix.0.result : ""
   cluster_name = var.cluster_name == "" ? data.terraform_remote_state.eks_cluster.outputs.eks_cluster_id : var.cluster_name
 
   oidc_principal = var.oidc_arn == "" ?
