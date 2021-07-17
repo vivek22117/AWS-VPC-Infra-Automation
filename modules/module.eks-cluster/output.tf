@@ -42,3 +42,7 @@ output "eks_cluster_iam_role_arn" {
 output "eks_cluster_worker_role_arn" {
   value = aws_iam_role.eks_nodes_role.arn
 }
+
+output "eks_cluster_austoscaling_policy_arn" {
+  value = aws_iam_policy.cluster_autoscaling_policy.arn
+}

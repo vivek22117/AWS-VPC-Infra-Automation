@@ -43,3 +43,7 @@ output "eks_cluster_worker_role_arn" {
 output "eks_cluster_certificate_authority" {
   value = module.eks-vpc.eks_cluster_certificate_authority
 }
+
+output "eks_cluster_austoscaling_policy_arn" {
+  value = module.eks-vpc.eks_cluster_austoscaling_policy_arn
+}
