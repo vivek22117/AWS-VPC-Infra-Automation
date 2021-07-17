@@ -110,7 +110,8 @@ resource "aws_iam_policy" "cluster_autoscaling_policy" {
                 "autoscaling:DescribeLaunchConfigurations",
                 "autoscaling:DescribeTags",
                 "autoscaling:SetDesiredCapacity",
-                "autoscaling:TerminateInstanceInAutoScalingGroup"
+                "autoscaling:TerminateInstanceInAutoScalingGroup",
+                "ec2:DescribeLaunchTemplateVersions"
             ],
             "Resource": "*"
         }
