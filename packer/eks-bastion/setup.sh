@@ -19,10 +19,13 @@ mv kubectl /usr/local/bin/kubectl
 curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
 mv /tmp/eksctl /usr/local/bin
 
-yum install docker -y
+sudo amazon-linux-extras install -y docker
 systemctl enable docker
 systemctl start docker
-usermod -aG docker ec2-user
+sudo usermod -aG docker ec2-user
+sudo chkconfig docker on
+
+docker --version
 
 
 echo "Install SSM-Agent"
