@@ -30,21 +30,25 @@ resource "aws_iam_role" "irsa_role" {
   name = format("%s", local.name)
   path = "/"
 
-  assume_role_policy = jsonencode({
-    Statement = [{
-      Version = "2012-10-17"
-      Action  = "sts:AssumeRoleWithWebIdentity"
-      Effect  = "Allow"
-      Principal = {
-        Federated = local.oidc_principal
-      }
-      Condition = {
-        StringEquals = {
-          format("%s:sub", local.oidc_url) = local.oidc_fully_qualified_subjects
-        }
-      }
-    }]
-  })
+  assume_role_policy = <<EOF
+  {
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Action": "sts:AssumeRoleWithWebIdentity"
+              "Effect": "Allow",
+              "Principal": {
+                "Federated": "${local.oidc_principal}"
+              },
+              "Condition": {
+                  "StringEquals": {
+                      "${format("%s:sub", local.oidc_url)}": "${local.oidc_fully_qualified_subjects}"
+                  }
+              }
+          }
+      ]
+  }
+  EOF
 
   tags = merge(local.common_tags, map("Name", local.name))
 }
