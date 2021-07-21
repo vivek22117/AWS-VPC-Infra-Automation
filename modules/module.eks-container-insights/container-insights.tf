@@ -1,5 +1,5 @@
 resource "random_string" "container_insights_suffix" {
-  count   = var.enabled ? 1 : 0
+  count = var.enabled ? 1 : 0
 
   length  = 5
   upper   = false
@@ -14,40 +14,39 @@ data "aws_region" "current" {
 
 
 locals {
-  suffix = var.enabled ? random_string.container_insights_suffix.0.result : ""
+  suffix       = var.enabled ? random_string.container_insights_suffix.0.result : ""
   cluster_name = var.cluster_name == "" ? data.terraform_remote_state.eks_cluster.outputs.eks_cluster_id : var.cluster_name
 
-  oidc_principal = var.oidc_arn == "" ?
-  data.terraform_remote_state.eks_cluster.outputs.eks_cluster_identity_oidc_issuer_arn : var.oidc_arn
+  oidc_principal = var.oidc_arn == "" ? data.terraform_remote_state.eks_cluster.outputs.eks_cluster_identity_oidc_issuer_arn : var.oidc_arn
 
   oidc_url = var.oidc_url == "" ? data.terraform_remote_state.eks_cluster.outputs.eks_cluster_identity_oidc_url : var.oidc_url
 }
 
 
 module "irsa-metrics" {
-  source         = "../module.eks-irsa"
+  source = "../module.eks-irsa"
 
-  count          = var.enabled ? 1 : 0
+  count = var.enabled ? 1 : 0
 
-  name           = join("-", compact(["irsa", local.cluster_name, "amazon-cloudwatch", local.suffix]))
-  namespace      = "amazon-cloudwatch"
+  name            = join("-", compact(["irsa", local.cluster_name, "amazon-cloudwatch", local.suffix]))
+  namespace       = "amazon-cloudwatch"
   service_account = "amazon-cloudwatch"
-  oidc_url       = local.oidc_url
-  oidc_arn       = local.oidc_principal
-  policy_arns    = ["arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"]
+  oidc_url        = local.oidc_url
+  oidc_arn        = local.oidc_principal
+  policy_arns     = ["arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"]
 
-  enabled = var.enabled
-  component = var.component
+  enabled        = var.enabled
+  component      = var.component
   default_region = var.default_region
-  environment = var.environment
-  isMonitoring = var.isMonitoring
-  owner = var.owner
-  project = var.project
-  team = var.team
+  environment    = var.environment
+  isMonitoring   = var.isMonitoring
+  owner          = var.owner
+  project        = var.project
+  team           = var.team
 }
 
 resource "helm_release" "metrics" {
-  count            = var.enabled ? 1 : 0
+  count = var.enabled ? 1 : 0
 
   name             = "aws-cloudwatch-metrics"
   chart            = "aws-cloudwatch-metrics"
@@ -71,29 +70,29 @@ resource "helm_release" "metrics" {
 }
 
 module "irsa-logs" {
-  source         = "../module.eks-irsa"
+  source = "../module.eks-irsa"
 
-  count          = var.enabled ? 1 : 0
+  count = var.enabled ? 1 : 0
 
-  name           = join("-", compact(["irsa", local.cluster_name, "aws-for-fluent-bit", local.suffix]))
-  namespace      = "kube-system"
+  name            = join("-", compact(["irsa", local.cluster_name, "aws-for-fluent-bit", local.suffix]))
+  namespace       = "kube-system"
   service_account = "aws-for-fluent-bit"
-  oidc_url       = local.oidc_url
-  oidc_arn       = local.oidc_principal
-  policy_arns    = ["arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"]
+  oidc_url        = local.oidc_url
+  oidc_arn        = local.oidc_principal
+  policy_arns     = ["arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"]
 
-  enabled = var.enabled
-  component = var.component
+  enabled        = var.enabled
+  component      = var.component
   default_region = var.default_region
-  environment = var.environment
-  isMonitoring = var.isMonitoring
-  owner = var.owner
-  project = var.project
-  team = var.team
+  environment    = var.environment
+  isMonitoring   = var.isMonitoring
+  owner          = var.owner
+  project        = var.project
+  team           = var.team
 }
 
 resource "helm_release" "logs" {
-  count           = var.enabled ? 1 : 0
+  count = var.enabled ? 1 : 0
 
   name            = "aws-for-fluent-bit"
   chart           = "aws-for-fluent-bit"
