@@ -13,9 +13,9 @@ output "kubectl_cli" {
     format("kubectl -n %s create sa %s", var.namespace, var.service_account),
     "&&",
     format("kubectl -n %s annotate sa %s %s",
-    var.namespace,
-    var.service_account,
-    join("=", ["eks.amazonaws.com/role-arn", aws_iam_role.irsa_role.0.arn])
+      var.namespace,
+      var.service_account,
+      join("=", ["eks.amazonaws.com/role-arn", aws_iam_role.irsa_role.0.arn])
     ),
   ]) : null)
   description = "The kubernetes configuration file for creating IAM role with service account"
