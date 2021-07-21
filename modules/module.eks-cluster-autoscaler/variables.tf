@@ -76,7 +76,7 @@ variable "helm" {
     name            = "cluster-autoscaler"
     chart           = "cluster-autoscaler"
     namespace       = "kube-system"
-    service_account  = "cluster-autoscaler"
+    service_account = "cluster-autoscaler"
     cleanup_on_fail = true
   }
 }
