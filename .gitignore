@@ -28,6 +28,8 @@ hs_err_pid*
 *.xml
 .idea
 .idea/
+.idea/*.iml
+.idea/*.xml
 #Terraform files
 .terraform
 *.tfstate*
