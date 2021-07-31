@@ -20,11 +20,13 @@ function create_credentials() {
   aws configure set profile.eks-creator.aws_secret_access_key $(echo $TEMP | jq -r .Credentials.SecretAccessKey)
   aws configure set profile.eks-creator.aws_session_token $(echo $TEMP | jq -r .Credentials.SessionToken)
   aws configure set profile.eks-creator.region ${default_region}
+
+  aws configure list --profile eks-creator
 }
 
 
 function update_and_apply_config() {
-  echo ================== Update & Apply Config ===============================
+  echo ================== Update and Apply Config ===============================
 
   aws eks update-kubeconfig --name ${cluster_name} --region ${default_region} --role-arn ${eks_create_role_arn} --profile eks-creator
   kubectl apply -f config-auth.yaml
