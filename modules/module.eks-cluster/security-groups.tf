@@ -139,6 +139,6 @@ resource "aws_security_group_rule" "allow_https_ports_eks_bastion" {
   from_port                = 443
   to_port                  = 443
   protocol                 = "tcp"
-  security_group_id        = aws_security_group.eks_cluster.id
+  security_group_id        = aws_eks_cluster.doubledigit_eks.vpc_config.*.cluster_security_group_id
   source_security_group_id = data.terraform_remote_state.eks_vpc.outputs.eks_bastion_sg_id
 }
