@@ -46,3 +46,7 @@ output "eks_cluster_worker_role_arn" {
 output "eks_cluster_austoscaling_policy_arn" {
   value = aws_iam_policy.cluster_autoscaling_policy.arn
 }
+
+output "eks_cluster_sg_id" {
+  value = aws_eks_cluster.doubledigit_eks.vpc_config.cluster_security_group_id
+}
