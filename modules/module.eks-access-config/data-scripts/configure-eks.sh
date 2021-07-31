@@ -16,12 +16,12 @@ function create_credentials() {
   echo ================== Configure Credentials ===============================
 
   TEMP=$(aws sts assume-role --role-arn ${eks_create_role_arn} --role-session-name Cluster-Config)
-  aws configure set profile.eks-creator.aws_access_key $(echo $TEMP | jq -r .Credentials.AccessKeyId)
+  aws configure set profile.eks-creator.aws_access_key_id $(echo $TEMP | jq -r .Credentials.AccessKeyId)
   aws configure set profile.eks-creator.aws_secret_access_key $(echo $TEMP | jq -r .Credentials.SecretAccessKey)
   aws configure set profile.eks-creator.aws_session_token $(echo $TEMP | jq -r .Credentials.SessionToken)
   aws configure set profile.eks-creator.region ${default_region}
 
-  aws configure list --profile eks-creator
+  aws configure list-profiles
 }
 
 
