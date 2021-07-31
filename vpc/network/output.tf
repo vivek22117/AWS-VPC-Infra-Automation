@@ -42,27 +42,3 @@ output "bastion_sg" {
 output "vpc_cidr" {
   value = module.vpc-test.vpc_cidr_block
 }
-
-output "artifactory_s3_arn" {
-  value = module.vpc-test.artifactory_s3_arn
-}
-
-output "logging_s3_arn" {
-  value = module.vpc-test.logging_s3_arn
-}
-
-output "datalake_s3_arn" {
-  value = module.vpc-test.datalake_s3_arn
-}
-
-output "artifactory_s3_name" {
-  value = module.vpc-test.artifactory_s3_name
-}
-
-output "logging_s3_name" {
-  value = module.vpc-test.logging_s3_name
-}
-
-output "datalake_s3_name" {
-  value = module.vpc-test.datalake_s3_name
-}
