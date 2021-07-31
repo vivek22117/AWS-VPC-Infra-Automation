@@ -1,10 +1,6 @@
 profile        = "test-admin"
 default_region = "us-east-1"
 
-artifactory_bucket_prefix = "doubledigit-artifactory"
-logging_bucket_prefix     = "doubledigit-logging"
-dataLake_bucket_prefix    = "doubledigit-datalake"
-
 cidr_block         = "10.0.0.0/20"
 instance_tenancy   = "default"
 enable_dns         = "true"
