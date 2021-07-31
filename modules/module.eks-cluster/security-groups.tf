@@ -128,4 +128,17 @@ resource "aws_security_group_rule" "all_ports_eks_sg" {
   source_security_group_id = aws_security_group.eks_cluster.id
 }
 
+#############################################################
+#       Add Security Group Rule for EKS Bastion Host        #
+#############################################################
+resource "aws_security_group_rule" "allow_https_ports_eks_bastion" {
+  depends_on = [aws_eks_cluster.doubledigit_eks,aws_security_group.eks_cluster]
 
+  type                     = "ingress"
+  description              = "Allow eks admin instance access"
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.eks_cluster.id
+  source_security_group_id = data.terraform_remote_state.eks_vpc.outputs.eks_bastion_sg_id
+}
