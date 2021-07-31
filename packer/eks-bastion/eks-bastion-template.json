@@ -2,7 +2,8 @@
   "variables": {
     "region" : "us-east-1",
     "source_ami" : "ami-02354e95b39ca8dec",
-    "terraform_version": "0.13.5"
+    "terraform_version": "0.13.5",
+    "kubectl_version": "1.19"
   },
   "builders": [{
     "type" : "amazon-ebs",
@@ -29,7 +30,8 @@
       "type" : "shell",
       "scripts" : ["./setup.sh"],
        "environment_vars": [
-         "TERRAFORM_VER={{user `terraform_version`}}"
+         "TERRAFORM_VER={{user `terraform_version`}}",
+         "KUBECTL_VER={{user `kubectl_version`}}"
        ],
       "execute_command" : "{{ .Vars }} sudo -E -S sh '{{ .Path }}'",
       "pause_before": "10s"

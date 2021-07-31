@@ -30,7 +30,7 @@ team         = "DoubleDigitTeam"
 owner        = "Vivek"
 isMonitoring = true
 
-cluster_version         = "1.17"
+cluster_version         = "1.19"
 cluster_name            = "DD-EKS"
 cluster_log_kms_key_id = ""
 
