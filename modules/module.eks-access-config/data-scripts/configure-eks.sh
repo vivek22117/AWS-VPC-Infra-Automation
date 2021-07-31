@@ -18,7 +18,7 @@ aws configure set profile.eks-creator.aws_session_token $(echo $TEMP | jq -r .Cr
 aws configure set profile.eks-creator.region ${default_region}
 
 
-aws eks update-kubeconfig --name=${cluster_name} --region=${default_region} --role-arn ${eks_create_role_arn}
+aws eks update-kubeconfig --name ${cluster_name} --region ${default_region} --role-arn ${eks_create_role_arn} --profile eks-creator
 
 kubectl apply -f config-auth.yaml
 
