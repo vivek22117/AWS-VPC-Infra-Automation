@@ -56,23 +56,6 @@ variable "bastion_instance_type" {
   description = "Instance type for Bastion Host"
 }
 
-variable "artifactory_bucket_prefix" {
-  type        = string
-  description = "S3 bucket store deployment packages"
-}
-
-variable "dataLake_bucket_prefix" {
-  type        = string
-  description = "Bucket to store data"
-}
-
-variable "logging_bucket_prefix" {
-  type        = string
-  description = "Bucket to store logging data"
-}
-
-
-
 ######################################################
 # Local variables defined                            #
 ######################################################
