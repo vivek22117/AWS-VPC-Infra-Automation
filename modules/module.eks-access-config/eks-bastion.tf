@@ -52,7 +52,7 @@ resource "aws_autoscaling_group" "bastion_asg" {
     aws_s3_bucket_object.artifactory_bucket_object
   ]
 
-  name = "${aws_launch_template.eks_bastion_lt.name}-asg"
+  name = "${aws_launch_template.eks_bastion_lt.name}-asg-${aws_launch_template.eks_bastion_lt.latest_version}"
 
   vpc_zone_identifier  = data.terraform_remote_state.eks_vpc.outputs.public_subnets
   termination_policies = var.termination_policies
