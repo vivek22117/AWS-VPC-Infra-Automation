@@ -3,7 +3,7 @@
     "region" : "us-east-1",
     "source_ami" : "ami-02354e95b39ca8dec",
     "terraform_version": "0.13.5",
-    "kubectl_version": "1.19"
+    "kubectl_version": "1.19.6"
   },
   "builders": [{
     "type" : "amazon-ebs",

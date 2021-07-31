@@ -115,7 +115,7 @@ variable "custom_tags" {
     team       = "doubledigit-solutions"
     tool       = "Terraform"
     monitoring = "true"
-    Name       = "Bastion-Host"
+    Name       = "EKS-Bastion-Host"
     Project    = "DoubleDigit-Solutions"
   }
 }
