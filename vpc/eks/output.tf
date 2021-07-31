@@ -47,3 +47,12 @@ output "eks_cluster_certificate_authority" {
 output "eks_cluster_austoscaling_policy_arn" {
   value = module.eks-vpc.eks_cluster_austoscaling_policy_arn
 }
+
+
+output "eks_vpc_config" {
+  value = module.eks-vpc.eks_vpc_config
+}
+
+output "eks_cluster_sg_id" {
+  value = module.eks-vpc.eks_cluster_sg_id
+}
