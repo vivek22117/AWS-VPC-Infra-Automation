@@ -3,12 +3,11 @@
 
 
 sudo yum install jq -y
-cd tmp/
 
 function download_eks_auth() {
   echo ================== Download EKS auth config ===============================
   echo 'Applying Auth ConfigMap with kubectl...'
-  aws s3 cp s3://${artifactory_bucket_name}/deploy/eks/config-auth.yaml . --region ${default_region}
+  sudo aws s3 cp s3://${artifactory_bucket_name}/deploy/eks/config-auth.yaml . --region ${default_region}
 
 }
 
