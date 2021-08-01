@@ -24,34 +24,35 @@ locals {
   }
 }
 
+data "aws_iam_policy_document" "role" {
+  count = var.enabled ? 1 : 0
+
+  statement {
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+    effect  = "Allow"
+
+    condition {
+      test     = "StringEquals"
+      variable = "${var.oidc_url}:sub"
+      values   = ["system:serviceaccount:${var.namespace}:${var.service_account}"]
+    }
+
+    principals {
+      identifiers = [local.oidc_principal]
+      type        = "Federated"
+    }
+  }
+}
+
 resource "aws_iam_role" "irsa_role" {
   count = var.enabled ? 1 : 0
 
-  name = format("%s", local.name)
-  path = "/"
-
-  assume_role_policy = <<EOF
-  {
-      "Version": "2012-10-17",
-      "Statement": [
-          {
-              "Action": "sts:AssumeRoleWithWebIdentity"
-              "Effect": "Allow",
-              "Principal": {
-                "Federated": "${local.oidc_principal}"
-              },
-              "Condition": {
-                  "StringEquals": {
-                      "${format("%s:sub", local.oidc_url)}": "${local.oidc_fully_qualified_subjects}"
-                  }
-              }
-          }
-      ]
-  }
-  EOF
+  assume_role_policy = data.aws_iam_policy_document.role[0].json
+  name               = "${data.terraform_remote_state.eks_cluster.outputs.eks_cluster_id}-${local.name}-role"
 
   tags = merge(local.common_tags, map("Name", local.name))
 }
+
 
 resource "aws_iam_role_policy_attachment" "irsa_role_policy_att" {
   for_each = var.enabled ? { for key, val in var.policy_arns : key => val } : {}
