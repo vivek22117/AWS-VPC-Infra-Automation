@@ -3,6 +3,7 @@
 
 
 sudo yum install jq -y
+cd /tmp
 
 function download_eks_auth() {
   echo ================== Download EKS auth config ===============================
