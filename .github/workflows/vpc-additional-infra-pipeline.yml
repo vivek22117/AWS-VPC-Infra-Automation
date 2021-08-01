@@ -24,7 +24,7 @@ env:
 
 jobs:
   terraform:
-    name: 'VPC-Additional-Resources-Deployment-Pipeline'
+    name: 'VPC-Additional-Resources-Deployment-Pipeline-${{ github.event.inputs.action }}'
     runs-on: ubuntu-latest
 
     defaults:
