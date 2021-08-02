@@ -26,7 +26,7 @@ variable "common_tags" {
 variable "subnets" {
   type        = list(string)
   description = "A list of subnets to place the EKS cluster and workers within."
-  default = []
+  default     = []
 }
 
 variable "cluster_endpoint_public_access_cidrs" {
@@ -54,9 +54,9 @@ variable "eks_cluster_delete_timeout" {
 }
 
 variable "cluster_encryption_resources" {
-  type = list(string)
+  type        = list(string)
   description = "Encryption configuration for the cluster resources"
-  default = []
+  default     = []
 }
 
 variable "cluster_egress_cidrs" {

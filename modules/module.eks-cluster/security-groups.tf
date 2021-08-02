@@ -132,7 +132,7 @@ resource "aws_security_group_rule" "all_ports_eks_sg" {
 #       Add Security Group Rule for EKS Bastion Host        #
 #############################################################
 resource "aws_security_group_rule" "allow_https_ports_eks_bastion" {
-  depends_on = [aws_eks_cluster.doubledigit_eks,aws_security_group.eks_cluster]
+  depends_on = [aws_eks_cluster.doubledigit_eks, aws_security_group.eks_cluster]
 
   type                     = "ingress"
   description              = "Allow eks admin instance access"
