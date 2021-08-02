@@ -23,7 +23,7 @@ locals {
   additional_iam_roles = tomap({
     read_only_user : aws_iam_role.eks_read_role.arn
     full_access_user : aws_iam_role.eks_full_access_role.arn
-    bastion_host_access: aws_iam_role.bastion_host_role.arn
+    bastion_host_access : aws_iam_role.bastion_host_role.arn
   })
 
   map_additional_iam_roles = [
@@ -52,9 +52,9 @@ data "template_file" "configmap_auth" {
   template = file(local.configmap_auth_template_file)
 
   vars = {
-    map_worker_roles_yaml         = local.map_worker_roles_yaml
-    map_additional_iam_roles_yaml = local.map_additional_iam_roles_yaml
-    map_additional_iam_users_yaml = local.map_additional_iam_users_yaml
+    map_worker_roles_yaml            = local.map_worker_roles_yaml
+    map_additional_iam_roles_yaml    = local.map_additional_iam_roles_yaml
+    map_additional_iam_users_yaml    = local.map_additional_iam_users_yaml
     map_additional_aws_accounts_yaml = local.map_additional_aws_accounts_yaml
   }
 }

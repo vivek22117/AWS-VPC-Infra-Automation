@@ -18,8 +18,8 @@ resource "aws_launch_template" "eks_bastion_lt" {
   network_interfaces {
     device_index                = 0
     associate_public_ip_address = true
-    security_groups = [data.terraform_remote_state.eks_vpc.outputs.eks_bastion_sg_id]
-    delete_on_termination = true
+    security_groups             = [data.terraform_remote_state.eks_vpc.outputs.eks_bastion_sg_id]
+    delete_on_termination       = true
   }
 
   block_device_mappings {
