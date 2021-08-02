@@ -1,5 +1,5 @@
 locals {
-  account_id     = data.aws_caller_identity.current.account_id
+  account_id = data.aws_caller_identity.current.account_id
 }
 
 data "aws_iam_policy_document" "kms_key_policy_doc" {
@@ -16,9 +16,9 @@ data "aws_iam_policy_document" "kms_key_policy_doc" {
   }
 
   statement {
-    sid       = "Allow access for Key Administrators"
-    effect    = "Allow"
-    actions   = [
+    sid    = "Allow access for Key Administrators"
+    effect = "Allow"
+    actions = [
       "kms:Create*",
       "kms:Describe*",
       "kms:Enable*",
@@ -33,7 +33,7 @@ data "aws_iam_policy_document" "kms_key_policy_doc" {
       "kms:UntagResource",
       "kms:ScheduleKeyDeletion",
       "kms:CancelKeyDeletion"
-      ]
+    ]
     resources = ["*"]
 
     principals {
@@ -87,8 +87,8 @@ data "aws_iam_policy_document" "kms_key_policy_doc" {
 }
 
 resource "aws_kms_key" "eks_cluster_key" {
-  description         = "KMS key for Secrets Encryption for EKS"
-  enable_key_rotation = false
+  description             = "KMS key for Secrets Encryption for EKS"
+  enable_key_rotation     = false
   deletion_window_in_days = 30
 
   policy = data.aws_iam_policy_document.kms_key_policy_doc.json

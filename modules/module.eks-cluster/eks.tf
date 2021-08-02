@@ -2,11 +2,11 @@
 locals {
   common_tags = var.common_tags
   eks_subnets = length(var.subnets) > 0 ? var.subnets : flatten([data.terraform_remote_state.eks_vpc.outputs.private_subnets,
-    data.terraform_remote_state.eks_vpc.outputs.public_subnets])
+  data.terraform_remote_state.eks_vpc.outputs.public_subnets])
 }
 
 resource "aws_cloudwatch_log_group" "dd_eks_lg" {
-  count             = length(var.enabled_log_types) > 0 ? 1 : 0
+  count = length(var.enabled_log_types) > 0 ? 1 : 0
 
   name              = "/aws/eks/${var.cluster_name}/cluster"
   retention_in_days = var.log_retention
@@ -38,12 +38,12 @@ resource "aws_eks_cluster" "doubledigit_eks" {
     security_group_ids      = [aws_security_group.eks_cluster.id, aws_security_group.eks_nodes_sg.id]
     endpoint_private_access = var.endpoint_private_access
     endpoint_public_access  = var.endpoint_public_access
-    subnet_ids = local.eks_subnets
+    subnet_ids              = local.eks_subnets
     public_access_cidrs     = var.cluster_endpoint_public_access_cidrs
   }
 
   dynamic "encryption_config" {
-    for_each = length(var.cluster_encryption_resources) > 0 ? [true]: []
+    for_each = length(var.cluster_encryption_resources) > 0 ? [true] : []
 
     content {
       provider {
