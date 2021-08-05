@@ -35,7 +35,8 @@ resource "aws_security_group_rule" "memcache_cluster_outgoing_traffic" {
 
 resource "aws_elasticache_subnet_group" "default" {
   count       = var.enable ? 1 : 0
-  name        = module.labels.id
+
+  name        = "${var.cluster_id}-subnet-gp"
   subnet_ids  = var.subnet_ids
   description = var.description
 }
