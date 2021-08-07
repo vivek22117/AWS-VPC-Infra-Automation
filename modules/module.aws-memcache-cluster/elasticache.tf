@@ -39,6 +39,8 @@ resource "aws_elasticache_subnet_group" "default" {
   name        = "${var.cluster_id}-subnet-gp"
   subnet_ids  = var.subnet_ids
   description = var.description
+
+  tags = merge(local.common_tags, map("Name", "${var.environment}-MemcacheCluster-Subnet-Grp"))
 }
 
 resource "aws_elasticache_cluster" "default" {
