@@ -166,12 +166,12 @@ variable "cluster_enabled" {
 }
 
 variable "num_cache_nodes" {
-  default     = 1
+  default     = 2
   description = "(Required unless replication_group_id is provided) The initial number of cache nodes that the cache cluster will have. For Redis, this value must be 1. For Memcache, this value must be between 1 and 20. If this number is reduced on subsequent runs, the highest numbered nodes will be removed."
 }
 
 variable "az_mode" {
-  default     = "single-az"
+  default     = "cross-az"
   description = "(Memcached only) Specifies whether the nodes in this Memcached node group are created in a single Availability Zone or created across multiple Availability Zones in the cluster's region. Valid values for this parameter are single-az or cross-az, default is single-az. If you want to choose cross-az, num_cache_nodes must be greater than 1."
 }
 
