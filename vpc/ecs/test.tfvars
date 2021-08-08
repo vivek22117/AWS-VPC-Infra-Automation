@@ -8,7 +8,7 @@ log_retention_days = 3
 
 instance_type                     = "t3a.small"
 key_name                          = "doubledigit-solutions"
-max_price                         = "0.0075"
+max_price                         = "0.0070"
 volume_size                       = "40"
 default_target_group_port         = 80
 app_asg_max_size                  = "4"
@@ -21,6 +21,3 @@ default_cooldown                  = 300
 termination_policies              = ["OldestInstance", "Default"]
 suspended_processes               = []
 wait_for_capacity_timeout         = "7m"
-
-bucket_name = "doubledigit-tfstate-test-us-east-1"
-

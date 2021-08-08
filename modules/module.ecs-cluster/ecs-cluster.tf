@@ -2,7 +2,7 @@ resource "aws_cloudwatch_log_group" "dd_ecs_cluster_log_group" {
   name              = "${var.component_name}-${var.environment}-loggroup"
   retention_in_days = var.log_retention_days
 
-  tags = merge(local.common_tags, map("Name", "dd-cluster-log-group"))
+  tags = merge(local.common_tags, map("Name", "dd-ecs-cluster-log-group"))
 }
 
 resource "aws_ecs_cluster" "dd_ecs_cluster" {

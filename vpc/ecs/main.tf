@@ -31,6 +31,5 @@ module "vpc-es-cluster" {
 
   component_name = var.component_name
 
-  bucket_name = var.bucket_name
   owner_team  = var.owner_team
 }

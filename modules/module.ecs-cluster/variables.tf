@@ -33,11 +33,6 @@ variable "log_retention_days" {
   description = "Number of days to retain cloudwatch logs"
 }
 
-variable "bucket_name" {
-  type        = string
-  description = "Bucket to be accessed by ECS"
-}
-
 variable "instance_type" {
   type        = string
   description = "EC2 instance type to be used for provisioning"
