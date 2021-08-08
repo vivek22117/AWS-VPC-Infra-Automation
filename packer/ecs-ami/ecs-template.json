@@ -1,12 +1,12 @@
 {
   "variables": {
     "region": "us-east-1",
-    "source_ami": "ami-0c1f575380708aa63"
+    "source_ami": "ami-01453e60fc2aef31b"
   },
   "builders": [
     {
       "type": "amazon-ebs",
-      "profile": "qa-admin",
+      "profile": "eks-admin",
       "region": "{{user `region`}}",
       "instance_type": "t3a.small",
       "source_ami": "{{user `source_ami`}}",
