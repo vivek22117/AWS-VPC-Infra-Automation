@@ -21,6 +21,3 @@ default_cooldown                  = 300
 termination_policies              = ["OldestInstance", "Default"]
 suspended_processes               = []
 wait_for_capacity_timeout         = "7m"
-
-bucket_name = "doubledigit-tfstate-test-us-east-1"
-
