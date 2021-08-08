@@ -73,6 +73,7 @@ jobs:
           tf_actions_comment: false
 
       - name: Terraform Plan ECS Cluster
+        if: github.event.inputs.action == 'create'
         id: app-plan
         uses: hashicorp/terraform-github-actions@master
         with:
