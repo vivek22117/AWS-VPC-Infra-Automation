@@ -30,4 +30,6 @@ module "vpc-cloudtrail" {
 
   team  = var.team
   owner = var.owner
+  cloudtrail_bucket_name = ""
+  default_region = ""
 }
