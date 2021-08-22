@@ -25,3 +25,7 @@ output "alb-target-group-arn" {
 output "alb-listner-arn" {
   value = aws_lb_listener.ecs_alb_listener.arn
 }
+
+output "ecs_optimized_ami" {
+  value = data.aws_ssm_parameter.ecs_ami.value
+}
