@@ -44,6 +44,9 @@ mv terraform /usr/local/bin/
 terraform version
 
 
+curl -sSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+
 sleep 10
 
 echo "SUCCESS! Installation succeeded!"
