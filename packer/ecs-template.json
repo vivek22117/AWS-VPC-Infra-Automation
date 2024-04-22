@@ -15,13 +15,13 @@
       "ami_description": "Amazon Linux Image with Docker",
       "run_tags": {
         "Name": "packer-builder",
-        "Project": "DoubleDigit-Solutions"
+        "Project": "Demo-Solutions"
       },
       "tags": {
         "Tool": "Packer",
         "Name": "EMR-AMI",
         "Author": "Vivek",
-        "Project": "DoubleDigit-Solutions"
+        "Project": "Demo-Solutions"
       }
     }
   ],
