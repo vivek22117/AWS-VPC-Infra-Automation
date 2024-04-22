@@ -9,7 +9,7 @@ terraform {
   required_version = ">= 0.12"
 
   backend "s3" {
-    profile = "doubledigit"
+    profile = "demo"
     region  = "us-east-1"
     encrypt = "true"
   }

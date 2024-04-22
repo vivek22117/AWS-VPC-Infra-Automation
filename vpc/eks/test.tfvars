@@ -36,10 +36,10 @@ cluster_log_kms_key_id = ""
 
 common_tags = {
   Owner       = "Vivek"
-  Team        = "DoubleDigit-Team"
+  Team        = "Demo-Team"
   Environment = "eks-test"
   Monitoring  = true
-  Project     = "DoubleDigit-Solutions"
+  Project     = "Demo-Solutions"
 }
 
 subnets = []

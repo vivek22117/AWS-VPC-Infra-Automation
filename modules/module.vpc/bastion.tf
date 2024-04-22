@@ -18,7 +18,7 @@ resource "aws_key_pair" "rsvp_processor_key" {
 
 resource "aws_key_pair" "common_ec2_key" {
   public_key = var.public_key
-  key_name   = "doubledigit-solutions"
+  key_name   = "demo-solutions"
 }
 
 ##################################################################

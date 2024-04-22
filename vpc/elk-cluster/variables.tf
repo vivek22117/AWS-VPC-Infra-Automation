@@ -10,7 +10,7 @@ variable "default_region" {
 variable "s3_bucket_prefix" {
   type        = string
   description = "S3 TF state bucket prefix"
-  default     = "doubledigit-tfstate"
+  default     = "demo-tfstate"
 }
 
 variable "volume_type" {

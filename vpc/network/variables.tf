@@ -88,7 +88,7 @@ variable "project" {
 #########################################################
 variable "s3_bucket_prefix" {
   type        = string
-  default     = "doubledigit-tfstate"
+  default     = "demo-tfstate"
   description = "Prefix for s3 bucket"
 }
 
@@ -98,10 +98,10 @@ variable "custom_tags" {
   type        = map(string)
   default = {
     owner      = "vivek"
-    team       = "DoubleDigit"
+    team       = "Demo"
     tool       = "Terraform"
     monitoring = "true"
     Name       = "Bastion-Host"
-    Project    = "DoubleDigit-Solutions"
+    Project    = "Demo-Solutions"
   }
 }

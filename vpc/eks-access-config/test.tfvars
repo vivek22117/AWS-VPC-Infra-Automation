@@ -3,7 +3,7 @@ default_region = "us-east-1"
 team         = "DoubleDigitTeam"
 owner        = "Vivek"
 isMonitoring  = true
-project     = "DoubleDigit-Solutions"
+project     = "Demo-Solutions"
 component = "Managed-EKS"
 
 eks_bastion_name_prefix = "eks-bastion-"

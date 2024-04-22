@@ -113,7 +113,7 @@ variable "wait_for_capacity_timeout" {
 variable "s3_bucket_prefix" {
   type        = string
   description = "S3 deployment bucket prefix"
-  default     = "doubledigit-tfstate"
+  default     = "demo-tfstate"
 }
 
 #####=============ASG Standards Tags===============#####
@@ -122,11 +122,11 @@ variable "custom_tags" {
   type        = map(string)
   default = {
     owner      = "Vivek"
-    team       = "DoubleDigit"
+    team       = "Demo"
     tool       = "Terraform"
     monitoring = "true"
     Name       = "ECS-Cluster",
-    Project    = "DoubleDigit-Solutions"
+    Project    = "Demo-Solutions"
   }
 }
 
@@ -136,7 +136,7 @@ variable "custom_tags" {
 locals {
   common_tags = {
     owner       = "Vivek"
-    team        = "DoubleDigit"
+    team        = "Demo"
     environment = var.environment
   }
 }

@@ -47,7 +47,7 @@ variable "verified_email" {
 #####====================Default Variables==================#####
 variable "s3_bucket_prefix" {
   type    = string
-  default = "doubledigit-tfstate"
+  default = "demo-tfstate"
 }
 
 #####============================Local variables=====================#####

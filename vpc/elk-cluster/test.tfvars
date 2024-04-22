@@ -14,6 +14,6 @@ indices_query_bool_max_clause_count    = 1024
 rest_action_multi_allow_explicit_index = "true"
 ingress_allow_security_groups          = []
 
-team      = "DoubleDigit-Team"
-project   = "DoubleDigit-Blogging"
+team      = "Demo-Team"
+project   = "Demo-Blogging"
 component = "Managed-EKS"

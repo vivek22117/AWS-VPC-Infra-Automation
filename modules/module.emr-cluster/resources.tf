@@ -66,7 +66,7 @@ resource "aws_emr_cluster" "cluster" {
   }
 
   /*  bootstrap_action {
-    path = "s3://doubledigit-aritifactory-qa-us-east-1/bootstrap-actions/setup-config.sh"
+    path = "s3://demo-aritifactory-qa-us-east-1/bootstrap-actions/setup-config.sh"
     name = "setup-config.sh"
   }*/
 
@@ -74,7 +74,7 @@ resource "aws_emr_cluster" "cluster" {
     Name        = "${var.cluster_name}-${var.environment}"
     Environment = var.environment
     Region      = var.default_region
-    Project     = "DoubleDigit-Solutions"
+    Project     = "Demo-Solutions"
   }
 
   service_role           = aws_iam_role.emr_rsvp_processor_service_role.arn

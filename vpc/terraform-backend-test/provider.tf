@@ -45,8 +45,8 @@ terraform {
 
   backend "s3" {
     profile        = "test-admin"
-    bucket         = "doubledigit-tfstate-test-us-east-1"
-    dynamodb_table = "doubledigit-tfstate-test-us-east-1"
+    bucket         = "demo-tfstate-test-us-east-1"
+    dynamodb_table = "demo-tfstate-test-us-east-1"
     key            = "state/test/backend/terraform.tfstate"
     region         = "us-east-1"
     encrypt        = "true"

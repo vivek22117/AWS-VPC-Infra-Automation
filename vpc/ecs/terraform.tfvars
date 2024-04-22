@@ -1,5 +1,5 @@
 profile        = "test-admin"
-owner_team     = "DoubleDigit"
+owner_team     = "Demo"
 default_region = "us-east-1"
 
 component_name = "dd-solutions"
@@ -7,7 +7,7 @@ component_name = "dd-solutions"
 log_retention_days = 3
 
 instance_type                     = "t3a.small"
-key_name                          = "doubledigit-solutions"
+key_name                          = "demo-solutions"
 max_price                         = "0.0075"
 volume_size                       = "40"
 default_target_group_port         = 80

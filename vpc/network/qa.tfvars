@@ -1,8 +1,8 @@
 default_region = "us-east-1"
 
-artifactory_bucket_prefix = "doubledigit-artifactory"
-logging_bucket_prefix     = "doubledigit-logging"
-dataLake_bucket_prefix    = "doubledigit-datalake"
+artifactory_bucket_prefix = "demo-artifactory"
+logging_bucket_prefix     = "demo-logging"
+dataLake_bucket_prefix    = "demo-datalake"
 
 cidr_block         = "10.0.0.0/20"
 instance_tenancy   = "default"
@@ -34,4 +34,4 @@ team                  = "DoubleDigitTeam"
 owner                 = "Vivek"
 bastion_instance_type = "t3a.small"
 isMonitoring          = true
-project               = "DoubleDigit-Solutions"
+project               = "Demo-Solutions"

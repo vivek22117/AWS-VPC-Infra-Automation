@@ -61,7 +61,7 @@ variable "bastion_instance_type" {
 #########################################################
 variable "s3_bucket_prefix" {
   type        = string
-  default     = "doubledigit-tfstate"
+  default     = "demo-tfstate"
   description = "Prefix for s3 bucket"
 }
 
@@ -109,7 +109,7 @@ variable "custom_tags" {
     tool       = "Terraform"
     monitoring = "true"
     Name       = "Bastion-Host"
-    Project    = "DoubleDigit-Solutions"
+    Project    = "Demo-Solutions"
   }
 }
 

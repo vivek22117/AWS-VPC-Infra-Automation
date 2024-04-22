@@ -5,6 +5,6 @@ environment = "test"
 team        = "DoubleDigitTeam"
 component   = "BackendConfig-Project"
 
-dyanamoDB_prefix          = "doubledigit-tfstate"
-tf_s3_bucket_prefix       = "doubledigit-tfstate"
+dyanamoDB_prefix          = "demo-tfstate"
+tf_s3_bucket_prefix       = "demo-tfstate"
 

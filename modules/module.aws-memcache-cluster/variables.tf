@@ -3,7 +3,7 @@
 #########################################################
 variable "s3_bucket_prefix" {
   type        = string
-  default     = "doubledigit-tfstate"
+  default     = "demo-tfstate"
   description = "Prefix for s3 bucket"
 }
 

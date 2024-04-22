@@ -119,7 +119,7 @@ variable "launch_template" {
 #########################################################
 variable "s3_bucket_prefix" {
   type        = string
-  default     = "doubledigit-tfstate"
+  default     = "demo-tfstate"
   description = "Prefix for s3 bucket"
 }
 
@@ -153,7 +153,7 @@ locals {
     team        = var.team
     environment = var.environment
     monitoring  = var.isMonitoring
-    Project     = "DoubleDigit-Solutions"
+    Project     = "Demo-Solutions"
   }
 }
 

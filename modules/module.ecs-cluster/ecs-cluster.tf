@@ -59,7 +59,7 @@ resource "aws_launch_template" "ecs_cluster_lt" {
   tag_specifications {
     resource_type = "instance"
 
-    tags = merge(local.common_tags, map("Project", "DoubleDigit-Solutions"))
+    tags = merge(local.common_tags, map("Project", "Demo-Solutions"))
   }
 
   lifecycle {

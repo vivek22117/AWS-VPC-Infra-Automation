@@ -1,4 +1,4 @@
-profile = "doubledigit"
+profile = "demo"
 environment = "shared"
 default_region = "us-east-1"
 

@@ -1,7 +1,7 @@
 ####################################################
 #        QA Elastic Search Cluster TF              #
 ####################################################
-module "doubledigit-logging-es" {
+module "demo-logging-es" {
   source = "../../modules/module-elk-stack"
 
   environment    = var.environment

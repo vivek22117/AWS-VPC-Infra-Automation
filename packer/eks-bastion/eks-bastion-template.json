@@ -16,13 +16,13 @@
     "ami_description" : "Amazon Linux Image with Telegraf",
     "run_tags" : {
       "Name" : "packer-builder-bastion",
-      "Project": "DoubleDigit-Solutions"
+      "Project": "Demo-Solutions"
     },
     "tags" : {
       "Tool" : "Packer",
       "Author" : "Vivek",
       "Name": "EKS-Bastion-AMI",
-      "Project": "DoubleDigit-Solutions"
+      "Project": "Demo-Solutions"
     }
   }],
   "provisioners": [

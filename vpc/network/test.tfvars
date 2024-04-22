@@ -31,4 +31,4 @@ team                  = "DoubleDigitTeam"
 owner                 = "Vivek"
 bastion_instance_type = "t3a.small"
 isMonitoring          = true
-project               = "DoubleDigit-Solutions"
+project               = "Demo-Solutions"
